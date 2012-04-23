@@ -85,10 +85,10 @@
     [self.view addSubview:myTableView];
     
     //Add the search bar
-    /*searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
 	myTableView.tableHeaderView = searchBar;
 	searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-    searchBar.delegate = self;*/
+    searchBar.delegate = self;
 	//searchBar.tintColor = [UIColor colorWithRed:148.0/255.0 green:127.0/255.0 blue:96.0/255.0 alpha:0.0];
     //searchBar.text = chosenCity;
     

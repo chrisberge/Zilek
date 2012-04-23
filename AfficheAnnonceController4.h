@@ -13,6 +13,9 @@
 #import "DiapoController3.h"
 #import "AFOpenFlowViewDiapo.h"
 #import "ProgressViewContoller.h"
+#import "ASIHTTPRequest.h"
+#import "ASINetworkQueue.h"
+#import "ASIFormDataRequest.h"
 
 @interface AfficheAnnonceController4 : UIViewController <DiapoController3Delegate>{
     Annonce *lAnnonce;

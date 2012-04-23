@@ -534,7 +534,7 @@
     [contact release];
     
     //TEL
-    NSError *error = nil;
+    /*NSError *error = nil;
     NSString *fullPath;
     NSString *texte;
     
@@ -550,10 +550,10 @@
     tel.userInteractionEnabled = NO;
     tel.backgroundColor = [UIColor clearColor];
     [scrollView addSubview:tel];
-    [tel release];
+    [tel release];*/
     
     //FAX
-    error = nil;
+    /*error = nil;
     
     fullPath = [[NSBundle mainBundle] pathForResource:@"fax-agence" ofType:@"txt"];
     texte = [NSString stringWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:&error];
@@ -565,23 +565,25 @@
     fax.userInteractionEnabled = NO;
     fax.backgroundColor = [UIColor clearColor];
     [scrollView addSubview:fax];
-    [fax release];
+    [fax release];*/
     
     //BOUTON ECRIVEZ NOUS
     UIButton *ecrivez = [UIButton buttonWithType:UIButtonTypeCustom];
     [ecrivez setFrame:CGRectMake(30, 940, 95, 65)];
-    [ecrivez setImage:[UIImage imageNamed:@"ecrivez-nous.png"] forState:UIControlStateNormal];
-    [ecrivez addTarget:self action:@selector(buttonEcrivez:) 
+    [ecrivez setImage:[UIImage imageNamed:@"formulaire-contact.png"] forState:UIControlStateNormal];
+    /*[ecrivez addTarget:self action:@selector(buttonEcrivez:) 
+     forControlEvents:UIControlEventTouchUpInside];*/
+    [ecrivez addTarget:self action:@selector(buttonFormulaire:) 
       forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:ecrivez];
     
     //BOUTON APPELEZ NOUS
-    UIButton *appelez = [UIButton buttonWithType:UIButtonTypeCustom];
+    /*UIButton *appelez = [UIButton buttonWithType:UIButtonTypeCustom];
     [appelez setFrame:CGRectMake(30, 1020, 95, 65)];
     [appelez setImage:[UIImage imageNamed:@"appelez-nous.png"] forState:UIControlStateNormal];
     [appelez addTarget:self action:@selector(buttonAppelez:) 
       forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:appelez];
+    [scrollView addSubview:appelez];*/
     
     //AJOUTER FAVORIS
     UIButton *favoris = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -593,7 +595,7 @@
     
     //ENVOYEZ AMI
     UIButton *envoyez = [UIButton buttonWithType:UIButtonTypeCustom];
-    [envoyez setFrame:CGRectMake(195, 1020, 95, 65)];
+    [envoyez setFrame:CGRectMake(110, 1020, 95, 65)];
     [envoyez setImage:[UIImage imageNamed:@"envoyez-a-un-ami.png"] forState:UIControlStateNormal];
     [envoyez addTarget:self action:@selector(buttonEnvoyez:) 
       forControlEvents:UIControlEventTouchUpInside];
@@ -631,6 +633,71 @@
 - (void) buttonPushed:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) buttonFormulaire:(id)sender
+{
+    NSLog(@"Formulaire internet...");
+    
+    /*--- QUEUE POUR LES REQUETES HTTP ---*/
+    ASINetworkQueue *networkQueue = [[ASINetworkQueue alloc] init];
+    [networkQueue reset];
+	[networkQueue setRequestDidFinishSelector:@selector(requestDone:)];
+	[networkQueue setRequestDidFailSelector:@selector(requestFailed:)];
+	[networkQueue setDelegate:self];
+    /*--- QUEUE POUR LES REQUETES HTTP ---*/
+    
+    /*--- REQUETE POST ---*/
+    NSURL *url = [NSURL URLWithString:@"http://zilek.com/request_info_akios.pl"];
+    
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setPostValue:@"859897" forKey:@"pid"];
+    [request setPostValue:@"Quand puis-je visiter?" forKey:@"question"];
+    [request setPostValue:@"Dupont" forKey:@"name"];
+    [request setPostValue:@"jc.dalmeida@akios.fr" forKey:@"email"];
+    [request setPostValue:@"0123456789" forKey:@"tel"];
+    [request setUserInfo:[NSDictionary dictionaryWithObject:[NSString stringWithString:@"formulaire"] forKey:@"name"]];
+    
+    [networkQueue addOperation:request];
+    [networkQueue go];
+    /*--- REQUETE POST ---*/
+}
+
+- (void)requestDone:(ASIHTTPRequest *)request
+{
+	NSData *responseData = [request responseData];
+    
+    NSLog(@"dataBrute long: %d",[responseData length]);
+    
+    NSString * string = [[NSString alloc] initWithData:responseData encoding:NSISOLatin1StringEncoding];
+    //NSString * string = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    NSLog(@"REPONSE DU WEB: \"%@\"\n",string);
+    
+    UIWebView *responseView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 250)];
+    [responseView loadHTMLString:string baseURL:nil];
+    
+    [self.view addSubview:responseView];
+    
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    UIAlertView *alert;
+    
+    NSLog(@"Connection failed! Error - %@",
+          [error localizedDescription]);
+    
+    //if (!isConnectionErrorPrinted) {
+    alert = [[UIAlertView alloc] initWithTitle:@"Erreur de connection."
+                                       message:[error localizedDescription]
+                                      delegate:self
+                             cancelButtonTitle:@"OK"
+                             otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+    //isConnectionErrorPrinted = YES;
+    //}
 }
 
 - (void) buttonEcrivez:(id)sender
@@ -726,10 +793,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    if ([UIApplication sharedApplication].networkActivityIndicatorVisible == YES) {
-        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    }
-    
     [myOpenFlowView centerOnSelectedCover:YES];
     //[[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
 }

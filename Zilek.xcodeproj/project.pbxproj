@@ -169,6 +169,7 @@
 		83CA32191520CC1900F1D159 /* fax-agence.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83CA32181520CC1900F1D159 /* fax-agence.txt */; };
 		83CF6CDB129EB969008B2434 /* Zilek.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 83A0DD9A125342B800DD5A75 /* Zilek.xcdatamodel */; };
 		83D07C6613DC67010065CDAB /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D07C6513DC67010065CDAB /* background.png */; };
+		83DF47E915459E88007C74CA /* formulaire-contact.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DF47E815459E88007C74CA /* formulaire-contact.png */; };
 		83E7597815062FEE00858CF1 /* consommationenergieA_grisee.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E7597615062FEE00858CF1 /* consommationenergieA_grisee.png */; };
 		83E7597915062FEE00858CF1 /* emissiongesC_grisee.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E7597715062FEE00858CF1 /* emissiongesC_grisee.png */; };
 		83EF0E1314FE338C00775FD9 /* appareil-photo-photographie-icone-6076-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EF0E1214FE338C00775FD9 /* appareil-photo-photographie-icone-6076-64.png */; };
@@ -406,6 +407,7 @@
 		83C7CCB811FA024200C9F911 /* Accueil.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Accueil.xib; sourceTree = "<group>"; };
 		83CA32181520CC1900F1D159 /* fax-agence.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fax-agence.txt"; sourceTree = "<group>"; };
 		83D07C6513DC67010065CDAB /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		83DF47E815459E88007C74CA /* formulaire-contact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "formulaire-contact.png"; sourceTree = "<group>"; };
 		83E7597615062FEE00858CF1 /* consommationenergieA_grisee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = consommationenergieA_grisee.png; sourceTree = "<group>"; };
 		83E7597715062FEE00858CF1 /* emissiongesC_grisee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emissiongesC_grisee.png; sourceTree = "<group>"; };
 		83EF0E1214FE338C00775FD9 /* appareil-photo-photographie-icone-6076-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appareil-photo-photographie-icone-6076-64.png"; sourceTree = "<group>"; };
@@ -679,6 +681,7 @@
 				83A75C511500DAAC006F0A80 /* bandeau-fiche-detaillee.png */,
 				837BA31F13DB61A700E6C7BD /* appelez-nous.png */,
 				837BA31D13DB618200E6C7BD /* ecrivez-nous.png */,
+				83DF47E815459E88007C74CA /* formulaire-contact.png */,
 				837BA31B13DB611F00E6C7BD /* envoyez-a-un-ami.png */,
 				83EF0E1814FE33E600775FD9 /* bandeau-contactez-nous.png */,
 				83EF0E1A14FE33EE00775FD9 /* bandeau-description.png */,
@@ -1194,6 +1197,7 @@
 				837C250C1540536900192CF8 /* portail-email.png in Resources */,
 				837C250E1540554700192CF8 /* portail-recommander.png in Resources */,
 				837C2510154057B700192CF8 /* developpement_akios.png in Resources */,
+				83DF47E915459E88007C74CA /* formulaire-contact.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
