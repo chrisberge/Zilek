@@ -34,6 +34,11 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+- (void)agenceModalPresAkiosDidFinish:(AgenceModalPresAkios *)controller
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -237,6 +242,9 @@
     AgenceModalEstimation *agenceModalEstimation = [[AgenceModalEstimation alloc] init];
     agenceModalEstimation.delegate = self;
     
+    AgenceModalPresAkios *agenceModalPresAkios = [[AgenceModalPresAkios alloc] init];
+    agenceModalPresAkios.delegate = self;
+    
 	switch (button.tag) {
         NSError *error = nil;
         NSString *fullPath;
@@ -300,6 +308,10 @@
             break;
         case 6:
             NSLog(@"FLIP PRESENTATION AKIOS");
+            buttonTag = [NSNumber numberWithInt:button.tag];
+            agenceModalPresAkios.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+            [self presentModalViewController:agenceModalPresAkios animated:YES];
+            [agenceModalPresAkios release];
             break;
 		default:
 			break;
@@ -361,7 +373,7 @@
 	[networkQueue setRequestDidFailSelector:@selector(requestFailed:)];
 	[networkQueue setDelegate:self];
     /*--- QUEUE POUR LES REQUETES HTTP ---*/
-    NSString *bodyString = @"http://www.akios.fr/immobilier/smart_phone.php?part=Transact_Immo&id_agence=225&coverflow=YES";
+    NSString *bodyString = @"http://zilek.com/akios_query.pl?coverflow=YES";
     
     NSLog(@"bodyString:%@\n",bodyString);
     
@@ -378,7 +390,8 @@
     
     NSLog(@"dataBrute long: %d",[responseData length]);
     
-    NSString * string = [[NSString alloc] initWithData:responseData encoding:NSISOLatin1StringEncoding];
+    //NSString * string = [[NSString alloc] initWithData:responseData encoding:NSISOLatin1StringEncoding];
+    NSString * string = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     NSLog(@"REPONSE DU WEB: \"%@\"\n",string);
     
     NSError *error = nil;
@@ -429,6 +442,7 @@
             for (Annonce *uneAnnonce in tableauAnnonces1) {
                 NSString *photos = [uneAnnonce valueForKey:@"photos"];
                 photos = [photos stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                photos = [photos stringByReplacingOccurrencesOfString:@" " withString:@""];
                 
                 if ([photos length] > 0) {
                     [imagesArray addObject:[[NSMutableArray arrayWithArray:[photos componentsSeparatedByString:@","]] objectAtIndex:0]];

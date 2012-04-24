@@ -18,12 +18,13 @@
 #import "AgenceModalVendre.h"
 #import "AgenceModalEstimation.h"
 #import "ZilekAppDelegate.h"
+#import "AgenceModalPresAkios.h"
 
 @class ASINetworkQueue;
 @class AFOpenFlowView;
 @class ZilekAppDelegate;
 
-@interface AgenceViewController : UIViewController <AgenceModalViewDelegate, AgenceModalViewFicheDelegate, AgenceModalVendreDelegate, AgenceModalEstimationDelegate>{
+@interface AgenceViewController : UIViewController <AgenceModalViewDelegate, AgenceModalViewFicheDelegate, AgenceModalVendreDelegate, AgenceModalEstimationDelegate, AgenceModalPresAkiosDelegate>{
     NSNumber *buttonTag;
     AFOpenFlowView *myOpenFlowView;
     ASINetworkQueue *networkQueue;

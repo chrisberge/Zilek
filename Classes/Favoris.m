@@ -1161,14 +1161,20 @@
         labelPrixBien1.text = prixPrint;
         
         NSString *ville = [bien1 valueForKey:@"ville"];
+        ville = [ville stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
         NSString *cp = [bien1 valueForKey:@"cp"];
+        cp = [cp stringByReplacingOccurrencesOfString:@" " withString:@""];
         
         NSString *villePrint = [NSString stringWithFormat:@"%@ - %@", ville, cp];
         
         labelVilleBien1.text = villePrint;
         
         NSString *surface = [bien1 valueForKey:@"surface"];
+        surface = [surface stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
         NSString *nb_pieces = [bien1 valueForKey:@"nb_pieces"];
+        nb_pieces = [nb_pieces stringByReplacingOccurrencesOfString:@" " withString:@""];
         
         NSString *surfacePrint = [NSString stringWithFormat:@"%@ piece(s) - %@ m²", nb_pieces, surface];
         
@@ -1207,14 +1213,20 @@
         labelPrixBien2.text = prixPrint;
         
         NSString *ville = [bien2 valueForKey:@"ville"];
+        ville = [ville stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
         NSString *cp = [bien2 valueForKey:@"cp"];
+        cp = [cp stringByReplacingOccurrencesOfString:@" " withString:@""];
         
         NSString *villePrint = [NSString stringWithFormat:@"%@ - %@", ville, cp];
         
         labelVilleBien2.text = villePrint;
         
         NSString *surface = [bien2 valueForKey:@"surface"];
+        surface = [surface stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
         NSString *nb_pieces = [bien2 valueForKey:@"nb_pieces"];
+        nb_pieces = [nb_pieces stringByReplacingOccurrencesOfString:@" " withString:@""];
         
         NSString *surfacePrint = [NSString stringWithFormat:@"%@ piece(s) - %@ m²", nb_pieces, surface];
         
@@ -1238,6 +1250,7 @@
     
     UIImageView *imgViewBien = [tableau objectAtIndex:0];
 	NSString *string = [tableau objectAtIndex:1];
+    string = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     if ([string length] > 0) {
         NSMutableArray * images;

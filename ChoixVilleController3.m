@@ -71,13 +71,13 @@
 	//self.navigationItem.title = @"Villes";
 	
     //TEXTE
-    UILabel *message = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, 320, 50)];
+    UILabel *message = [[UILabel alloc] initWithFrame:CGRectMake(0, 50, 320, 30)];
     message.text = @"Sélectionnez une ville";
     message.textAlignment = UITextAlignmentCenter;
     [self.view addSubview:message];
     
     //TABLE VIEW
-    myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 100, 320, 300) style:UITableViewStylePlain];
+    myTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 80, 320, 250) style:UITableViewStylePlain];
     myTableView.delegate = self;
     myTableView.dataSource = self;
     [myTableView setContentSize:CGSizeMake(320, 10000)];
@@ -98,7 +98,7 @@
     selection = [[NSMutableArray alloc] init];
     
     //REQUETE CORE DATA
-    ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
+    /*ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
 	NSManagedObjectContext *context = appDelegate.managedObjectContext;
 	
 	NSFetchRequest *requete = [[NSFetchRequest alloc] init];
@@ -138,7 +138,7 @@
 	[requete release];
 	
 	resultsController = fetchedResultsController;
-    //[fetchedResultsController release];
+    //[fetchedResultsController release];*/
 }
 
 
@@ -308,10 +308,10 @@
 	}
 	else {
 		
-		/*searching = NO;
+		searching = NO;
 		letUserSelectRow = NO;
-		myTableView.scrollEnabled = NO;*/
-        ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
+		myTableView.scrollEnabled = NO;
+        /*ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
         NSManagedObjectContext *context = appDelegate.managedObjectContext;
         
         NSFetchRequest *requete = [[NSFetchRequest alloc] init];
@@ -350,7 +350,7 @@
         
         [requete release];
         
-        resultsController = fetchedResultsController;
+        resultsController = fetchedResultsController;*/
 	}
 	
 	[myTableView reloadData];

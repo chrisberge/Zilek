@@ -23,6 +23,7 @@
             etage,
             ascenseur,
             chauffage,
+            code,
             photos;
 
 - (void) dealloc {
@@ -39,6 +40,7 @@
     [etage release];
     [ascenseur release];
     [chauffage release];
+    [code release];
 	[super dealloc];
 }
 

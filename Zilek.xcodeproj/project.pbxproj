@@ -170,6 +170,8 @@
 		83CF6CDB129EB969008B2434 /* Zilek.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 83A0DD9A125342B800DD5A75 /* Zilek.xcdatamodel */; };
 		83D07C6613DC67010065CDAB /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 83D07C6513DC67010065CDAB /* background.png */; };
 		83DF47E915459E88007C74CA /* formulaire-contact.png in Resources */ = {isa = PBXBuildFile; fileRef = 83DF47E815459E88007C74CA /* formulaire-contact.png */; };
+		83DF641B1546AD810091A37B /* AgenceModalPresAkios.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DF641A1546AD810091A37B /* AgenceModalPresAkios.m */; };
+		83DF641D1546AEAB0091A37B /* presentation-akios.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83DF641C1546AEAB0091A37B /* presentation-akios.txt */; };
 		83E7597815062FEE00858CF1 /* consommationenergieA_grisee.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E7597615062FEE00858CF1 /* consommationenergieA_grisee.png */; };
 		83E7597915062FEE00858CF1 /* emissiongesC_grisee.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E7597715062FEE00858CF1 /* emissiongesC_grisee.png */; };
 		83EF0E1314FE338C00775FD9 /* appareil-photo-photographie-icone-6076-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EF0E1214FE338C00775FD9 /* appareil-photo-photographie-icone-6076-64.png */; };
@@ -408,6 +410,9 @@
 		83CA32181520CC1900F1D159 /* fax-agence.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fax-agence.txt"; sourceTree = "<group>"; };
 		83D07C6513DC67010065CDAB /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		83DF47E815459E88007C74CA /* formulaire-contact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "formulaire-contact.png"; sourceTree = "<group>"; };
+		83DF64191546AD810091A37B /* AgenceModalPresAkios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgenceModalPresAkios.h; sourceTree = "<group>"; };
+		83DF641A1546AD810091A37B /* AgenceModalPresAkios.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgenceModalPresAkios.m; sourceTree = "<group>"; };
+		83DF641C1546AEAB0091A37B /* presentation-akios.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "presentation-akios.txt"; sourceTree = "<group>"; };
 		83E7597615062FEE00858CF1 /* consommationenergieA_grisee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = consommationenergieA_grisee.png; sourceTree = "<group>"; };
 		83E7597715062FEE00858CF1 /* emissiongesC_grisee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emissiongesC_grisee.png; sourceTree = "<group>"; };
 		83EF0E1214FE338C00775FD9 /* appareil-photo-photographie-icone-6076-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appareil-photo-photographie-icone-6076-64.png"; sourceTree = "<group>"; };
@@ -545,6 +550,8 @@
 				837C75A31510D8C6002F99D5 /* AgenceModalVendre.m */,
 				837C75A51510DC9D002F99D5 /* AgenceModalEstimation.h */,
 				837C75A61510DC9D002F99D5 /* AgenceModalEstimation.m */,
+				83DF64191546AD810091A37B /* AgenceModalPresAkios.h */,
+				83DF641A1546AD810091A37B /* AgenceModalPresAkios.m */,
 			);
 			name = Agence;
 			sourceTree = "<group>";
@@ -595,6 +602,7 @@
 				8304014C15139B0200D4DEDE /* coordonnees-globales.txt */,
 				83CA32181520CC1900F1D159 /* fax-agence.txt */,
 				8395513615230C740039E5ED /* nom-appli.txt */,
+				83DF641C1546AEAB0091A37B /* presentation-akios.txt */,
 			);
 			path = Conf;
 			sourceTree = "<group>";
@@ -1198,6 +1206,7 @@
 				837C250E1540554700192CF8 /* portail-recommander.png in Resources */,
 				837C2510154057B700192CF8 /* developpement_akios.png in Resources */,
 				83DF47E915459E88007C74CA /* formulaire-contact.png in Resources */,
+				83DF641D1546AEAB0091A37B /* presentation-akios.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1258,6 +1267,7 @@
 				83C715AE152DD99600638B42 /* XMLParserVilles.m in Sources */,
 				83C715B1152DD9C400638B42 /* Ville.m in Sources */,
 				83C715B4152DDCFC00638B42 /* ChoixVilleController3.m in Sources */,
+				83DF641B1546AD810091A37B /* AgenceModalPresAkios.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

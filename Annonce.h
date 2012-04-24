@@ -23,6 +23,7 @@
     NSString *etage;
     NSString *ascenseur;
     NSString *chauffage;
+    NSString *code;
 	
 }
 
@@ -39,6 +40,7 @@
 @property (nonatomic, retain) NSString *etage;
 @property (nonatomic, retain) NSString *ascenseur;
 @property (nonatomic, retain) NSString *chauffage;
+@property (nonatomic, retain) NSString *code;
 
 
 @end

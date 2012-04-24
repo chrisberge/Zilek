@@ -241,7 +241,7 @@
     /*--- QUEUE POUR LES REQUETES HTTP ---*/
     
     /*--- REQUETE COVERFLOW ---*/
-    NSString *bodyString = @"http://www.akios.fr/immobilier/smart_phone.php?part=Transact_Immo&id_agence=225&coverflow=YES";
+    NSString *bodyString = @"http://zilek.com/akios_query.pl?coverflow=YES";
     
     NSLog(@"bodyString:%@\n",bodyString);
     
@@ -251,19 +251,19 @@
     /*--- REQUETE COVERFLOW ---*/
     
     /*--- REQUETE VILLES ET CODES POSTAUX ---*/
-    bodyString = @"http://wpc1066.amenworld.com/iphone.php?part=Transact_Immo&id_agence=457&villes=YES";
+    /*bodyString = @"http://zilek.com/akios_city_query.pl";
     
     NSLog(@"bodyString:%@\n",bodyString);
     
     request = [[[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:bodyString]] autorelease];
     [request setUserInfo:[NSDictionary dictionaryWithObject:[NSString stringWithString:@"villes"] forKey:@"name"]];
-    [networkQueue addOperation:request];
+    //[networkQueue addOperation:request];*/
     /*--- REQUETE VILLES ET CODES POSTAUX ---*/
     
     [networkQueue go];
 }
 
-- (void)requestVillesDone:(ASIHTTPRequest *)request
+/*- (void)requestVillesDone:(ASIHTTPRequest *)request
 {
     NSData *responseData = [request responseData];
     
@@ -280,18 +280,18 @@
         
         NSData *dataString = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         
-        NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(59, [dataString length] - zap)]];
+        NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(59, [dataString length] - zap)]];*/
         
         //ON PARSE DU XML
         
         /*--- POUR LE TEST OFF LINE ---
          NSFileManager *fileManager = [NSFileManager defaultManager];
-         NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens" ofType:@"xml"];
+         NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Codes_postaux_villes" ofType:@"xml"];
          data = [fileManager contentsAtPath:xmlSamplePath];
-         string = [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding];
+         string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
          NSLog(@"REPONSE DU WEB: %@\n",string);
-         */
-        
+        */
+        /*
         if ([string rangeOfString:@"<villes></villes>"].length != 0) {
             //AUCUNE ANNONCES
             NSDictionary *userInfo = [NSDictionary 
@@ -323,23 +323,21 @@
             NSManagedObjectContext *context = appDelegate.managedObjectContext;
             
             for (Ville *uneVille in tableauVilles) {
-                NSLog(@"Ville Acc: %@", uneVille);
                 if (uneVille.nom != nil && uneVille.cp != nil) {
-                    NSLog(@"nom: %@", uneVille.nom);
-                    NSLog(@"cp: %@", uneVille.cp);
+                    NSLog(@"%@;%@", uneVille.cp, uneVille.nom);
                 
                     NSManagedObject *codesPostauxInfo = [NSEntityDescription
                                                          insertNewObjectForEntityForName:@"Codes" 
                                                          inManagedObjectContext:context];
                     
                     [codesPostauxInfo setValue:[uneVille.cp stringByReplacingOccurrencesOfString:@"\n" withString:@""] forKey:@"code"];
-                    [codesPostauxInfo setValue:uneVille.nom forKey:@"commune"];
+                    [codesPostauxInfo setValue:uneVille.nom forKey:@"commune"];*/
                     
                     /*NSError *error;
                     if (![context save:&error]) {
                         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
                     }*/
-                }
+                /*}
             }
             
             [xmlParser release];
@@ -347,20 +345,21 @@
         }
         [string release];
     }
-}
+}*/
 
 - (void)requestDone:(ASIHTTPRequest *)request
 {
-    if ([request.userInfo valueForKey:@"name"] == @"villes") {
+    /*if ([request.userInfo valueForKey:@"name"] == @"villes") {
         [self requestVillesDone:request];
         return;
-    }
+    }*/
     
 	NSData *responseData = [request responseData];
     
     NSLog(@"dataBrute long: %d",[responseData length]);
     
-    NSString * string = [[NSString alloc] initWithData:responseData encoding:NSISOLatin1StringEncoding];
+    //NSString * string = [[NSString alloc] initWithData:responseData encoding:NSISOLatin1StringEncoding];
+    NSString * string = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     NSLog(@"REPONSE DU WEB: \"%@\"\n",string);
     
     NSError *error = nil;
@@ -375,13 +374,13 @@
         
         //ON PARSE DU XML
         
-        /*--- POUR LE TEST OFF LINE ---
+        /*--- POUR LE TEST OFF LINE ---*/
          NSFileManager *fileManager = [NSFileManager defaultManager];
          NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens" ofType:@"xml"];
          data = [fileManager contentsAtPath:xmlSamplePath];
-         string = [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding];
+         string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
          NSLog(@"REPONSE DU WEB: %@\n",string);
-         */
+         
         
         if ([string rangeOfString:@"<biens></biens>"].length != 0) {
             //AUCUNE ANNONCES
@@ -412,6 +411,7 @@
                 NSString *photos = [uneAnnonce valueForKey:@"photos"];
                 NSLog(@"COVERFLOW: \"%@\"",photos);
                 photos = [photos stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                photos = [photos stringByReplacingOccurrencesOfString:@" " withString:@""];
                 
                 if ([photos length] > 0) {
                     [imagesArray addObject:[[NSMutableArray arrayWithArray:[photos componentsSeparatedByString:@","]] objectAtIndex:0]];
