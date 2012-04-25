@@ -384,7 +384,8 @@
     ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.whichView = @"multicriteres";
     
-    NSString *bodyString = @"http://www.akios.fr/immobilier/smart_phone.php?part=Transact_Immo&id_agence=225&";
+    //NSString *bodyString = @"http://www.akios.fr/immobilier/smart_phone.php?part=Transact_Immo&id_agence=225&";
+    NSString *bodyString = @"http://zilek.com/akios_query.pl?";
     
     NSEnumerator *enume;
     NSString *key;
@@ -577,27 +578,29 @@
     
     NSLog(@"dataBrute long: %d",[responseData length]);
     
-    NSString * string = [[NSString alloc] initWithData:responseData encoding:NSISOLatin1StringEncoding];
-    //NSString * string = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    //NSString * string = [[NSString alloc] initWithData:responseData encoding:NSISOLatin1StringEncoding];
+    NSString * string = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    //string = [string stringByReplacingOccurrencesOfString:@"¤" withString:@""];
+    
     NSLog(@"REPONSE DU WEB: \"%@\"\n",string);
     
     NSError *error = nil;
     
     if ([string length] > 0) {
         
-        NSUInteger zap = 60;
+        NSUInteger zap = 39;
         
         NSData *dataString = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         //NSData *dataString = [string dataUsingEncoding:NSISOLatin1StringEncoding allowLossyConversion:YES];
         
-        NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(59, [dataString length] - zap)]];
+        NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];
         //NSData *data = [[NSData alloc] initWithData:responseData];
         
         //ON PARSE DU XML
         
         /*--- POUR LE TEST OFF LINE ---
          NSFileManager *fileManager = [NSFileManager defaultManager];
-         NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens" ofType:@"xml"];
+         NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens1" ofType:@"xml"];
          data = [fileManager contentsAtPath:xmlSamplePath];
          string = [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding];
          NSLog(@"REPONSE DU WEB: %@\n",string);

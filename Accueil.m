@@ -366,11 +366,11 @@
     
     if ([string length] > 0) {
         
-        NSUInteger zap = 60;
+        NSUInteger zap = 39;
         
         NSData *dataString = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         
-        NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(59, [dataString length] - zap)]];
+        NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];
         
         //ON PARSE DU XML
         
@@ -411,7 +411,7 @@
                 NSString *photos = [uneAnnonce valueForKey:@"photos"];
                 NSLog(@"COVERFLOW: \"%@\"",photos);
                 photos = [photos stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-                photos = [photos stringByReplacingOccurrencesOfString:@" " withString:@""];
+                //photos = [photos stringByReplacingOccurrencesOfString:@" " withString:@""];
                 
                 if ([photos length] > 0) {
                     [imagesArray addObject:[[NSMutableArray arrayWithArray:[photos componentsSeparatedByString:@","]] objectAtIndex:0]];

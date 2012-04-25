@@ -117,6 +117,7 @@
 		83955D7A1506647800BBB710 /* coche.png in Resources */ = {isa = PBXBuildFile; fileRef = 83955D771506647800BBB710 /* coche.png */; };
 		83955D7B1506647800BBB710 /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 83955D781506647800BBB710 /* location.png */; };
 		839AC6E713DC60DF006CEA9C /* header.png in Resources */ = {isa = PBXBuildFile; fileRef = 839AC6E613DC60DF006CEA9C /* header.png */; };
+		839AC72815480A27003CF33E /* Biens1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 839AC72715480A27003CF33E /* Biens1.xml */; };
 		83A0DDB11253440500DD5A75 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83A0DDB01253440500DD5A75 /* CoreData.framework */; };
 		83A1700013E74B6200A8A4CD /* AFOpenFlowViewDiapo.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A16FFF13E74B6200A8A4CD /* AFOpenFlowViewDiapo.m */; };
 		83A1700213E7575C00A8A4CD /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A1700113E7575C00A8A4CD /* Default.png */; };
@@ -344,6 +345,7 @@
 		83955D771506647800BBB710 /* coche.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = coche.png; path = Images/coche.png; sourceTree = SOURCE_ROOT; };
 		83955D781506647800BBB710 /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = location.png; path = Images/location.png; sourceTree = SOURCE_ROOT; };
 		839AC6E613DC60DF006CEA9C /* header.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = header.png; sourceTree = "<group>"; };
+		839AC72715480A27003CF33E /* Biens1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Biens1.xml; sourceTree = "<group>"; };
 		83A0DD9A125342B800DD5A75 /* Zilek.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Zilek.xcdatamodel; sourceTree = "<group>"; };
 		83A0DDB01253440500DD5A75 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		83A16FFE13E74B1800A8A4CD /* AFOpenFlowViewDiapo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOpenFlowViewDiapo.h; sourceTree = "<group>"; };
@@ -929,6 +931,7 @@
 				8389D76813D989B7007C9450 /* Codes_postaux_villes.xml */,
 				837EE97913E0CD4A00ACF0B7 /* Ventes.xml */,
 				83A5142413E8B2890061A363 /* Biens_prestige.xml */,
+				839AC72715480A27003CF33E /* Biens1.xml */,
 			);
 			name = Exemples;
 			sourceTree = "<group>";
@@ -1207,6 +1210,7 @@
 				837C2510154057B700192CF8 /* developpement_akios.png in Resources */,
 				83DF47E915459E88007C74CA /* formulaire-contact.png in Resources */,
 				83DF641D1546AEAB0091A37B /* presentation-akios.txt in Resources */,
+				839AC72815480A27003CF33E /* Biens1.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

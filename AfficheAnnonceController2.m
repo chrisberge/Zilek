@@ -148,15 +148,15 @@
     labelPrix.text = [NSString stringWithFormat:@"%@€", prix];
     
     labelVille.text = [NSString stringWithFormat:@"%@ - %@",
-                       [[lAnnonce valueForKey:@"ville"] stringByReplacingOccurrencesOfString:@" " withString:@""],
-                       [[lAnnonce valueForKey:@"cp"] stringByReplacingOccurrencesOfString:@" " withString:@""]
+                       [lAnnonce valueForKey:@"ville"] ,
+                       [lAnnonce valueForKey:@"cp"] 
                        ];
     
     labelSurface.text = [NSString stringWithFormat:@"%@ - %@ piece%@ - %@m²",
-                         [[lAnnonce valueForKey:@"ref"] stringByReplacingOccurrencesOfString:@" " withString:@""],
-                         [nb_pieces stringByReplacingOccurrencesOfString:@" " withString:@""],
+                         [lAnnonce valueForKey:@"ref"] ,
+                         nb_pieces,
                          isS,
-                         [[lAnnonce valueForKey:@"surface"] stringByReplacingOccurrencesOfString:@" " withString:@""]
+                         [lAnnonce valueForKey:@"surface"] 
                          ];
     
     [scrollView addSubview:labelPrix];
@@ -177,7 +177,6 @@
     
     NSString *string = [lAnnonce valueForKey:@"photos"];
     string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    string = [string stringByReplacingOccurrencesOfString:@" " withString:@""];
 	
     if ([string length] > 0) {
 		imagesArray = [[NSMutableArray alloc] initWithArray:[string componentsSeparatedByString:@","]];
@@ -239,14 +238,14 @@
     labelPrix2.text = [NSString stringWithFormat:@"- Prix: %@€", prix];
     
     labelSurface2.font = [UIFont fontWithName:@"Arial" size:12];
-    labelSurface2.text = [NSString stringWithFormat:@"- Surface: %@m²", [[lAnnonce valueForKey:@"surface"] stringByReplacingOccurrencesOfString:@" " withString:@""]];
+    labelSurface2.text = [NSString stringWithFormat:@"- Surface: %@m²", [lAnnonce valueForKey:@"surface"]];
     
     labelEtage.font = [UIFont fontWithName:@"Arial" size:12];
-    labelEtage.text = [NSString stringWithFormat:@"- Etage: %@", [[lAnnonce valueForKey:@"etage"] stringByReplacingOccurrencesOfString:@" " withString:@""]];
+    labelEtage.text = [NSString stringWithFormat:@"- Etage: %@", [lAnnonce valueForKey:@"etage"]];
     //labelEtage.text = @"- Etage: 3";
     
     labelAscenseur.font = [UIFont fontWithName:@"Arial" size:12];
-    labelAscenseur.text = [NSString stringWithFormat:@"- Ascenseur: %@", [[lAnnonce valueForKey:@"ascenseur"] stringByReplacingOccurrencesOfString:@" " withString:@""]];
+    labelAscenseur.text = [NSString stringWithFormat:@"- Ascenseur: %@", [lAnnonce valueForKey:@"ascenseur"]];
     //labelAscenseur.text = @"- Ascenseur: Oui";
     
     NSDictionary *typeChauffage = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -328,7 +327,6 @@
     /*---- BILAN CONSO ENERGIE ----*/
     NSString *lettreCE = [lAnnonce valueForKey:@"bilan_ce"];
     lettreCE = [lettreCE stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    lettreCE = [lettreCE stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSLog(@"LETTRE CE: \"%@\"",lettreCE);
     
     NSString *consoA = @"consommationenergieA";
@@ -431,7 +429,6 @@
     /*---- BILAN CONSO GES ----*/
     NSString *lettreGES = [lAnnonce valueForKey:@"bilan_ges"];
     lettreGES = [lettreGES stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    lettreGES = [lettreGES stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     NSString *gesA = @"emissiongesA";
     NSString *gesB = @"emissiongesB";
