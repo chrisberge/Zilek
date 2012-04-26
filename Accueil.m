@@ -374,13 +374,13 @@
         
         //ON PARSE DU XML
         
-        /*--- POUR LE TEST OFF LINE ---*/
+        /*--- POUR LE TEST OFF LINE ---
          NSFileManager *fileManager = [NSFileManager defaultManager];
          NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens" ofType:@"xml"];
          data = [fileManager contentsAtPath:xmlSamplePath];
          string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
          NSLog(@"REPONSE DU WEB: %@\n",string);
-         
+         */
         
         if ([string rangeOfString:@"<biens></biens>"].length != 0) {
             //AUCUNE ANNONCES

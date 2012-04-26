@@ -99,6 +99,7 @@
         if (!([elementName isEqualToString:@"ville"]) && !([elementName isEqualToString:@"descriptif"])){
             elementValueString = [elementValueString stringByReplacingOccurrencesOfString:@" " withString:@""];
             elementValueString = [elementValueString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+            elementValueString = [elementValueString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
         }
         
         [uneAnnonce setValue:elementValueString forKey:elementName];

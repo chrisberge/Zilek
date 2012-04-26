@@ -13,11 +13,9 @@
 #import "DiapoController3.h"
 #import "AFOpenFlowViewDiapo.h"
 #import "ProgressViewContoller.h"
-#import "ASIHTTPRequest.h"
-#import "ASINetworkQueue.h"
-#import "ASIFormDataRequest.h"
+#import "FormulaireAnnonce.h"
 
-@interface AfficheAnnonceController4 : UIViewController <DiapoController3Delegate>{
+@interface AfficheAnnonceController4 : UIViewController <DiapoController3Delegate, FormulaireAnnonceDelegate>{
     Annonce *lAnnonce;
 	NSMutableArray *imagesArray;
 	ArrayWithIndex *arrayWithIndex;

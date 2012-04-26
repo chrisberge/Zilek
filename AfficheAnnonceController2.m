@@ -11,6 +11,11 @@
 
 @implementation AfficheAnnonceController2
 
+- (void)formulaireAnnonceDidFinish:(FormulaireAnnonce *)controller
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)diapoControllerDidFinish:(DiapoController3 *)controller
 {
     [self dismissModalViewControllerAnimated:YES];
@@ -62,6 +67,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheAnnonce:) name:@"afficheAnnonce" object: nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheDiaporamaReady:) name:@"afficheDiaporamaReady" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(coverFlowFicheDetaillee:) name:@"coverFlowFicheDetaillee" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(formulaireAnnonceReady:) name:@"formulaireAnnonceReady" object: nil];
     
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"afficheAnnonceReady" object: @"afficheAnnonceReady"];
     
@@ -607,6 +613,10 @@
     //[[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
 }
 
+- (void) formulaireAnnonceReady:(NSNotification *)notify {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"formulaireGetAnnonce" object: lAnnonce];
+}
+
 - (void) afficheDiaporamaReady:(NSNotification *)notify {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"afficheDiaporama" object: arrayWithIndex];
 }
@@ -641,65 +651,14 @@
 {
     NSLog(@"Formulaire internet...");
     
-    /*--- QUEUE POUR LES REQUETES HTTP ---*/
-    ASINetworkQueue *networkQueue = [[ASINetworkQueue alloc] init];
-    [networkQueue reset];
-	[networkQueue setRequestDidFinishSelector:@selector(requestDone:)];
-	[networkQueue setRequestDidFailSelector:@selector(requestFailed:)];
-	[networkQueue setDelegate:self];
-    /*--- QUEUE POUR LES REQUETES HTTP ---*/
+    FormulaireAnnonce *formulaireAnnonce = [[FormulaireAnnonce alloc] init];
+    formulaireAnnonce.delegate = self;
+    formulaireAnnonce.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     
-    /*--- REQUETE POST ---*/
-    NSURL *url = [NSURL URLWithString:@"http://zilek.com/request_info_akios.pl"];
+    [self presentModalViewController:formulaireAnnonce animated:YES];
+    [formulaireAnnonce release];
     
-    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-    [request setPostValue:@"859897" forKey:@"pid"];
-    [request setPostValue:@"Quand puis-je visiter?" forKey:@"question"];
-    [request setPostValue:@"Dupont" forKey:@"name"];
-    [request setPostValue:@"jc.dalmeida@akios.fr" forKey:@"email"];
-    [request setPostValue:@"0123456789" forKey:@"tel"];
-    [request setUserInfo:[NSDictionary dictionaryWithObject:[NSString stringWithString:@"formulaire"] forKey:@"name"]];
-    
-    [networkQueue addOperation:request];
-    [networkQueue go];
-    /*--- REQUETE POST ---*/
-}
-
-- (void)requestDone:(ASIHTTPRequest *)request
-{
-	NSData *responseData = [request responseData];
-    
-    NSLog(@"dataBrute long: %d",[responseData length]);
-    
-    NSString * string = [[NSString alloc] initWithData:responseData encoding:NSISOLatin1StringEncoding];
-    //NSString * string = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-    NSLog(@"REPONSE DU WEB: \"%@\"\n",string);
-    
-    UIWebView *responseView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 250)];
-    [responseView loadHTMLString:string baseURL:nil];
-    
-    [self.view addSubview:responseView];
-    
-}
-
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    NSError *error = [request error];
-    UIAlertView *alert;
-    
-    NSLog(@"Connection failed! Error - %@",
-          [error localizedDescription]);
-    
-    //if (!isConnectionErrorPrinted) {
-    alert = [[UIAlertView alloc] initWithTitle:@"Erreur de connection."
-                                       message:[error localizedDescription]
-                                      delegate:self
-                             cancelButtonTitle:@"OK"
-                             otherButtonTitles:nil];
-    [alert show];
-    [alert release];
-    //isConnectionErrorPrinted = YES;
-    //}
+    return;
 }
 
 - (void) buttonEcrivez:(id)sender
@@ -813,6 +772,7 @@
                                    [lAnnonce valueForKey:@"etage"], @"etage",
                                    [lAnnonce valueForKey:@"ascenseur"], @"ascenseur",
                                    [lAnnonce valueForKey:@"chauffage"], @"chauffage",
+                                   [lAnnonce valueForKey:@"code"], @"code",
                                    nil];
     
     NSLog(@"Annonce record: %@", recordAnnonce);

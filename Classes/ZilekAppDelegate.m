@@ -13,7 +13,7 @@
 
 @synthesize window, /*myTableViewController,*/ tabBarController, accueilView;
 @synthesize favorisView, agenceView/*, contactView*/;
-@synthesize isAccueil, whichView;
+@synthesize isAccueil, whichView, infosAgence;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -36,8 +36,11 @@
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}
 	******************/
-	
+	[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(formulaireAgenceReady:) name:@"formulaireAgenceReady" object: nil];
+    
     isAccueil = NO;
+    
+    infosAgence = [[NSMutableArray alloc] init];
     
 	// creates your tab bar so you can add everything else to it
 	tabBarController = [[UITabBarController alloc] init];
@@ -320,5 +323,8 @@
     [super dealloc];
 }
 
+- (void) formulaireAgenceReady:(NSNotification *)notify {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"formulaireGetAgence" object: [infosAgence objectAtIndex:0]];
+}
 
 @end

@@ -112,6 +112,10 @@
 		8387EA9513D4DBAC0044FEAC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8387EA9413D4DBAC0044FEAC /* MobileCoreServices.framework */; };
 		838891CF1505010200968B35 /* bandeau-resultat-recherche.png in Resources */ = {isa = PBXBuildFile; fileRef = 838891CE1505010200968B35 /* bandeau-resultat-recherche.png */; };
 		8389D76913D989B7007C9450 /* Codes_postaux_villes.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8389D76813D989B7007C9450 /* Codes_postaux_villes.xml */; };
+		8391370A15494069003E3114 /* FormulaireAnnonce.m in Sources */ = {isa = PBXBuildFile; fileRef = 8391370915494069003E3114 /* FormulaireAnnonce.m */; };
+		8391370D154957E5003E3114 /* XMLParserFormulaire.m in Sources */ = {isa = PBXBuildFile; fileRef = 8391370C154957E5003E3114 /* XMLParserFormulaire.m */; };
+		839137101549582F003E3114 /* Agence.m in Sources */ = {isa = PBXBuildFile; fileRef = 8391370F1549582F003E3114 /* Agence.m */; };
+		8391371215497EB8003E3114 /* Formulaire.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8391371115497EB8003E3114 /* Formulaire.xml */; };
 		8395513715230C740039E5ED /* nom-appli.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8395513615230C740039E5ED /* nom-appli.txt */; };
 		83955D791506647800BBB710 /* achat.png in Resources */ = {isa = PBXBuildFile; fileRef = 83955D761506647800BBB710 /* achat.png */; };
 		83955D7A1506647800BBB710 /* coche.png in Resources */ = {isa = PBXBuildFile; fileRef = 83955D771506647800BBB710 /* coche.png */; };
@@ -340,6 +344,13 @@
 		8387EA9413D4DBAC0044FEAC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		838891CE1505010200968B35 /* bandeau-resultat-recherche.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bandeau-resultat-recherche.png"; sourceTree = "<group>"; };
 		8389D76813D989B7007C9450 /* Codes_postaux_villes.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Codes_postaux_villes.xml; sourceTree = "<group>"; };
+		8391370815494069003E3114 /* FormulaireAnnonce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormulaireAnnonce.h; sourceTree = "<group>"; };
+		8391370915494069003E3114 /* FormulaireAnnonce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormulaireAnnonce.m; sourceTree = "<group>"; };
+		8391370B154957E4003E3114 /* XMLParserFormulaire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParserFormulaire.h; sourceTree = "<group>"; };
+		8391370C154957E5003E3114 /* XMLParserFormulaire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParserFormulaire.m; sourceTree = "<group>"; };
+		8391370E1549582F003E3114 /* Agence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Agence.h; sourceTree = "<group>"; };
+		8391370F1549582F003E3114 /* Agence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Agence.m; sourceTree = "<group>"; };
+		8391371115497EB8003E3114 /* Formulaire.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Formulaire.xml; sourceTree = "<group>"; };
 		8395513615230C740039E5ED /* nom-appli.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "nom-appli.txt"; sourceTree = "<group>"; };
 		83955D761506647800BBB710 /* achat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = achat.png; path = Images/achat.png; sourceTree = SOURCE_ROOT; };
 		83955D771506647800BBB710 /* coche.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = coche.png; path = Images/coche.png; sourceTree = SOURCE_ROOT; };
@@ -859,6 +870,8 @@
 				837F2EB513EF400C0049FFEE /* AfficheAnnonceController3.m */,
 				837664A01508B63E0035B357 /* AfficheAnnonceController4.h */,
 				837664A11508B63E0035B357 /* AfficheAnnonceController4.m */,
+				8391370815494069003E3114 /* FormulaireAnnonce.h */,
+				8391370915494069003E3114 /* FormulaireAnnonce.m */,
 			);
 			name = "Fiche Detaillee";
 			sourceTree = "<group>";
@@ -889,6 +902,8 @@
 				837E5D4E13CC945000CA5776 /* Annonce.m */,
 				83C715AF152DD9C400638B42 /* Ville.h */,
 				83C715B0152DD9C400638B42 /* Ville.m */,
+				8391370E1549582F003E3114 /* Agence.h */,
+				8391370F1549582F003E3114 /* Agence.m */,
 				837E5D2213CC8CF500CA5776 /* ArrayWithIndex.h */,
 				837E5D2313CC8CF500CA5776 /* ArrayWithIndex.m */,
 				837E5D2F13CC8F5300CA5776 /* Intervalle.m */,
@@ -932,6 +947,7 @@
 				837EE97913E0CD4A00ACF0B7 /* Ventes.xml */,
 				83A5142413E8B2890061A363 /* Biens_prestige.xml */,
 				839AC72715480A27003CF33E /* Biens1.xml */,
+				8391371115497EB8003E3114 /* Formulaire.xml */,
 			);
 			name = Exemples;
 			sourceTree = "<group>";
@@ -943,6 +959,8 @@
 				83BDABC312A6A41D004E600B /* XMLParser.m */,
 				83C715AC152DD99600638B42 /* XMLParserVilles.h */,
 				83C715AD152DD99600638B42 /* XMLParserVilles.m */,
+				8391370B154957E4003E3114 /* XMLParserFormulaire.h */,
+				8391370C154957E5003E3114 /* XMLParserFormulaire.m */,
 			);
 			name = XML;
 			sourceTree = "<group>";
@@ -1211,6 +1229,7 @@
 				83DF47E915459E88007C74CA /* formulaire-contact.png in Resources */,
 				83DF641D1546AEAB0091A37B /* presentation-akios.txt in Resources */,
 				839AC72815480A27003CF33E /* Biens1.xml in Resources */,
+				8391371215497EB8003E3114 /* Formulaire.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1272,6 +1291,9 @@
 				83C715B1152DD9C400638B42 /* Ville.m in Sources */,
 				83C715B4152DDCFC00638B42 /* ChoixVilleController3.m in Sources */,
 				83DF641B1546AD810091A37B /* AgenceModalPresAkios.m in Sources */,
+				8391370A15494069003E3114 /* FormulaireAnnonce.m in Sources */,
+				8391370D154957E5003E3114 /* XMLParserFormulaire.m in Sources */,
+				839137101549582F003E3114 /* Agence.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

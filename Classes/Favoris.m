@@ -496,6 +496,7 @@
                 [annonceSelected setValue:[bien1 valueForKey:@"etage"] forKey:@"etage"];
                 [annonceSelected setValue:[bien1 valueForKey:@"ascenseur"] forKey:@"ascenseur"];
                 [annonceSelected setValue:[bien1 valueForKey:@"chauffage"] forKey:@"chauffage"];
+                [annonceSelected setValue:[bien1 valueForKey:@"code"] forKey:@"code"];
             }
             
             [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
@@ -523,6 +524,7 @@
                 [annonceSelected setValue:[bien2 valueForKey:@"etage"] forKey:@"etage"];
                 [annonceSelected setValue:[bien2 valueForKey:@"ascenseur"] forKey:@"ascenseur"];
                 [annonceSelected setValue:[bien2 valueForKey:@"chauffage"] forKey:@"chauffage"];
+                [annonceSelected setValue:[bien2 valueForKey:@"code"] forKey:@"code"];
             }
             
             [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];

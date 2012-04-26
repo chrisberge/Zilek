@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "Utility.h"
 #import "Accueil.h"
-#import "ContactViewController.h"
+//#import "ContactViewController.h"
 #import "Favoris.h"
 #import "AgenceViewController.h"
 
@@ -24,10 +24,11 @@
 	Accueil *accueilView;
 	Favoris *favorisView;
 	AgenceViewController *agenceView;
-	ContactViewController *contactView;
+	//ContactViewController *contactView;
     BOOL isAccueil;
     UIImageView *imagePresentation;
     NSString *whichView;
+    NSMutableArray *infosAgence;
 	
 @private
     NSManagedObjectContext *managedObjectContext_;
@@ -41,9 +42,10 @@
 @property (nonatomic, retain) Accueil *accueilView;
 @property (nonatomic, retain) Favoris *favorisView;
 @property (nonatomic, retain) AgenceViewController *agenceView;
-@property (nonatomic, retain) ContactViewController *contactView;
+//@property (nonatomic, retain) ContactViewController *contactView;
 @property (nonatomic, assign) BOOL isAccueil;
 @property (nonatomic, assign) NSString *whichView;
+@property (nonatomic, retain) NSMutableArray *infosAgence;
 
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
