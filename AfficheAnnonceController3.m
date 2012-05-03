@@ -70,6 +70,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheDiaporamaReady:) name:@"afficheDiaporamaReady" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(coverFlowFicheDetaillee:) name:@"coverFlowFicheDetaillee" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(formulaireAnnonceReady:) name:@"formulaireAnnonceReady" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(formulaireGetAgence:) name:@"formulaireGetAgence" object: nil];
     
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"afficheAnnonce3Ready" object: @"afficheAnnonce3Ready"];
     
@@ -79,8 +80,8 @@
     //self.view.backgroundColor = [UIColor whiteColor];
     
     //SCROLLVIEW
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 70, 320, 480)];
-    [scrollView setContentSize:CGSizeMake(320, 1120)];
+    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 70, 320, 480)];
+    [scrollView setContentSize:CGSizeMake(320, 1320)];
     [scrollView setScrollEnabled:YES];
     [self.view addSubview:scrollView];
     
@@ -595,6 +596,32 @@
     [envoyez addTarget:self action:@selector(buttonEnvoyez:) 
       forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:envoyez];
+    
+    //COORDONNEES AGENCE
+    NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
+    NSDictionary *formData = [NSDictionary dictionaryWithContentsOfFile:
+                              [directory stringByAppendingPathComponent:@"formData.plist"]];
+    
+    if (formData != nil) {
+        /*--- QUEUE POUR LES REQUETES HTTP ---*/
+        ASINetworkQueue *networkQueue = [[ASINetworkQueue alloc] init];
+        [networkQueue reset];
+        [networkQueue setRequestDidFinishSelector:@selector(requestDone:)];
+        [networkQueue setRequestDidFailSelector:@selector(requestFailed:)];
+        [networkQueue setDelegate:self];
+        /*--- QUEUE POUR LES REQUETES HTTP ---*/
+        
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.akios.fr/immobilier/smart_phone.php?part=ZilekPortail&url=http://zilek.com/akios_agent_query.pl&pid=%@",
+                                           [lAnnonce valueForKey:@"code"]]];
+        
+        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+        [request setUserInfo:[NSDictionary dictionaryWithObject:[NSString stringWithString:@"coordonnees agence"] forKey:@"name"]];
+        
+        [networkQueue addOperation:request];
+        [networkQueue go];
+    }
+    
     /*--- CONTACT ---*/
     
     //BOUTON RETOUR
@@ -612,6 +639,11 @@
     [self.view addSubview:boutonRetour];
     
     //[[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
+}
+
+- (void) formulaireGetAgence:(NSNotification *)notify {
+	lAgence = [[Agence alloc] init];
+    lAgence = [notify object];
 }
 
 - (void) formulaireAnnonceReady:(NSNotification *)notify {
@@ -796,6 +828,90 @@
         [save2 writeToFile:[directory stringByAppendingPathComponent:@"bien1.plist"] atomically:YES];
         [recordAnnonce writeToFile:[directory stringByAppendingPathComponent:@"bien2.plist"] atomically:YES];
     }
+}
+
+- (void)requestDone:(ASIHTTPRequest *)request
+{
+	NSData *responseData = [request responseData];
+    
+    NSLog(@"dataBrute long: %d",[responseData length]);
+    
+    //NSString * string = [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease];
+    NSString * string = @"    ";
+    /*NSString *string2 = [string stringByAppendingFormat:@"\n"];
+     
+     NSLog(@"REPONSE DU WEB: \"%@\"",string2);*/
+    
+    if ([string length] > 0) {
+        
+        /*NSUInteger zap = 39;
+         
+         NSData *dataString = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+         
+         NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];*/
+        
+        /*--- POUR LE TEST OFF LINE ---*/
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Formulaire" ofType:@"xml"];
+        NSData *data = [fileManager contentsAtPath:xmlSamplePath];
+        string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"REPONSE DU WEB: %@\n",string);
+        
+        
+        NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
+        XMLParserFormulaire *parser = [[XMLParserFormulaire alloc] initXMLParser];
+        
+        [xmlParser setDelegate:parser];
+        
+        BOOL success = [xmlParser parse];
+        
+        if(success)
+            NSLog(@"No Errors on XML parsing.");
+        else
+            NSLog(@"Error on XML parsing!!!");
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"formulaireAgenceReady" object: @"formulaireAgenceReady"];
+        
+        NSString *texte = @"Coordonnées de l'agence:";
+        texte = [texte stringByAppendingFormat:@"\n%@\n%@\n%@\n%@ %@\n%@\n%@\n%@",
+                 [lAgence valueForKey:@"titre"],
+                 [lAgence valueForKey:@"responsable"],
+                 [lAgence valueForKey:@"adresse"],
+                 [lAgence valueForKey:@"cp"],
+                 [lAgence valueForKey:@"ville"],
+                 [lAgence valueForKey:@"fixe"],
+                 [lAgence valueForKey:@"mobile"],
+                 [lAgence valueForKey:@"email"]
+                 ];
+        
+        UITextView *contactMessage = [[UITextView alloc] initWithFrame:CGRectMake(5, 1040, 300, 350)];
+        contactMessage.editable = NO;
+        contactMessage.text = texte;
+        
+        [scrollView addSubview:contactMessage];
+        
+        [xmlParser release];
+        [parser release];
+    }
+    //[string release];
+    
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    UIAlertView *alert;
+    
+    NSLog(@"Connection failed! Error - %@",
+          [error localizedDescription]);
+    
+    alert = [[UIAlertView alloc] initWithTitle:@"Erreur de connection."
+                                       message:[error localizedDescription]
+                                      delegate:self
+                             cancelButtonTitle:@"OK"
+                             otherButtonTitles:nil];
+    [alert show];
+    [alert release];
 }
 
 - (void)viewDidUnload

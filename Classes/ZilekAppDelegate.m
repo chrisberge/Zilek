@@ -84,7 +84,7 @@
 	//favorisView.tabBarItem = [utility getItem:@"" imagePath:@"/favoris.png" tag:tag++];
 	//favorisView.tabBarItem.title = @"Favoris";
     
-	agenceView.tabBarItem = [utility getItem:@"" imagePath:@"/lagence.png" tag:tag++];
+	agenceView.tabBarItem = [utility getItem:@"" imagePath:@"/plus-avec-style.png" tag:tag++];
 	agenceView.tabBarItem.title = @"Informations";
     
 	/*contactView.tabBarItem = [utility getItem:@"" imagePath:@"/contact.png" tag:tag++];

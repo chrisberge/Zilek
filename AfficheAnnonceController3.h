@@ -19,9 +19,11 @@
 
 @interface AfficheAnnonceController3 : UIViewController <DiapoController3Delegate, FormulaireAnnonceDelegate>{
     Annonce *lAnnonce;
+    Agence *lAgence;
 	NSMutableArray *imagesArray;
 	ArrayWithIndex *arrayWithIndex;
     AFOpenFlowViewDiapo *myOpenFlowView;
+    UIScrollView *scrollView;
 }
 
 @property (nonatomic, assign) id <AgenceModalViewFicheDelegate> delegate;

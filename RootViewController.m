@@ -127,7 +127,7 @@
     [self.view addSubview:boutonRetour];
     
     //BOUTON ACHAT
-    UIButton *boutonAchat = [UIButton buttonWithType:UIButtonTypeCustom];
+    /*UIButton *boutonAchat = [UIButton buttonWithType:UIButtonTypeCustom];
     boutonAchat.tag = 7;
     boutonAchat.showsTouchWhenHighlighted = NO;
     
@@ -152,14 +152,14 @@
     image = [self getImage:@"location"];
 	[boutonLocation setImage:image forState:UIControlStateNormal];
     
-    [self.view addSubview:boutonLocation];
+    [self.view addSubview:boutonLocation];*/
     
     //IMAGE COCHE
-    coche = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"coche.png"]];
+    /*coche = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"coche.png"]];
     [coche setFrame:CGRectMake(103, yPos - 33, 25, 25)];
     [self.view addSubview:coche];
     coche.tag = 100;
-    [criteres1 setValue:@"0" forKey:@"transaction"];
+    [criteres1 setValue:@"0" forKey:@"transaction"];*/
     
     //BOUTON VILLE
     UIButton *boutonVille = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -384,8 +384,8 @@
     ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.whichView = @"multicriteres";
     
-    //NSString *bodyString = @"http://www.akios.fr/immobilier/smart_phone.php?part=Transact_Immo&id_agence=225&";
-    NSString *bodyString = @"http://zilek.com/akios_query.pl?";
+    NSString *bodyString = @"http://www.akios.fr/immobilier/smart_phone.php?part=ZilekPortail&url=http://zilek.com/akios_query.pl&";
+    //NSString *bodyString = @"http://zilek.com/akios_query.pl?";
     
     NSEnumerator *enume;
     NSString *key;

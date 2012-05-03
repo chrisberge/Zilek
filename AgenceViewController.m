@@ -373,7 +373,8 @@
 	[networkQueue setRequestDidFailSelector:@selector(requestFailed:)];
 	[networkQueue setDelegate:self];
     /*--- QUEUE POUR LES REQUETES HTTP ---*/
-    NSString *bodyString = @"http://zilek.com/akios_query.pl?coverflow=YES";
+    NSString *bodyString = @"http://www.akios.fr/immobilier/smart_phone.php?part=ZilekPortail&url=http://zilek.com/akios_query.pl&coverflow=YES";
+    //NSString *bodyString = @"http://zilek.com/akios_query.pl?coverflow=YES";
     
     NSLog(@"bodyString:%@\n",bodyString);
     
@@ -406,13 +407,13 @@
         
         //ON PARSE DU XML
         
-        /*--- POUR LE TEST OFF LINE ---
+        /*--- POUR LE TEST OFF LINE ---*/
          NSFileManager *fileManager = [NSFileManager defaultManager];
          NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens" ofType:@"xml"];
          data = [fileManager contentsAtPath:xmlSamplePath];
          string = [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding];
          NSLog(@"REPONSE DU WEB: %@\n",string);
-         */
+         
         
         if ([string rangeOfString:@"<biens></biens>"].length != 0) {
             //AUCUNE ANNONCES
@@ -472,8 +473,29 @@
             
             [pvc.view removeFromSuperview];
         }
-        [string release];
     }
+    else{
+        //PAS DE REPONSE DU SERVEUR WEB
+        [pvc.view removeFromSuperview];
+        NSDictionary *userInfo;
+        UIAlertView *alert;
+        
+        userInfo = [NSDictionary 
+                    dictionaryWithObject:@"Pas de réponse du serveur zilek.com"
+                    forKey:NSLocalizedDescriptionKey];
+        
+        error =[NSError errorWithDomain:@"Pas de réponse du serveur."
+                                   code:1 userInfo:userInfo];
+        
+        alert = [[UIAlertView alloc] initWithTitle:@"Pas de réponse du serveur"
+                                           message:[error localizedDescription]
+                                          delegate:self
+                                 cancelButtonTitle:@"OK"
+                                 otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+    }
+    [string release];
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request

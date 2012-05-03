@@ -147,6 +147,20 @@
     
     [scrollView addSubview:boutonEnvoyer];
     
+    /*--- INFOS FORMULAIRE ---*/
+    NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
+    NSDictionary *formData = [NSDictionary dictionaryWithContentsOfFile:
+                              [directory stringByAppendingPathComponent:@"formData.plist"]];
+    
+    if (formData != nil) {
+        nomTF.text = [formData valueForKey:@"nom"];
+        emailTF.text = [formData valueForKey:@"email"];
+        telephoneTF.text = [formData valueForKey:@"tel"];
+    }
+    
+    /*--- INFOS FORMULAIRE ---*/
+    
     /*--- FORMULAIRE DE CONTACT ---*/
     
 }
@@ -178,7 +192,7 @@
     /*--- QUEUE POUR LES REQUETES HTTP ---*/
     
     /*--- REQUETE POST ---*/
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://zilek.com/akios_agent_query.pl?pid=%@",
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.akios.fr/immobilier/smart_phone.php?part=ZilekPortail&url=http://zilek.com/akios_agent_query.pl&pid=%@",
                                        [lAnnonce valueForKey:@"code"]]];
     
     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
@@ -192,6 +206,19 @@
     [networkQueue addOperation:request];
     [networkQueue go];
     /*--- REQUETE POST ---*/
+    
+    /*--- SAUVEGARDE DES INFOS FORMULAIRE ---*/
+    NSDictionary *recordFormData = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                    nomTF.text, @"nom",
+                                    emailTF.text, @"email",
+                                    telephoneTF.text, @"tel",
+                                    nil];
+    
+    NSLog(@"FormData record: %@", recordFormData);
+    
+    NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    [recordFormData writeToFile:[directory stringByAppendingPathComponent:@"formData.plist"] atomically:YES];
+    /*--- SAUVEGARDE DES INFOS FORMULAIRE ---*/
 }
 
 - (void)requestDone:(ASIHTTPRequest *)request

@@ -554,8 +554,8 @@
     //whichView = @"favoris";
     NSMutableDictionary *criteres1 = [recherchesSauvees objectAtIndex:num];
     
-    //NSString *bodyString = @"http://www.akios.fr/immobilier/smart_phone.php?part=Transact_Immo&id_agence=225&";
-    NSString *bodyString = @"http://zilek.com/akios_query.pl?";
+    NSString *bodyString = @"http://www.akios.fr/immobilier/smart_phone.php?part=ZilekPortail&url=http://zilek.com/akios_query.pl&";
+    //NSString *bodyString = @"http://zilek.com/akios_query.pl?";
     
     NSEnumerator *enume;
     NSString *key;

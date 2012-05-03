@@ -96,6 +96,8 @@
 		8381510613CF1B240070C3F0 /* ContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8381510513CF1B240070C3F0 /* ContactViewController.m */; };
 		8382738613A0167C0037561B /* Biens.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8382738513A0167C0037561B /* Biens.xml */; };
 		8382A3DB13CDC49600D74331 /* AfficheAnnonceController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8382A3DA13CDC49600D74331 /* AfficheAnnonceController2.m */; };
+		838593BF1552C6D400651136 /* plus-sans-style.png in Resources */ = {isa = PBXBuildFile; fileRef = 838593BE1552C6D400651136 /* plus-sans-style.png */; };
+		838593C11552C6DE00651136 /* plus-avec-style.png in Resources */ = {isa = PBXBuildFile; fileRef = 838593C01552C6DE00651136 /* plus-avec-style.png */; };
 		8386BF5713E14A6D00BF91AB /* recherche-multicriteres.png in Resources */ = {isa = PBXBuildFile; fileRef = 8386BF5613E14A6D00BF91AB /* recherche-multicriteres.png */; };
 		8387E92F13D4843F0044FEAC /* RechercheCarte2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8387E92E13D4843F0044FEAC /* RechercheCarte2.m */; };
 		8387EA8313D4DB240044FEAC /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8387EA7613D4DB240044FEAC /* ASIDataCompressor.m */; };
@@ -313,6 +315,8 @@
 		8382738513A0167C0037561B /* Biens.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Biens.xml; sourceTree = "<group>"; };
 		8382A3D913CDC49600D74331 /* AfficheAnnonceController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AfficheAnnonceController2.h; sourceTree = "<group>"; };
 		8382A3DA13CDC49600D74331 /* AfficheAnnonceController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AfficheAnnonceController2.m; sourceTree = "<group>"; };
+		838593BE1552C6D400651136 /* plus-sans-style.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-sans-style.png"; sourceTree = "<group>"; };
+		838593C01552C6DE00651136 /* plus-avec-style.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-avec-style.png"; sourceTree = "<group>"; };
 		8386BF5613E14A6D00BF91AB /* recherche-multicriteres.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "recherche-multicriteres.png"; sourceTree = "<group>"; };
 		8387E92D13D4843F0044FEAC /* RechercheCarte2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RechercheCarte2.h; sourceTree = "<group>"; };
 		8387E92E13D4843F0044FEAC /* RechercheCarte2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RechercheCarte2.m; sourceTree = "<group>"; };
@@ -643,6 +647,8 @@
 				83AED48C13E83676005F1610 /* lagence.png */,
 				83AED48D13E83676005F1610 /* contact.png */,
 				83AED48E13E83676005F1610 /* favoris.png */,
+				838593BE1552C6D400651136 /* plus-sans-style.png */,
+				838593C01552C6DE00651136 /* plus-avec-style.png */,
 			);
 			name = Footer;
 			sourceTree = "<group>";
@@ -1230,6 +1236,8 @@
 				83DF641D1546AEAB0091A37B /* presentation-akios.txt in Resources */,
 				839AC72815480A27003CF33E /* Biens1.xml in Resources */,
 				8391371215497EB8003E3114 /* Formulaire.xml in Resources */,
+				838593BF1552C6D400651136 /* plus-sans-style.png in Resources */,
+				838593C11552C6DE00651136 /* plus-avec-style.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
