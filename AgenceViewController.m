@@ -475,25 +475,75 @@
         }
     }
     else{
-        //PAS DE REPONSE DU SERVEUR WEB
-        [pvc.view removeFromSuperview];
-        NSDictionary *userInfo;
-        UIAlertView *alert;
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens" ofType:@"xml"];
+        NSData *data = [fileManager contentsAtPath:xmlSamplePath];
+        string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"REPONSE DU WEB: %@\n",string);
         
-        userInfo = [NSDictionary 
-                    dictionaryWithObject:@"Pas de réponse du serveur zilek.com"
-                    forKey:NSLocalizedDescriptionKey];
         
-        error =[NSError errorWithDomain:@"Pas de réponse du serveur."
-                                   code:1 userInfo:userInfo];
-        
-        alert = [[UIAlertView alloc] initWithTitle:@"Pas de réponse du serveur"
-                                           message:[error localizedDescription]
-                                          delegate:self
-                                 cancelButtonTitle:@"OK"
-                                 otherButtonTitles:nil];
-        [alert show];
-        [alert release];
+        if ([string rangeOfString:@"<biens></biens>"].length != 0) {
+            //AUCUNE ANNONCES
+            NSDictionary *userInfo = [NSDictionary 
+                                      dictionaryWithObject:@"Aucun bien ne correspond à ces critères dans notre base de données."
+                                      forKey:NSLocalizedDescriptionKey];
+            
+            error =[NSError errorWithDomain:@"Aucun bien trouvé."
+                                       code:1 userInfo:userInfo];
+        }
+        else{
+            NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
+            XMLParser *parser = [[XMLParser alloc] initXMLParser];
+            
+            [xmlParser setDelegate:parser];
+            
+            BOOL success = [xmlParser parse];
+            
+            if(success)
+                NSLog(@"No Errors on XML parsing.");
+            else
+                NSLog(@"Error on XML parsing!!!");
+            
+            //COVER FLOW
+            NSMutableArray *imagesArray = [[NSMutableArray alloc] init];
+            
+            for (Annonce *uneAnnonce in tableauAnnonces1) {
+                NSString *photos = [uneAnnonce valueForKey:@"photos"];
+                NSLog(@"COVERFLOW: \"%@\"",photos);
+                photos = [photos stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                //photos = [photos stringByReplacingOccurrencesOfString:@" " withString:@""];
+                
+                if ([photos length] > 0) {
+                    [imagesArray addObject:[[NSMutableArray arrayWithArray:[photos componentsSeparatedByString:@","]] objectAtIndex:0]];
+                }
+            }
+            
+            
+            myOpenFlowView = [[AFOpenFlowView alloc] init];
+            int num = [imagesArray count];
+            [myOpenFlowView setNumberOfImages:num];
+            
+            [myOpenFlowView setFrame:CGRectMake(10, 260, 300, 130)];
+            for (int index = 0; index < num; index++){
+                NSData* imageData = [[NSData alloc]initWithContentsOfURL:
+                                     [NSURL URLWithString:
+                                      [NSString stringWithFormat:@"%@",
+                                       [imagesArray objectAtIndex:index]]]];
+                if (imageData != nil) {
+                    UIImage *image = [[UIImage alloc] initWithData:imageData];
+                    [myOpenFlowView setImage:image forIndex:index];
+                }
+                [imageData release];
+            }
+            
+            [self.view addSubview:myOpenFlowView];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Accueil"];
+            
+            [pvc.view removeFromSuperview];
+            
+            [xmlParser release];
+            [parser release];
+        }
     }
     [string release];
 }

@@ -181,6 +181,7 @@
 		83DF641D1546AEAB0091A37B /* presentation-akios.txt in Resources */ = {isa = PBXBuildFile; fileRef = 83DF641C1546AEAB0091A37B /* presentation-akios.txt */; };
 		83E7597815062FEE00858CF1 /* consommationenergieA_grisee.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E7597615062FEE00858CF1 /* consommationenergieA_grisee.png */; };
 		83E7597915062FEE00858CF1 /* emissiongesC_grisee.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E7597715062FEE00858CF1 /* emissiongesC_grisee.png */; };
+		83EA1BB415541225009D10C2 /* contact-agence.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EA1BB315541225009D10C2 /* contact-agence.png */; };
 		83EF0E1314FE338C00775FD9 /* appareil-photo-photographie-icone-6076-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EF0E1214FE338C00775FD9 /* appareil-photo-photographie-icone-6076-64.png */; };
 		83EF0E1514FE339D00775FD9 /* bandeau-vierge.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EF0E1414FE339D00775FD9 /* bandeau-vierge.png */; };
 		83EF0E1914FE33E600775FD9 /* bandeau-contactez-nous.png in Resources */ = {isa = PBXBuildFile; fileRef = 83EF0E1814FE33E600775FD9 /* bandeau-contactez-nous.png */; };
@@ -432,6 +433,7 @@
 		83DF641C1546AEAB0091A37B /* presentation-akios.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "presentation-akios.txt"; sourceTree = "<group>"; };
 		83E7597615062FEE00858CF1 /* consommationenergieA_grisee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = consommationenergieA_grisee.png; sourceTree = "<group>"; };
 		83E7597715062FEE00858CF1 /* emissiongesC_grisee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emissiongesC_grisee.png; sourceTree = "<group>"; };
+		83EA1BB315541225009D10C2 /* contact-agence.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact-agence.png"; sourceTree = "<group>"; };
 		83EF0E1214FE338C00775FD9 /* appareil-photo-photographie-icone-6076-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appareil-photo-photographie-icone-6076-64.png"; sourceTree = "<group>"; };
 		83EF0E1414FE339D00775FD9 /* bandeau-vierge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bandeau-vierge.png"; sourceTree = "<group>"; };
 		83EF0E1814FE33E600775FD9 /* bandeau-contactez-nous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bandeau-contactez-nous.png"; sourceTree = "<group>"; };
@@ -704,6 +706,7 @@
 		838150E213CF0FDF0070C3F0 /* Fiche detaillee */ = {
 			isa = PBXGroup;
 			children = (
+				83EA1BB315541225009D10C2 /* contact-agence.png */,
 				837031AD1501169A0071F77D /* ajouter-favoris.png */,
 				83A75C511500DAAC006F0A80 /* bandeau-fiche-detaillee.png */,
 				837BA31F13DB61A700E6C7BD /* appelez-nous.png */,
@@ -1238,6 +1241,7 @@
 				8391371215497EB8003E3114 /* Formulaire.xml in Resources */,
 				838593BF1552C6D400651136 /* plus-sans-style.png in Resources */,
 				838593C11552C6DE00651136 /* plus-avec-style.png in Resources */,
+				83EA1BB415541225009D10C2 /* contact-agence.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -79,7 +79,7 @@
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 70, 320, 480)];
     scrollView.showsVerticalScrollIndicator = YES;
     
-    [scrollView setContentSize:CGSizeMake(320, 1200)];
+    [scrollView setContentSize:CGSizeMake(320, 1050)];
     [scrollView setScrollEnabled:YES];
     [self.view addSubview:scrollView];
     
@@ -94,6 +94,8 @@
     
     nomTF = [[UITextField alloc] initWithFrame:CGRectMake(30, 30, 250, 30)];
     nomTF.borderStyle = UITextBorderStyleRoundedRect;
+    nomTF.delegate = self;
+    [nomTF becomeFirstResponder];
     [scrollView addSubview:nomTF];
     [nomTF release];
     
@@ -105,6 +107,7 @@
     
     prenomTF = [[UITextField alloc] initWithFrame:CGRectMake(30, 90, 250, 30)];
     prenomTF.borderStyle = UITextBorderStyleRoundedRect;
+    prenomTF.delegate = self;
     [scrollView addSubview:prenomTF];
     [prenomTF release];
     
@@ -117,6 +120,7 @@
     telephoneTF = [[UITextField alloc] initWithFrame:CGRectMake(30, 150, 250, 30)];
     telephoneTF.borderStyle = UITextBorderStyleRoundedRect;
     telephoneTF.keyboardType = UIKeyboardTypePhonePad;
+    telephoneTF.delegate = self;
     [scrollView addSubview:telephoneTF];
     [telephoneTF release];
     
@@ -129,6 +133,7 @@
     emailTF = [[UITextField alloc] initWithFrame:CGRectMake(30, 210, 250, 30)];
     emailTF.borderStyle = UITextBorderStyleRoundedRect;
     emailTF.keyboardType = UIKeyboardTypeEmailAddress;
+    emailTF.delegate = self;
     [scrollView addSubview:emailTF];
     [emailTF release];
     
@@ -140,6 +145,7 @@
     
     type_bienTF = [[UITextField alloc] initWithFrame:CGRectMake(30, 270, 250, 30)];
     type_bienTF.borderStyle = UITextBorderStyleRoundedRect;
+    type_bienTF.delegate = self;
     [scrollView addSubview:type_bienTF];
     [type_bienTF release];
     
@@ -152,6 +158,7 @@
     surfaceTF = [[UITextField alloc] initWithFrame:CGRectMake(30, 330, 250, 30)];
     surfaceTF.borderStyle = UITextBorderStyleRoundedRect;
     surfaceTF.keyboardType = UIKeyboardTypeNumberPad;
+    surfaceTF.delegate = self;
     [scrollView addSubview:surfaceTF];
     [surfaceTF release];
     
@@ -164,6 +171,7 @@
     nb_piecesTF = [[UITextField alloc] initWithFrame:CGRectMake(30, 390, 250, 30)];
     nb_piecesTF.borderStyle = UITextBorderStyleRoundedRect;
     nb_piecesTF.keyboardType = UIKeyboardTypeNumberPad;
+    nb_piecesTF.delegate = self;
     [scrollView addSubview:nb_piecesTF];
     [nb_piecesTF release];
     
@@ -188,6 +196,7 @@
     
     adresseTF = [[UITextField alloc] initWithFrame:CGRectMake(30, 510, 250, 30)];
     adresseTF.borderStyle = UITextBorderStyleRoundedRect;
+    adresseTF.delegate = self;
     [scrollView addSubview:adresseTF];
     [adresseTF release];
     
@@ -200,6 +209,7 @@
     code_postalTF = [[UITextField alloc] initWithFrame:CGRectMake(30, 570, 250, 30)];
     code_postalTF.borderStyle = UITextBorderStyleRoundedRect;
     code_postalTF.keyboardType = UIKeyboardTypeNumberPad;
+    code_postalTF.delegate = self;
     [scrollView addSubview:code_postalTF];
     [code_postalTF release];
     
@@ -211,6 +221,7 @@
     
     villeTF = [[UITextField alloc] initWithFrame:CGRectMake(30, 630, 250, 30)];
     villeTF.borderStyle = UITextBorderStyleRoundedRect;
+    villeTF.delegate = self;
     [scrollView addSubview:villeTF];
     [villeTF release];
     
@@ -219,7 +230,7 @@
     boutonEnvoyer.showsTouchWhenHighlighted = NO;
     boutonEnvoyer.tag = 1;
     
-    [boutonEnvoyer setFrame:CGRectMake(70,690,200,50)];
+    [boutonEnvoyer setFrame:CGRectMake(50,690,200,50)];
     [boutonEnvoyer addTarget:self action:@selector(buttonPushed:) 
            forControlEvents:UIControlEventTouchUpInside];
     
@@ -228,7 +239,6 @@
     
     [scrollView addSubview:boutonEnvoyer];
 }
-
 
 - (void)viewDidUnload
 {
@@ -358,24 +368,28 @@
 
 - (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    newString = [newString stringByReplacingOccurrencesOfString:@" " withString:@""] ;
+    if (textField == prixTF) {
     
-    if ([newString length] <= 10) {
+        NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+        newString = [newString stringByReplacingOccurrencesOfString:@" " withString:@""] ;
         
-        NSNumber *formattedResult;
-        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-        [formatter setGroupingSeparator:@" "];
-        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-        
-        formattedResult = [NSNumber numberWithInt:[newString intValue]];
-        
-        string = [formatter stringForObjectValue:formattedResult];
-        [textField setText:string];
-        [formatter release];
+        if ([newString length] <= 10) {
+            
+            NSNumber *formattedResult;
+            NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+            [formatter setGroupingSeparator:@" "];
+            [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+            
+            formattedResult = [NSNumber numberWithInt:[newString intValue]];
+            
+            string = [formatter stringForObjectValue:formattedResult];
+            [textField setText:string];
+            [formatter release];
+        }
+        return NO;
     }
     //Returning yes allows the entered chars to be processed
-    return NO;
+    return YES;
 }
 
 @end

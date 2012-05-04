@@ -232,7 +232,7 @@
     
     NSLog(@"REPONSE DU WEB: \"%@\"\n",string2);
     
-    if ([string2 length] > 0) {
+    if ([string length] > 0) {
         
         NSUInteger zap = 39;
         
@@ -274,27 +274,35 @@
         
         [boutonEnvoyer removeFromSuperview];
         
-        NSString *texte = @"Vos coordonnées ont été transmises à l'agence ci-dessous. Vous recevrez un e-mail de confirmation.";
-        texte = [texte stringByAppendingFormat:@"\n\n%@\n%@\n%@\n%@ %@\n%@\n%@\n%@",
-                 [lAgence valueForKey:@"titre"],
-                 [lAgence valueForKey:@"responsable"],
-                 [lAgence valueForKey:@"adresse"],
+        NSString *texte = @"Vos coordonnées ont été transmises à l'agence ci-dessous. Vous recevrez un e-mail de confirmation.\n\n";
+        
+        texte = [texte stringByAppendingFormat:@"Agence        :\t%@\n",
+                 [lAgence valueForKey:@"titre"]];
+        texte = [texte stringByAppendingFormat:@"Nom du contact:\t%@\n",
+                 [lAgence valueForKey:@"responsable"]];
+        texte = [texte stringByAppendingFormat:@"Adresse       :\t%@\n",
+                 [lAgence valueForKey:@"adresse"]];
+        texte = [texte stringByAppendingFormat:@"               \t%@ %@\n",
                  [lAgence valueForKey:@"cp"],
-                 [lAgence valueForKey:@"ville"],
-                 [lAgence valueForKey:@"fixe"],
-                 [lAgence valueForKey:@"mobile"],
-                 [lAgence valueForKey:@"email"]
-                 ];
+                 [lAgence valueForKey:@"ville"]];
+        texte = [texte stringByAppendingFormat:@"Tel. fixe     :\t%@\n",
+                 [lAgence valueForKey:@"fixe"]];
+        texte = [texte stringByAppendingFormat:@"Tel. mobile   :\t%@\n",
+                 [lAgence valueForKey:@"mobile"]];
+        
+        texte = [texte stringByAppendingFormat:@"email         :\t%@",
+                 [lAgence valueForKey:@"email"]];
         
         UITextView *contactMessage = [[UITextView alloc] initWithFrame:CGRectMake(0, 5, 300, 350)];
         contactMessage.editable = NO;
         contactMessage.text = texte;
+        contactMessage.font = [UIFont fontWithName:@"Courier" size:12];
         
         [scrollView addSubview:contactMessage];
         
         [xmlParser release];
         [parser release];
-        }
+    }
     //[string release];
     
 }

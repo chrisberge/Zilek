@@ -578,8 +578,8 @@
     
     //BOUTON ECRIVEZ NOUS
     UIButton *ecrivez = [UIButton buttonWithType:UIButtonTypeCustom];
-    [ecrivez setFrame:CGRectMake(5, 940, 90, 65)];
-    [ecrivez setImage:[UIImage imageNamed:@"formulaire-contact.png"] forState:UIControlStateNormal];
+    [ecrivez setFrame:CGRectMake(15, 920, 90, 70)];
+    [ecrivez setImage:[UIImage imageNamed:@"contact-agence.png"] forState:UIControlStateNormal];
     /*[ecrivez addTarget:self action:@selector(buttonEcrivez:) 
       forControlEvents:UIControlEventTouchUpInside];*/
     [ecrivez addTarget:self action:@selector(buttonFormulaire:) 
@@ -596,7 +596,7 @@
     
     //AJOUTER FAVORIS
     UIButton *favoris = [UIButton buttonWithType:UIButtonTypeCustom];
-    [favoris setFrame:CGRectMake(205, 940, 110, 65)];
+    [favoris setFrame:CGRectMake(215, 920, 90, 70)];
     [favoris setImage:[UIImage imageNamed:@"ajouter-favoris.png"] forState:UIControlStateNormal];
     [favoris addTarget:self action:@selector(buttonFavoris:) 
       forControlEvents:UIControlEventTouchUpInside];
@@ -604,7 +604,7 @@
     
     //ENVOYEZ AMI
     UIButton *envoyez = [UIButton buttonWithType:UIButtonTypeCustom];
-    [envoyez setFrame:CGRectMake(110, 940, 90, 65)];
+    [envoyez setFrame:CGRectMake(115, 920, 90, 70)];
     [envoyez setImage:[UIImage imageNamed:@"envoyez-a-un-ami.png"] forState:UIControlStateNormal];
     [envoyez addTarget:self action:@selector(buttonEnvoyez:) 
       forControlEvents:UIControlEventTouchUpInside];
@@ -835,26 +835,27 @@
     
     NSLog(@"dataBrute long: %d",[responseData length]);
     
-    //NSString * string = [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease];
-    NSString * string = @"    ";
-    /*NSString *string2 = [string stringByAppendingFormat:@"\n"];
+    NSString * string = [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease];
+    //NSString * string = @"    ";
+    NSString *string2 = [string stringByAppendingFormat:@"\n"];
     
-    NSLog(@"REPONSE DU WEB: \"%@\"",string2);*/
+    NSLog(@"REPONSE DU WEB: \"%@\"",string2);
     
     if ([string length] > 0) {
         
-        /*NSUInteger zap = 39;
+        NSUInteger zap = 39;
         
         NSData *dataString = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         
-        NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];*/
+        NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];
         
-        /*--- POUR LE TEST OFF LINE ---*/
+        /*--- POUR LE TEST OFF LINE ---
          NSFileManager *fileManager = [NSFileManager defaultManager];
          NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Formulaire" ofType:@"xml"];
          NSData *data = [fileManager contentsAtPath:xmlSamplePath];
          string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
          NSLog(@"REPONSE DU WEB: %@\n",string);
+         */
          
         
         NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
@@ -871,21 +872,28 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"formulaireAgenceReady" object: @"formulaireAgenceReady"];
         
-        NSString *texte = @"Coordonnées de l'agence:";
-        texte = [texte stringByAppendingFormat:@"\n%@\n%@\n%@\n%@ %@\n%@\n%@\n%@",
-                 [lAgence valueForKey:@"titre"],
-                 [lAgence valueForKey:@"responsable"],
-                 [lAgence valueForKey:@"adresse"],
+        NSString *texte = @"Coordonnées de l'agence:\n";
+        texte = [texte stringByAppendingFormat:@"Agence        :\t%@\n",
+                 [lAgence valueForKey:@"titre"]];
+        texte = [texte stringByAppendingFormat:@"Nom du contact:\t%@\n",
+                 [lAgence valueForKey:@"responsable"]];
+        texte = [texte stringByAppendingFormat:@"Adresse       :\t%@\n",
+                 [lAgence valueForKey:@"adresse"]];
+        texte = [texte stringByAppendingFormat:@"               \t%@ %@\n",
                  [lAgence valueForKey:@"cp"],
-                 [lAgence valueForKey:@"ville"],
-                 [lAgence valueForKey:@"fixe"],
-                 [lAgence valueForKey:@"mobile"],
-                 [lAgence valueForKey:@"email"]
-                 ];
+                 [lAgence valueForKey:@"ville"]];
+        texte = [texte stringByAppendingFormat:@"Tel. fixe     :\t%@\n",
+                 [lAgence valueForKey:@"fixe"]];
+        texte = [texte stringByAppendingFormat:@"Tel. mobile   :\t%@\n",
+                 [lAgence valueForKey:@"mobile"]];
+        
+        texte = [texte stringByAppendingFormat:@"email         :\t%@",
+                 [lAgence valueForKey:@"email"]];
         
         UITextView *contactMessage = [[UITextView alloc] initWithFrame:CGRectMake(5, 1040, 300, 350)];
         contactMessage.editable = NO;
         contactMessage.text = texte;
+        contactMessage.font = [UIFont fontWithName:@"Courier" size:12];
         
         [scrollView addSubview:contactMessage];
         

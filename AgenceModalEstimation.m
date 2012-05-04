@@ -79,7 +79,7 @@
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 70, 320, 480)];
     scrollView.showsVerticalScrollIndicator = YES;
     
-    [scrollView setContentSize:CGSizeMake(320, 1200)];
+    [scrollView setContentSize:CGSizeMake(320, 1000)];
     [scrollView setScrollEnabled:YES];
     [self.view addSubview:scrollView];
     
@@ -94,6 +94,7 @@
     
     nomTF = [[UITextField alloc] initWithFrame:CGRectMake(30, 30, 250, 30)];
     nomTF.borderStyle = UITextBorderStyleRoundedRect;
+    [nomTF becomeFirstResponder];
     [scrollView addSubview:nomTF];
     [nomTF release];
     
@@ -206,7 +207,7 @@
     boutonEnvoyer.showsTouchWhenHighlighted = NO;
     boutonEnvoyer.tag = 1;
     
-    [boutonEnvoyer setFrame:CGRectMake(70,660,200,50)];
+    [boutonEnvoyer setFrame:CGRectMake(50,620,200,50)];
     [boutonEnvoyer addTarget:self action:@selector(buttonPushed:) 
             forControlEvents:UIControlEventTouchUpInside];
     

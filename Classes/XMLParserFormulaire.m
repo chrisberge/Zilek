@@ -61,7 +61,7 @@
         NSString *elementValueString = currentElementValue;
         
         if([elementName isEqualToString:@"titre"] || [elementName isEqualToString:@"responsable"] || [elementName isEqualToString:@"adresse"]){
-            elementValueString = [elementValueString stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@""];
+            elementValueString = [elementValueString stringByReplacingCharactersInRange:NSMakeRange(0, 5) withString:@""];
         }
         
         if (!([elementName isEqualToString:@"titre"]) && !([elementName isEqualToString:@"responsable"]) && !([elementName isEqualToString:@"adresse"])){
