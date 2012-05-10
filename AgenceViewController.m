@@ -215,8 +215,9 @@
     ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.whichView = @"agence";
     
-    [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
-    [self makeRequest];
+    //[NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
+    //[self makeRequest];
+    [self makeCoverFlow];
 }
 
 - (void) printHUD{
@@ -365,6 +366,66 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"afficheText" object: buttonTag];
 }
 
+- (void)makeCoverFlow{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens" ofType:@"xml"];
+    NSData *data = [fileManager contentsAtPath:xmlSamplePath];
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"REPONSE DU WEB: %@\n",string);
+    
+    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
+    XMLParser *parser = [[XMLParser alloc] initXMLParser];
+    
+    [xmlParser setDelegate:parser];
+    
+    BOOL success = [xmlParser parse];
+    
+    if(success)
+        NSLog(@"No Errors on XML parsing.");
+    else
+        NSLog(@"Error on XML parsing!!!");
+    
+    //COVER FLOW
+    NSMutableArray *imagesArray = [[NSMutableArray alloc] init];
+    
+    for (Annonce *uneAnnonce in tableauAnnonces1) {
+        NSString *photos = [uneAnnonce valueForKey:@"photos"];
+        NSLog(@"COVERFLOW: \"%@\"",photos);
+        photos = [photos stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        //photos = [photos stringByReplacingOccurrencesOfString:@" " withString:@""];
+        
+        if ([photos length] > 0) {
+            [imagesArray addObject:[[NSMutableArray arrayWithArray:[photos componentsSeparatedByString:@","]] objectAtIndex:0]];
+        }
+    }
+    
+    
+    myOpenFlowView = [[AFOpenFlowView alloc] init];
+    int num = [imagesArray count];
+    [myOpenFlowView setNumberOfImages:num];
+    
+    [myOpenFlowView setFrame:CGRectMake(10, 260, 300, 130)];
+    for (int index = 0; index < num; index++){
+        NSData* imageData = [[NSData alloc]initWithContentsOfURL:
+                             [NSURL URLWithString:
+                              [NSString stringWithFormat:@"%@",
+                               [imagesArray objectAtIndex:index]]]];
+        if (imageData != nil) {
+            UIImage *image = [[UIImage alloc] initWithData:imageData];
+            [myOpenFlowView setImage:image forIndex:index];
+        }
+        [imageData release];
+    }
+    
+    [self.view addSubview:myOpenFlowView];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Accueil"];
+    
+    [pvc.view removeFromSuperview];
+    
+    [xmlParser release];
+    [parser release];
+}
+
 - (void)makeRequest{
     /*--- QUEUE POUR LES REQUETES HTTP ---*/
     networkQueue = [[ASINetworkQueue alloc] init];
@@ -468,7 +529,7 @@
                 [imageData release];
             }
             
-            [self.view addSubview:myOpenFlowView];
+            [self.view insertSubview:myOpenFlowView belowSubview:pvc.view];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Agence"];
             
             [pvc.view removeFromSuperview];

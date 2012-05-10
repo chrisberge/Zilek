@@ -60,14 +60,22 @@
         
         NSString *elementValueString = currentElementValue;
         
+        NSLog(@"element: \"%@\"\nvalue: \"%@\"",elementName, elementValueString);
+        
         if([elementName isEqualToString:@"titre"] || [elementName isEqualToString:@"responsable"] || [elementName isEqualToString:@"adresse"]){
-            elementValueString = [elementValueString stringByReplacingCharactersInRange:NSMakeRange(0, 5) withString:@""];
+            
+            if ([elementValueString length] > 5) {
+             elementValueString = [elementValueString stringByReplacingCharactersInRange:NSMakeRange(0, 3) withString:@""];   
+            }
         }
         
         if (!([elementName isEqualToString:@"titre"]) && !([elementName isEqualToString:@"responsable"]) && !([elementName isEqualToString:@"adresse"])){
-            elementValueString = [elementValueString stringByReplacingOccurrencesOfString:@" " withString:@""];
-            elementValueString = [elementValueString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-            elementValueString = [elementValueString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+            
+            if ([elementValueString length] > 0) {
+                elementValueString = [elementValueString stringByReplacingOccurrencesOfString:@" " withString:@""];
+                elementValueString = [elementValueString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+                elementValueString = [elementValueString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+            }
         }
         
         [uneAgence setValue:elementValueString forKey:elementName];

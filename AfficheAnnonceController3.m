@@ -81,7 +81,7 @@
     
     //SCROLLVIEW
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 70, 320, 480)];
-    [scrollView setContentSize:CGSizeMake(320, 1320)];
+    [scrollView setContentSize:CGSizeMake(320, 1340)];
     [scrollView setScrollEnabled:YES];
     [self.view addSubview:scrollView];
     
@@ -846,7 +846,7 @@
         
         NSUInteger zap = 39;
          
-         NSData *dataString = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+         NSData *dataString = [string2 dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
          
          NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];
         
