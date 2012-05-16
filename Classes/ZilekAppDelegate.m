@@ -13,7 +13,7 @@
 
 @synthesize window, /*myTableViewController,*/ tabBarController, accueilView;
 @synthesize favorisView, agenceView/*, contactView*/;
-@synthesize isAccueil, whichView, infosAgence;
+@synthesize isAccueil, whichView, infosAgence, tableauAnnonces1;
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -37,10 +37,12 @@
 	}
 	******************/
 	[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(formulaireAgenceReady:) name:@"formulaireAgenceReady" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(getNextResultsReady:) name:@"getNextResultsReady" object: nil];
     
     isAccueil = NO;
     
     infosAgence = [[NSMutableArray alloc] init];
+    tableauAnnonces1 = [[NSMutableArray alloc] init];
     
 	// creates your tab bar so you can add everything else to it
 	tabBarController = [[UITabBarController alloc] init];
@@ -313,6 +315,9 @@
 	[favorisView release];
 	[agenceView release];
 	//[contactView release];
+    
+    [infosAgence release];
+    [tableauAnnonces1 release];
 	
 	
     [managedObjectContext_ release];
@@ -325,6 +330,10 @@
 
 - (void) formulaireAgenceReady:(NSNotification *)notify {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"formulaireGetAgence" object: [infosAgence objectAtIndex:0]];
+}
+
+- (void) getNextResultsReady:(NSNotification *)notify {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"nextResults" object: tableauAnnonces1];
 }
 
 @end

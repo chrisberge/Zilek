@@ -53,11 +53,13 @@
     //self.navigationController.navigationBar.hidden = YES;
     criteres = [[NSMutableDictionary alloc] init];
     listeAnnonces = [[NSMutableArray alloc] init];
+    page = 1;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheListeAnnoncesRoot:) name:@"afficheListeAnnoncesRoot" object: nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"afficheListeAnnoncesReadyRoot" object: @"afficheListeAnnoncesReadyRoot"];
 	
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheAnnonceReady:) name:@"afficheAnnonceReady" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(nextResults:) name:@"nextResults" object: nil];
     
     /*UIColor *fond = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"background.png"]];
     self.view.backgroundColor = fond;
@@ -213,7 +215,8 @@
     
     //TABLE VIEW
     tableView1 = [[UITableView alloc] init];
-    [tableView1 setFrame:CGRectMake(0, 170, 320, 270)];
+    [tableView1 setFrame:CGRectMake(0, 170, 320, 250)];
+    tableView1.contentSize = CGSizeMake(320, 1000);
     tableView1.delegate = self;
     tableView1.dataSource = self;
     //tableView1.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell.png"]];
@@ -222,6 +225,9 @@
 }
 
 - (void) afficheListeAnnoncesRoot:(NSNotification *)notify {
+    bodyString = @"";
+    bodyString = [[notify object] objectAtIndex:2];
+    
 	[listeAnnonces removeAllObjects];
     [listeAnnonces release];
     listeAnnonces = nil;
@@ -358,7 +364,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [listeAnnonces count];
+    return [listeAnnonces count] + 1;
 }
 
 
@@ -367,68 +373,73 @@
     
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    /*if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
-    else{
+    /*else{
         UIImage *image= [UIImage imageNamed:@"appareil-photo-photographie-icone-6076-64.png"];
         UIImageView *iv = [[UIImageView alloc] initWithImage:image];
         [cell.imageView addSubview:iv];
         [iv release];
         
-    }
+    }*/
+    UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     
 	// Configure the cell...
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	Annonce *uneAnnonce = [listeAnnonces objectAtIndex:indexPath.row];
     
-	//IMAGE
-    
-	/*NSString *string = [uneAnnonce valueForKey:@"photos"];
-	NSLog(@"string photos: %@",string);*/
-    
-    UIImage *image= [UIImage imageNamed:@"appareil-photo-photographie-icone-6076-64.png"];
-    [cell.imageView setImage:image];
-    
-    [NSThread detachNewThreadSelector:@selector(loadImage:) toTarget:self withObject:[NSArray arrayWithObjects:cell, uneAnnonce, nil]];
-    
-    NSNumber *formattedResult;
-    NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
-    [formatter setGroupingSeparator:@" "];
-    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    
-    NSString *prix1 = [uneAnnonce valueForKey:@"prix"];
-    prix1 = [prix1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    
-    formattedResult = [NSNumber numberWithInt:[prix1 intValue]];
-    
-    NSString *prix = [formatter stringForObjectValue:formattedResult];
-    
-    [formatter release];
-    
-	NSString *ville = [uneAnnonce valueForKey:@"ville"];
-	NSString *texte = [[NSString alloc] initWithFormat:@"%@ € - %@",prix,ville];
-	
-	cell.textLabel.text = texte;
-	
-	//SOUS TITRE
-	NSString *codePostal = [uneAnnonce valueForKey:@"cp"];
-	NSString *surface = [uneAnnonce valueForKey:@"surface"];
-	NSString *nbPieces = [uneAnnonce valueForKey:@"nb_pieces"];
-    nbPieces = [nbPieces stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    
-    NSString *isS = @"";
-    
-    if ([nbPieces intValue] > 1) {
-        isS = @"s";
+	if (indexPath.row == (20 * page)) {
+        cell.textLabel.text = @"Les 20 annonces suivantes";
     }
-    
-	NSString *subTitle = [[NSString alloc] initWithFormat:@"%@ - %@ m² - %@ piece%@",codePostal,surface,nbPieces,isS];
-	cell.detailTextLabel.text = subTitle;
-	
-	[texte release];
-	[subTitle release];
+    else{
+        Annonce *uneAnnonce = [listeAnnonces objectAtIndex:indexPath.row];
+        
+        if (cell.imageView.image == nil) {
+        
+            UIImage *image= [UIImage imageNamed:@"appareil-photo-photographie-icone-6076-64.png"];
+            [cell.imageView setImage:image];
+        
+            [NSThread detachNewThreadSelector:@selector(loadImage:) toTarget:self withObject:[NSArray arrayWithObjects:cell, uneAnnonce, nil]];
+        }
+        
+        NSNumber *formattedResult;
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+        [formatter setGroupingSeparator:@" "];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        
+        NSString *prix1 = [uneAnnonce valueForKey:@"prix"];
+        prix1 = [prix1 stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        
+        formattedResult = [NSNumber numberWithInt:[prix1 intValue]];
+        
+        NSString *prix = [formatter stringForObjectValue:formattedResult];
+        
+        [formatter release];
+        
+        NSString *ville = [uneAnnonce valueForKey:@"ville"];
+        NSString *texte = [[NSString alloc] initWithFormat:@"%@ € - %@",prix,ville];
+        
+        cell.textLabel.text = texte;
+        
+        //SOUS TITRE
+        NSString *codePostal = [uneAnnonce valueForKey:@"cp"];
+        NSString *surface = [uneAnnonce valueForKey:@"surface"];
+        NSString *nbPieces = [uneAnnonce valueForKey:@"nb_pieces"];
+        nbPieces = [nbPieces stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        
+        NSString *isS = @"";
+        
+        if ([nbPieces intValue] > 1) {
+            isS = @"s";
+        }
+        
+        NSString *subTitle = [[NSString alloc] initWithFormat:@"%@ - %@ m² - %@ piece%@",codePostal,surface,nbPieces,isS];
+        cell.detailTextLabel.text = subTitle;
+        
+        [texte release];
+        [subTitle release];
+    }
 	
     return cell;
 }
@@ -442,25 +453,137 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
-	
-    //[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-	annonceSelected = [listeAnnonces objectAtIndex:indexPath.row];
     
     [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
 
+    if (indexPath.row == (20 * page)) {
+        //NSLog(@"COUCOU");
+        page++;
+        [self getNextResults];
+        //[tableView1 reloadData];
+    }
+    else{
+        annonceSelected = [listeAnnonces objectAtIndex:indexPath.row];
+        
+        AfficheAnnonceController2 *afficheAnnonceController = [[AfficheAnnonceController2 alloc] init];
+        [self.navigationController pushViewController:afficheAnnonceController animated:YES];
+        [afficheAnnonceController release];
+	}
+}
+
+- (void)getNextResults{
+    /*--- QUEUE POUR LES REQUETES HTTP ---*/
+    ASINetworkQueue *networkQueue = [[ASINetworkQueue alloc] init];
+    [networkQueue reset];
+    [networkQueue setRequestDidFinishSelector:@selector(requestDone:)];
+    [networkQueue setRequestDidFailSelector:@selector(requestFailed:)];
+    [networkQueue setDelegate:self];
+    /*--- QUEUE POUR LES REQUETES HTTP ---*/
     
-	AfficheAnnonceController2 *afficheAnnonceController = [[AfficheAnnonceController2 alloc] init/*WithNibName:@"AfficheAnnonceController" bundle:nil*/];
-	[self.navigationController pushViewController:afficheAnnonceController animated:YES];
-	[afficheAnnonceController release];
-	
+    ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.whichView = @"listing";
+    [appDelegate.tableauAnnonces1 removeAllObjects];
+    
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"&page=\([0-9]*\)" options:NSRegularExpressionCaseInsensitive error:&error];
+    bodyString = [regex stringByReplacingMatchesInString:bodyString options:0 range:NSMakeRange(0, [bodyString length]) withTemplate:@""];
+    bodyString = [bodyString stringByAppendingFormat:[NSString stringWithFormat:@"&page=%d",page]];
+    
+    NSLog(@"bodyString: %@", bodyString);
+    
+    NSURL *url = [NSURL URLWithString:bodyString];
+    
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setUserInfo:[NSDictionary dictionaryWithObject:[NSString stringWithString:@"annonces suivantes"] forKey:@"name"]];
+    
+    [networkQueue addOperation:request];
+    [networkQueue go];
+}
+
+- (void)requestDone:(ASIHTTPRequest *)request
+{
+	NSData *responseData = [request responseData];
+    
+    NSLog(@"dataBrute long: %d",[responseData length]);
+    
+    NSString * string = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    
+    NSLog(@"REPONSE DU WEB: \"%@\"\n",string);
+    
+    if ([string length] > 0) {
+        
+        NSUInteger zap = 39;
+        
+        NSData *dataString = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        
+        NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];
+        
+        //ON PARSE DU XML
+        
+        /*--- POUR LE TEST OFF LINE ---
+         NSFileManager *fileManager = [NSFileManager defaultManager];
+         NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens1" ofType:@"xml"];
+         data = [fileManager contentsAtPath:xmlSamplePath];
+         string = [[NSString alloc] initWithData:data encoding:NSISOLatin1StringEncoding];
+         NSLog(@"REPONSE DU WEB: %@\n",string);
+         */
+        
+        if ([string rangeOfString:@"<biens></biens>"].length != 0) {
+            //AUCUNE ANNONCES
+            return;
+        }
+        else{
+            NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
+            XMLParser *parser = [[XMLParser alloc] initXMLParser];
+            
+            [xmlParser setDelegate:parser];
+            
+            BOOL success = [xmlParser parse];
+            
+            if(success)
+                NSLog(@"No Errors on XML parsing.");
+            else
+                NSLog(@"Error on XML parsing!!!");
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getNextResultsReady" object: @"getNextResultsReady"];
+            
+            [xmlParser release];
+            [parser release];
+            
+        }
+        [string release];
+    }
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSError *error = [request error];
+    UIAlertView *alert;
+    
+    NSLog(@"Connection failed! Error - %@", [error localizedDescription]);
+    
+    
+    alert = [[UIAlertView alloc] initWithTitle:@"Erreur de connection."
+                                       message:[error localizedDescription]
+                                      delegate:self
+                             cancelButtonTitle:@"OK"
+                             otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+}
+
+- (void) nextResults:(NSNotification *)notify {
+    [listeAnnonces addObjectsFromArray:[notify object]];
+    NSLog(@"Annonces: %@,\nNb: %d",listeAnnonces, [listeAnnonces count]);
+    [pvc.view removeFromSuperview];
+    [tableView1 reloadData];
 }
 
 - (void) printHUD{
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     pvc = [[ProgressViewContoller alloc] init];
-    [self.navigationController.view addSubview:pvc.view];
+    [self.view addSubview:pvc.view];
     
     [pool release];
     

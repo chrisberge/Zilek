@@ -71,6 +71,7 @@
     
     Annonce *annonceSelected;
 
+    NSString *bodyString2;
 }
 
 @property (nonatomic, assign) NSString *whichView;

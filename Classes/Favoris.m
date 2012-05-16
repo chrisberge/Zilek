@@ -454,7 +454,7 @@
     NSLog(@"tableau Annonces: %@", tableauAnnonces1);
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:criteres2 copyItems:NO];
     NSMutableArray *array = [[NSMutableArray alloc] initWithArray:tableauAnnonces1 copyItems:NO];
-    NSArray *criteresEtAnnonces = [NSArray arrayWithObjects:dict, array, nil];
+    NSArray *criteresEtAnnonces = [NSArray arrayWithObjects:dict, array, bodyString2, nil];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"afficheListeAnnoncesFavoris" object: criteresEtAnnonces];
 }
 
@@ -581,6 +581,7 @@
     }
     
     NSLog(@"bodyString:%@\n",bodyString);
+    bodyString2 = bodyString;
     
     ASIHTTPRequest *request = [[[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:bodyString]] autorelease];
     [request setUserInfo:[NSDictionary dictionaryWithObject:[NSString stringWithString:@"recherche multicriteres"] forKey:@"name"]];

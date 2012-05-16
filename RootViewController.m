@@ -392,6 +392,7 @@
     
     [criteres1 setValue:@"" forKey:@"nbPieces"];
     [criteres1 setValue:@"" forKey:@"villes"];
+    [criteres1 setValue:@"1" forKey:@"page"];
     
     enume = [criteres1 keyEnumerator];
     BOOL isFirstObject = YES;
@@ -415,6 +416,7 @@
     }
 
     NSLog(@"bodyString:%@\n",bodyString);
+    bodyString2 = bodyString;
 
     ASIHTTPRequest *request = [[[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:bodyString]] autorelease];
     [request setUserInfo:[NSDictionary dictionaryWithObject:[NSString stringWithString:@"recherche multicriteres"] forKey:@"name"]];
@@ -568,7 +570,7 @@
     NSLog(@"tableau Annonces: %@", tableauAnnonces1);
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:criteres2 copyItems:NO];
     NSMutableArray *array = [[NSMutableArray alloc] initWithArray:tableauAnnonces1 copyItems:NO];
-    NSArray *criteresEtAnnonces = [NSArray arrayWithObjects:dict, array, nil];
+    NSArray *criteresEtAnnonces = [NSArray arrayWithObjects:dict, array, bodyString2, nil];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"afficheListeAnnoncesRoot" object: criteresEtAnnonces];
 }
 
@@ -578,9 +580,7 @@
     
     NSLog(@"dataBrute long: %d",[responseData length]);
     
-    //NSString * string = [[NSString alloc] initWithData:responseData encoding:NSISOLatin1StringEncoding];
     NSString * string = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-    //string = [string stringByReplacingOccurrencesOfString:@"¤" withString:@""];
     
     NSLog(@"REPONSE DU WEB: \"%@\"\n",string);
     
@@ -591,10 +591,8 @@
         NSUInteger zap = 39;
         
         NSData *dataString = [string dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-        //NSData *dataString = [string dataUsingEncoding:NSISOLatin1StringEncoding allowLossyConversion:YES];
         
         NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];
-        //NSData *data = [[NSData alloc] initWithData:responseData];
         
         //ON PARSE DU XML
         

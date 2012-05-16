@@ -85,6 +85,10 @@
             [appDelegate.agenceView.tableauAnnonces1 addObject:uneAnnonce];
         }
         
+        if (appDelegate.whichView == @"listing") {
+            [appDelegate.tableauAnnonces1 addObject:uneAnnonce];
+        }
+        
 		[uneAnnonce release];
 		uneAnnonce = nil;
 	}

@@ -22,6 +22,7 @@
 	ArrayWithIndex *arrayWithIndex;
     AFOpenFlowViewDiapo *myOpenFlowView;
     UIScrollView *scrollView;
+    ProgressViewContoller *pvc;
 }
 
 @end

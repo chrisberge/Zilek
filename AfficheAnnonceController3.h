@@ -24,6 +24,7 @@
 	ArrayWithIndex *arrayWithIndex;
     AFOpenFlowViewDiapo *myOpenFlowView;
     UIScrollView *scrollView;
+    ProgressViewContoller *pvc;
 }
 
 @property (nonatomic, assign) id <AgenceModalViewFicheDelegate> delegate;

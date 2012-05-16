@@ -36,6 +36,7 @@
     UILabel *labelSurface;
     UILabel *labelNbPiece;
     UILabel *labelBudget;
+    NSString *bodyString2;
     int nbRequetes;
 }
 

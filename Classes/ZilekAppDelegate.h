@@ -29,6 +29,7 @@
     UIImageView *imagePresentation;
     NSString *whichView;
     NSMutableArray *infosAgence;
+    NSMutableArray *tableauAnnonces1;
 	
 @private
     NSManagedObjectContext *managedObjectContext_;
@@ -46,6 +47,7 @@
 @property (nonatomic, assign) BOOL isAccueil;
 @property (nonatomic, assign) NSString *whichView;
 @property (nonatomic, retain) NSMutableArray *infosAgence;
+@property (nonatomic, retain) NSMutableArray *tableauAnnonces1;
 
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;

@@ -38,6 +38,7 @@
 	[arrayWithIndex release];
 	[lAnnonce release];
     [myOpenFlowView release];
+    [pvc release];
     myOpenFlowView = nil;
     [super dealloc];
 }
@@ -620,6 +621,7 @@
         
         [networkQueue addOperation:request];
         [networkQueue go];
+        [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
     }
     
     /*--- CONTACT ---*/
@@ -638,7 +640,16 @@
     
     [self.view addSubview:boutonRetour];
     
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
+}
+
+- (void) printHUD{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    pvc = [[ProgressViewContoller alloc] init];
+    [self.view addSubview:pvc.view];
+    
+    [pool release];
+    
 }
 
 - (void) formulaireGetAgence:(NSNotification *)notify {
@@ -896,6 +907,8 @@
         contactMessage.font = [UIFont fontWithName:@"Courier" size:12];
         
         [scrollView addSubview:contactMessage];
+        
+        [pvc.view removeFromSuperview];
         
         [xmlParser release];
         [parser release];
