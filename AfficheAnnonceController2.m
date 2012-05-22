@@ -98,7 +98,7 @@
     /*--- BANDEAU FICHE DETAILLE ---*/
     
     //BOUTON RETOUR
-    UIButton *boutonRetour = [UIButton buttonWithType:UIButtonTypeCustom];
+    boutonRetour = [UIButton buttonWithType:UIButtonTypeCustom];
     boutonRetour.showsTouchWhenHighlighted = NO;
     boutonRetour.tag = 3;
     
@@ -178,7 +178,6 @@
     /*--- CRITERES ---*/
     
     /*--- COVER FLOW ---*/
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
     
     myOpenFlowView = [[AFOpenFlowViewDiapo alloc] init];
     [myOpenFlowView setFrame:CGRectMake(10, 65, 300, 130)];
@@ -208,7 +207,6 @@
 	}
     
     [scrollView addSubview:myOpenFlowView];
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
     
     /*--- COVER FLOW ---*/
     
@@ -220,7 +218,7 @@
     [description release];
     
     //TEXTE
-    UITextView *descriptif = [[UITextView alloc] initWithFrame:CGRectMake(0, 226, 320, 70)];
+    UITextView *descriptif = [[UITextView alloc] initWithFrame:CGRectMake(0, 226, 320, 90)];
     descriptif.text = [lAnnonce valueForKey:@"descriptif"];
     descriptif.backgroundColor = [UIColor clearColor];
     descriptif.editable = NO;
@@ -635,21 +633,20 @@
         [networkQueue addOperation:request];
         [networkQueue go];
         [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
+        boutonRetour.userInteractionEnabled = NO;
+        
     }
     
     /*--- CONTACT ---*/
-    
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
 }
 
 - (void) printHUD{
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     pvc = [[ProgressViewContoller alloc] init];
-    [self.view addSubview:pvc.view];
+    [scrollView addSubview:pvc.view];
     
     [pool release];
-    
 }
 
 - (void) formulaireGetAgence:(NSNotification *)notify {
@@ -666,7 +663,9 @@
 }
 
 - (void) coverFlowFicheDetaillee:(NSNotification *)notify {
-	NSNumber *num = [notify object];
+    [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
+    
+    NSNumber *num = [notify object];
     arrayWithIndex.arrayIndex = [num intValue];
     arrayWithIndex.titre = [NSString stringWithString:[lAnnonce valueForKey:@"ref"]];
     
@@ -676,6 +675,7 @@
     [self presentModalViewController:diaporamaController animated:YES];
     //[self.navigationController pushViewController:diaporamaController animated:YES];
     [diaporamaController release];
+
 }
 
 - (void) afficheAnnonce:(NSNotification *)notify {
@@ -913,6 +913,7 @@
         
         [xmlParser release];
         [parser release];
+        boutonRetour.userInteractionEnabled = YES;
     }
     //[string release];
     
@@ -933,6 +934,8 @@
                              otherButtonTitles:nil];
     [alert show];
     [alert release];
+    boutonRetour.userInteractionEnabled = YES;
+    [pvc.view removeFromSuperview];
 }
 
 - (void)viewDidUnload
@@ -940,6 +943,10 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [pvc.view removeFromSuperview];
 }
 
 - (void)viewWillAppear:(BOOL)animated{

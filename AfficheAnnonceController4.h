@@ -23,6 +23,7 @@
     AFOpenFlowViewDiapo *myOpenFlowView;
     UIScrollView *scrollView;
     ProgressViewContoller *pvc;
+    UIButton *boutonRetour;
 }
 
 @end

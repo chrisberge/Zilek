@@ -93,9 +93,9 @@
     ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.whichView = @"accueil";
     
-    //[NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
-    //[self makeRequest];
-    [self makeCoverFlow];
+    [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
+    [self makeRequest];
+    //[self makeCoverFlow];
     
     //IMAGE NOS BIENS A LA VENTE
     UIImageView *nosBiens = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"coverflow-background.png"]];
@@ -420,7 +420,6 @@
     
     NSLog(@"dataBrute long: %d",[responseData length]);
     
-    //NSString * string = [[NSString alloc] initWithData:responseData encoding:NSISOLatin1StringEncoding];
     NSString * string = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     NSLog(@"REPONSE DU WEB: \"%@\"\n",string);
     
@@ -436,84 +435,13 @@
         
         //ON PARSE DU XML
         
-        /*--- POUR LE TEST OFF LINE ---*/
+        /*--- POUR LE TEST OFF LINE ---
          NSFileManager *fileManager = [NSFileManager defaultManager];
          NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens" ofType:@"xml"];
          data = [fileManager contentsAtPath:xmlSamplePath];
          string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
          NSLog(@"REPONSE DU WEB: %@\n",string);
-         
-        
-        if ([string rangeOfString:@"<biens></biens>"].length != 0) {
-            //AUCUNE ANNONCES
-            NSDictionary *userInfo = [NSDictionary 
-                                      dictionaryWithObject:@"Aucun bien ne correspond à ces critères dans notre base de données."
-                                      forKey:NSLocalizedDescriptionKey];
-            
-            error =[NSError errorWithDomain:@"Aucun bien trouvé."
-                                       code:1 userInfo:userInfo];
-        }
-        else{
-            NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
-            XMLParser *parser = [[XMLParser alloc] initXMLParser];
-            
-            [xmlParser setDelegate:parser];
-            
-            BOOL success = [xmlParser parse];
-            
-            if(success)
-                NSLog(@"No Errors on XML parsing.");
-            else
-                NSLog(@"Error on XML parsing!!!");
-            
-            //COVER FLOW
-            NSMutableArray *imagesArray = [[NSMutableArray alloc] init];
-            
-            for (Annonce *uneAnnonce in tableauAnnonces1) {
-                NSString *photos = [uneAnnonce valueForKey:@"photos"];
-                NSLog(@"COVERFLOW: \"%@\"",photos);
-                photos = [photos stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-                //photos = [photos stringByReplacingOccurrencesOfString:@" " withString:@""];
-                
-                if ([photos length] > 0) {
-                    [imagesArray addObject:[[NSMutableArray arrayWithArray:[photos componentsSeparatedByString:@","]] objectAtIndex:0]];
-                }
-            }
-            
-            
-            myOpenFlowView = [[AFOpenFlowView alloc] init];
-            int num = [imagesArray count];
-            [myOpenFlowView setNumberOfImages:num];
-            
-            [myOpenFlowView setFrame:CGRectMake(10, 260, 300, 130)];
-            for (int index = 0; index < num; index++){
-                NSData* imageData = [[NSData alloc]initWithContentsOfURL:
-                                     [NSURL URLWithString:
-                                      [NSString stringWithFormat:@"%@",
-                                       [imagesArray objectAtIndex:index]]]];
-                if (imageData != nil) {
-                    UIImage *image = [[UIImage alloc] initWithData:imageData];
-                    [myOpenFlowView setImage:image forIndex:index];
-                }
-                [imageData release];
-            }
-            
-            [self.view addSubview:myOpenFlowView];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Accueil"];
-            
-            [pvc.view removeFromSuperview];
-            
-            [xmlParser release];
-            [parser release];
-        }
-    }
-    else{
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens" ofType:@"xml"];
-        NSData *data = [fileManager contentsAtPath:xmlSamplePath];
-        string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"REPONSE DU WEB: %@\n",string);
-        
+         */
         
         if ([string rangeOfString:@"<biens></biens>"].length != 0) {
             //AUCUNE ANNONCES

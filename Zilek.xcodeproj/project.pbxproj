@@ -92,7 +92,6 @@
 		83805FBD1513E7A00099C1CB /* SelectionBudgetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83805FBB1513E7A00099C1CB /* SelectionBudgetController.xib */; };
 		83805FC11513E8D40099C1CB /* SelectionSurfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83805FBF1513E8D40099C1CB /* SelectionSurfaceController.m */; };
 		83805FC21513E8D40099C1CB /* SelectionSurfaceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83805FC01513E8D40099C1CB /* SelectionSurfaceController.xib */; };
-		8381510113CF19910070C3F0 /* IGUIScrollViewImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 838150FF13CF19910070C3F0 /* IGUIScrollViewImage.m */; };
 		8381510613CF1B240070C3F0 /* ContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8381510513CF1B240070C3F0 /* ContactViewController.m */; };
 		8382738613A0167C0037561B /* Biens.xml in Resources */ = {isa = PBXBuildFile; fileRef = 8382738513A0167C0037561B /* Biens.xml */; };
 		8382A3DB13CDC49600D74331 /* AfficheAnnonceController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 8382A3DA13CDC49600D74331 /* AfficheAnnonceController2.m */; };
@@ -309,8 +308,6 @@
 		83805FBE1513E8D40099C1CB /* SelectionSurfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectionSurfaceController.h; sourceTree = "<group>"; };
 		83805FBF1513E8D40099C1CB /* SelectionSurfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectionSurfaceController.m; sourceTree = "<group>"; };
 		83805FC01513E8D40099C1CB /* SelectionSurfaceController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectionSurfaceController.xib; sourceTree = "<group>"; };
-		838150FF13CF19910070C3F0 /* IGUIScrollViewImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGUIScrollViewImage.m; sourceTree = "<group>"; };
-		8381510013CF19910070C3F0 /* IGUIScrollViewImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGUIScrollViewImage.h; sourceTree = "<group>"; };
 		8381510413CF1B240070C3F0 /* ContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactViewController.h; sourceTree = "<group>"; };
 		8381510513CF1B240070C3F0 /* ContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactViewController.m; sourceTree = "<group>"; };
 		8382738513A0167C0037561B /* Biens.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Biens.xml; sourceTree = "<group>"; };
@@ -931,8 +928,6 @@
 		838150F513CF17F40070C3F0 /* Diaporama */ = {
 			isa = PBXGroup;
 			children = (
-				8381510013CF19910070C3F0 /* IGUIScrollViewImage.h */,
-				838150FF13CF19910070C3F0 /* IGUIScrollViewImage.m */,
 				8368060D13D5FE4E0047E32B /* DiapoController3.h */,
 				8368060E13D5FE4E0047E32B /* DiapoController3.m */,
 			);
@@ -1270,7 +1265,6 @@
 				837E5D5313CC947000CA5776 /* ChoixVilleController2.m in Sources */,
 				837E5D5A13CCADE700CA5776 /* AfficheListeAnnoncesController2.m in Sources */,
 				8382A3DB13CDC49600D74331 /* AfficheAnnonceController2.m in Sources */,
-				8381510113CF19910070C3F0 /* IGUIScrollViewImage.m in Sources */,
 				8381510613CF1B240070C3F0 /* ContactViewController.m in Sources */,
 				837722C513CF814F00B32417 /* AgenceViewController.m in Sources */,
 				83C4CBD513D0F734002CB110 /* GeolocViewController.m in Sources */,

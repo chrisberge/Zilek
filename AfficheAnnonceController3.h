@@ -25,6 +25,7 @@
     AFOpenFlowViewDiapo *myOpenFlowView;
     UIScrollView *scrollView;
     ProgressViewContoller *pvc;
+    UIButton *boutonRetour;
 }
 
 @property (nonatomic, assign) id <AgenceModalViewFicheDelegate> delegate;

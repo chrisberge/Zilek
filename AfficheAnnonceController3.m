@@ -627,7 +627,7 @@
     /*--- CONTACT ---*/
     
     //BOUTON RETOUR
-    UIButton *boutonRetour = [UIButton buttonWithType:UIButtonTypeCustom];
+    boutonRetour = [UIButton buttonWithType:UIButtonTypeCustom];
     boutonRetour.showsTouchWhenHighlighted = NO;
     boutonRetour.tag = 3;
     
@@ -639,6 +639,7 @@
     [boutonRetour setImage:image forState:UIControlStateNormal];
     
     [self.view addSubview:boutonRetour];
+    boutonRetour.userInteractionEnabled = NO;
     
 }
 
@@ -646,7 +647,7 @@
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     pvc = [[ProgressViewContoller alloc] init];
-    [self.view addSubview:pvc.view];
+    [scrollView addSubview:pvc.view];
     
     [pool release];
     
@@ -666,6 +667,8 @@
 }
 
 - (void) coverFlowFicheDetaillee:(NSNotification *)notify {
+    [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
+    
 	NSNumber *num = [notify object];
     arrayWithIndex.arrayIndex = [num intValue];
     arrayWithIndex.titre = [NSString stringWithString:[lAnnonce valueForKey:@"ref"]];
@@ -912,6 +915,7 @@
         
         [xmlParser release];
         [parser release];
+        boutonRetour.userInteractionEnabled = YES;
     }
     //[string release];
     
@@ -932,6 +936,8 @@
                              otherButtonTitles:nil];
     [alert show];
     [alert release];
+    boutonRetour.userInteractionEnabled = YES;
+    [pvc.view removeFromSuperview];
 }
 
 - (void)viewDidUnload

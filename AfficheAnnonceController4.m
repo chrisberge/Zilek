@@ -219,7 +219,7 @@
     [description release];
     
     //TEXTE
-    UITextView *descriptif = [[UITextView alloc] initWithFrame:CGRectMake(0, 226, 320, 70)];
+    UITextView *descriptif = [[UITextView alloc] initWithFrame:CGRectMake(0, 226, 320, 90)];
     descriptif.text = [lAnnonce valueForKey:@"descriptif"];
     descriptif.backgroundColor = [UIColor clearColor];
     descriptif.editable = NO;
@@ -633,17 +633,17 @@
         [networkQueue addOperation:request];
         [networkQueue go];
         [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
+        boutonRetour.userInteractionEnabled = NO;
     }
     
     /*--- CONTACT ---*/
-    
 }
 
 - (void) printHUD{
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     pvc = [[ProgressViewContoller alloc] init];
-    [self.view addSubview:pvc.view];
+    [scrollView addSubview:pvc.view];
     
     [pool release];
     
@@ -663,6 +663,8 @@
 }
 
 - (void) coverFlowFicheDetaillee:(NSNotification *)notify {
+    [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
+    
 	NSNumber *num = [notify object];
     arrayWithIndex.arrayIndex = [num intValue];
     arrayWithIndex.titre = [NSString stringWithString:[lAnnonce valueForKey:@"ref"]];
@@ -858,6 +860,7 @@
         
         [xmlParser release];
         [parser release];
+        boutonRetour.userInteractionEnabled = YES;
     }
     //[string release];
     
@@ -878,6 +881,8 @@
                              otherButtonTitles:nil];
     [alert show];
     [alert release];
+    boutonRetour.userInteractionEnabled = YES;
+    [pvc.view removeFromSuperview];
 }
 
 - (void)viewDidUnload

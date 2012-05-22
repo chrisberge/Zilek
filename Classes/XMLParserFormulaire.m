@@ -50,7 +50,7 @@
 	if([elementName isEqualToString:@"agence"]) {
         [appDelegate.infosAgence removeAllObjects];
         [appDelegate.infosAgence addObject:uneAgence];
-        NSLog(@"INFOS AGENCE: %@", appDelegate.infosAgence);
+        //NSLog(@"INFOS AGENCE: %@", appDelegate.infosAgence);
         
         
 		[uneAgence release];
@@ -60,7 +60,7 @@
         
         NSString *elementValueString = currentElementValue;
         
-        NSLog(@"element: \"%@\"\nvalue: \"%@\"",elementName, elementValueString);
+        //NSLog(@"element: \"%@\"\nvalue: \"%@\"",elementName, elementValueString);
         
         if([elementName isEqualToString:@"titre"] || [elementName isEqualToString:@"responsable"] || [elementName isEqualToString:@"adresse"]){
             

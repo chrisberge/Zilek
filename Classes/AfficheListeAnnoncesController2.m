@@ -54,6 +54,7 @@
     criteres = [[NSMutableDictionary alloc] init];
     listeAnnonces = [[NSMutableArray alloc] init];
     page = 1;
+    bodyString = @"";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheListeAnnoncesRoot:) name:@"afficheListeAnnoncesRoot" object: nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"afficheListeAnnoncesReadyRoot" object: @"afficheListeAnnoncesReadyRoot"];
@@ -472,6 +473,7 @@
 }
 
 - (void)getNextResults{
+    
     /*--- QUEUE POUR LES REQUETES HTTP ---*/
     ASINetworkQueue *networkQueue = [[ASINetworkQueue alloc] init];
     [networkQueue reset];
@@ -484,10 +486,29 @@
     appDelegate.whichView = @"listing";
     [appDelegate.tableauAnnonces1 removeAllObjects];
     
-    NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"&page=\([0-9]*\)" options:NSRegularExpressionCaseInsensitive error:&error];
-    bodyString = [regex stringByReplacingMatchesInString:bodyString options:0 range:NSMakeRange(0, [bodyString length]) withTemplate:@""];
-    bodyString = [bodyString stringByAppendingFormat:[NSString stringWithFormat:@"&page=%d",page]];
+    bodyString = @"http://www.akios.fr/immobilier/smart_phone.php?part=ZilekPortail&url=http://zilek.com/akios_query.pl&";
+    
+    NSEnumerator *enume;
+    NSString *key;
+    
+    [criteres setValue:[NSString stringWithFormat:@"%d", page] forKey:@"page"];
+    
+    enume = [criteres keyEnumerator];
+    BOOL isFirstObject = YES;
+    NSString *esperluette = @"";
+    
+    while((key = [enume nextObject])) {
+        if ([criteres objectForKey:key] != @"") {
+            if (!isFirstObject) {
+                esperluette = @"&";
+            }
+            else{
+                isFirstObject = NO;
+            }
+            bodyString = [bodyString stringByAppendingFormat:@"%@%@=%@",esperluette, key, [criteres valueForKey:key]];
+            bodyString = [bodyString stringByAddingPercentEscapesUsingEncoding:NSISOLatin1StringEncoding];
+        }
+    }
     
     NSLog(@"bodyString: %@", bodyString);
     
@@ -570,6 +591,7 @@
                              otherButtonTitles:nil];
     [alert show];
     [alert release];
+    [pvc.view removeFromSuperview];
 }
 
 - (void) nextResults:(NSNotification *)notify {
@@ -693,17 +715,13 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated{
-    //[listeAnnonces removeAllObjects];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"afficheListeAnnoncesReadyRoot" object: @"afficheListeAnnoncesReadyRoot"];
-    
-    //[self viewDidLoad];
     [tableView1 reloadData];
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
     UIView *view;
     
-    for (view in [self.navigationController.view subviews]) {
+    for (view in [self.view subviews]) {
         if (view == pvc.view) {
             [pvc.view removeFromSuperview];
         }
