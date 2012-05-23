@@ -97,7 +97,7 @@
     /*--- BANDEAU FICHE DETAILLE ---*/
     
     //BOUTON RETOUR
-    UIButton *boutonRetour = [UIButton buttonWithType:UIButtonTypeCustom];
+    boutonRetour = [UIButton buttonWithType:UIButtonTypeCustom];
     boutonRetour.showsTouchWhenHighlighted = NO;
     boutonRetour.tag = 3;
     
