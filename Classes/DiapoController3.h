@@ -18,6 +18,7 @@
     int scrollViewIndex;
     UINavigationBar *navBar;
     int page;
+    BOOL isFirstRotation;
 }
 @property (nonatomic, assign) id <DiapoController3Delegate> delegate;
 

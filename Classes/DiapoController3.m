@@ -59,6 +59,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    isFirstRotation = YES;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheDiaporama:) name:@"afficheDiaporama" object: nil];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"afficheDiaporamaReady" object: @"afficheDiaporamaReady"];
     
@@ -158,6 +160,7 @@
     {
         pageWidth = 320.0;
         page = (diaporama.contentOffset.x / pageWidth);
+        [navBar setFrame:CGRectMake(0, 0, 480, 45)];
     }
 }
 
@@ -165,6 +168,7 @@
     UIImageView *imageView;
     int i = 0;
     
+    if (!isFirstRotation) {
     if(fromInterfaceOrientation == UIInterfaceOrientationPortrait || fromInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
     {
         [navBar setFrame:CGRectMake(0, 0, 480, 45)];
@@ -197,6 +201,10 @@
         frameCenter.origin.x = frameCenter.size.width * page;
         frameCenter.origin.y = 0;
         [diaporama scrollRectToVisible:frameCenter animated:NO];
+    }
+    }
+    else{
+        isFirstRotation = NO;
     }
 }
 
