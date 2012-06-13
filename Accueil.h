@@ -15,13 +15,15 @@
 #import "ASINetworkQueue.h"
 #import "Annonce.h"
 #import "ProgressViewContoller.h"
-#import "AfficheAnnonceController2.h"
+#import "AfficheAnnonceControllerAccueil.h"
 #import "Ville.h"
 #import "XMLParserVilles.h"
+#import "ZilekAppDelegate.h"
 
 @class ASINetworkQueue;
 @class RootViewController;
 @class RechercheCarte2;
+@class ZilekAppDelegate;
 
 @interface Accueil : UIViewController {
     RootViewController *myTableViewController;
@@ -34,6 +36,7 @@
     BOOL isConnectionErrorPrinted;
     ProgressViewContoller *pvc;
     Annonce *annonceSelected;
+    ZilekAppDelegate *appDelegate;
 
 }
 
@@ -44,5 +47,6 @@
 @property (nonatomic, copy) NSMutableArray *tableauVilles;
 
 -(UIImage *) getImage:(NSString *)cheminImage;
+-(void) makeRequest;
 
 @end

@@ -11,7 +11,7 @@
 
 @implementation Favoris
 
-@synthesize whichView, rechercheMulti, tableauAnnonces1, annonceSelected;
+@synthesize whichView, rechercheMulti, tableauAnnonces1, annonceSelected, criteres2;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -30,12 +30,13 @@
     
     self.navigationController.navigationBar.hidden = YES;
     
+    appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
     tableauAnnonces1 = [[NSMutableArray alloc] init];
     criteres2 = [[NSMutableDictionary alloc] init];
-    rechercheMulti = [[RootViewController alloc] init];
+    rechercheMulti = [[RootViewControllerModifierFavoris alloc] init];
     annonceSelected = [[Annonce alloc] init];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheListeAnnoncesReadyFavoris:) name:@"afficheListeAnnoncesReadyFavoris" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheAnnonceFavorisReady:) name:@"afficheAnnonceFavorisReady" object: nil];
     
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 70, 320, 480)];
@@ -449,15 +450,6 @@
     /*--- MODELE: RETROUVER LES RECHERCHES ET BIENS SAUVES ET AFFICHER DANS LES BOUTONS ---*/
 }
 
-- (void) afficheListeAnnoncesReadyFavoris:(NSNotification *)notify {
-    NSLog(@"criteres2: %@", criteres2);
-    NSLog(@"tableau Annonces: %@", tableauAnnonces1);
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:criteres2 copyItems:NO];
-    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:tableauAnnonces1 copyItems:NO];
-    NSArray *criteresEtAnnonces = [NSArray arrayWithObjects:dict, array, bodyString2, nil];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"afficheListeAnnoncesFavoris" object: criteresEtAnnonces];
-}
-
 - (void) buttonInfosPushed:(id)sender
 {
 	UIButton *button = sender;
@@ -497,6 +489,8 @@
                 [annonceSelected setValue:[bien1 valueForKey:@"ascenseur"] forKey:@"ascenseur"];
                 [annonceSelected setValue:[bien1 valueForKey:@"chauffage"] forKey:@"chauffage"];
                 [annonceSelected setValue:[bien1 valueForKey:@"code"] forKey:@"code"];
+                
+                appDelegate.annonceBiensFavoris = annonceSelected;
             }
             
             [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
@@ -525,6 +519,8 @@
                 [annonceSelected setValue:[bien2 valueForKey:@"ascenseur"] forKey:@"ascenseur"];
                 [annonceSelected setValue:[bien2 valueForKey:@"chauffage"] forKey:@"chauffage"];
                 [annonceSelected setValue:[bien2 valueForKey:@"code"] forKey:@"code"];
+                
+                appDelegate.annonceBiensFavoris = annonceSelected;
             }
             
             [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
@@ -549,7 +545,6 @@
 }
 
 - (void)makeRequest:(int)num{
-    ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.whichView = @"favoris";
     //whichView = @"favoris";
     NSMutableDictionary *criteres1 = [recherchesSauvees objectAtIndex:num];
@@ -649,44 +644,8 @@
             else
                 NSLog(@"Error on XML parsing!!!");
             
-            /*NSMutableDictionary *tempDictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                   @"", @"transaction",
-                                                   @"", @"ville1",
-                                                   @"", @"ville2",
-                                                   @"", @"ville3",
-                                                   @"", @"cp1",
-                                                   @"", @"cp2",
-                                                   @"", @"cp3",
-                                                   @"", @"types",
-                                                   @"", @"nb_pieces_mini",
-                                                   @"", @"nb_pieces_maxi",
-                                                   @"", @"prix_mini",
-                                                   @"", @"prix_maxi",
-                                                   @"", @"surface_mini",
-                                                   @"", @"surface_maxi",
-                                                   nil];*/
-            
-            /*[criteres2 setDictionary:tempDictionary];
-             
-             NSEnumerator *enume;
-             NSString *key;
-             
-             enume = [criteres1 keyEnumerator];
-             
-             while((key = [enume nextObject])) {
-             if ([criteres1 objectForKey:key] != @"") {
-             NSString *value = [criteres1 valueForKey:key];
-             [criteres2 setValue:value forKey:key];
-             }
-             }*/
-            
-            //[self sauvegardeRecherches];
-            
-            //[criteres1 setDictionary:tempDictionary];
-            
             AfficheListeAnnoncesController3 *afficheListeAnnoncesController = 
             [[AfficheListeAnnoncesController3 alloc] init];
-            //afficheListeAnnoncesController.title = @"Annonces";
             [self.navigationController pushViewController:afficheListeAnnoncesController animated:YES];
             [afficheListeAnnoncesController release];
             
@@ -718,8 +677,6 @@
 - (void) buttonModifierPushed:(id)sender
 {
 	UIButton *button = sender;
-    //RootViewController *rechercheMultiCriteres;
-    ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
     
 	switch (button.tag) {
 		case 11:
@@ -727,7 +684,7 @@
             appDelegate.whichView = @"favoris_modifier";
             
             [self.navigationController pushViewController:rechercheMulti animated:YES];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"rechercheSauvee"
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"rechercheSauveeFavoris"
                                                                 object:[recherchesSauvees objectAtIndex:0]];
 			break;
 		case 12:
@@ -735,7 +692,7 @@
             appDelegate.whichView = @"favoris_modifier";
             
             [self.navigationController pushViewController:rechercheMulti animated:YES];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"rechercheSauvee"
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"rechercheSauveeFavoris"
                                                                 object:[recherchesSauvees objectAtIndex:1]];
             break;
         case 13:
@@ -743,7 +700,7 @@
             appDelegate.whichView = @"favoris_modifier";
             
             [self.navigationController pushViewController:rechercheMulti animated:YES];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"rechercheSauvee"
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"rechercheSauveeFavoris"
                                                                 object:[recherchesSauvees objectAtIndex:2]];
             break;
         default:

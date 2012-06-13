@@ -64,14 +64,14 @@
 {
     [super viewDidLoad];
     arrayWithIndex = [[ArrayWithIndex alloc] init];
+    appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
 	
-	[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheAnnonce:) name:@"afficheAnnonce" object: nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheDiaporamaReady:) name:@"afficheDiaporamaReady" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(coverFlowFicheDetaillee:) name:@"coverFlowFicheDetaillee" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(formulaireAnnonceReady:) name:@"formulaireAnnonceReady" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(formulaireGetAgence:) name:@"formulaireGetAgence" object: nil];
     
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"afficheAnnonceReady" object: @"afficheAnnonceReady"];
+    lAnnonce = appDelegate.annonceMulti;
     
     UIColor *fond = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"background.png"]];
     self.view.backgroundColor = fond;
@@ -673,17 +673,8 @@
     diaporamaController.delegate = self;
     diaporamaController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:diaporamaController animated:YES];
-    //[self.navigationController pushViewController:diaporamaController animated:YES];
     [diaporamaController release];
 
-}
-
-- (void) afficheAnnonce:(NSNotification *)notify {
-	lAnnonce = [[Annonce alloc] init];
-	lAnnonce = [notify object];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
-	//NSLog(@"%@",lAnnonce);
-    
 }
 
 - (void) buttonPushed:(id)sender

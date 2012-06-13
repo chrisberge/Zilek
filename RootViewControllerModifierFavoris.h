@@ -1,5 +1,5 @@
 //
-//  RootViewController.h
+//  RootViewControllerModifierFavoris.h
 //  Zilek
 //
 //  Created by Christophe Bergé on 16/06/11.
@@ -13,7 +13,7 @@
 #import "SelectionSurfaceController.h"
 #import "SelectionNbPiecesController.h"
 #import "SelectionBudgetController.h"
-#import "AfficheListeAnnoncesController2.h"
+#import "AfficheListeAnnoncesControllerModifierFavoris.h"
 #import "Intervalle.h"
 #import "ASIHTTPRequest.h"
 #import "ASINetworkQueue.h"
@@ -23,7 +23,7 @@
 @class ASINetworkQueue;
 @class ZilekAppDelegate;
 
-@interface RootViewController : UIViewController {
+@interface RootViewControllerModifierFavoris : UIViewController {
 	NSMutableArray *tableauAnnonces1;
 	NSMutableDictionary *criteres1;
     NSMutableDictionary *criteres2;
@@ -44,7 +44,6 @@
 @property (nonatomic, assign) NSMutableDictionary *criteres2;
 
 -(UIImage *) getImage:(NSString *)cheminImage;
-- (BOOL) sendRequest;
-- (void) sauvegardeRecherches;
+- (void) makeRequest;
 
 @end

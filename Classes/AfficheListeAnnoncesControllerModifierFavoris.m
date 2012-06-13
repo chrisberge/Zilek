@@ -1,15 +1,15 @@
 //
-//  AfficheListeAnnoncesController2.m
+//  AfficheListeAnnoncesControllerModifierFavoris.m
 //  Zilek
 //
 //  Created by Christophe Bergé on 12/07/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "AfficheListeAnnoncesController2.h"
+#import "AfficheListeAnnoncesControllerModifierFavoris.h"
 
 
-@implementation AfficheListeAnnoncesController2
+@implementation AfficheListeAnnoncesControllerModifierFavoris
 
 @synthesize listeAnnonces, criteres, annonceSelected;
 
@@ -50,17 +50,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //self.navigationController.navigationBar.hidden = YES;
     //criteres = [[NSMutableDictionary alloc] init];
     //listeAnnonces = [[NSMutableArray alloc] init];
-    
-    appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
     page = 1;
     bodyString = @"";
     
-    listeAnnonces = appDelegate.accueilView.myTableViewController.tableauAnnonces1;
-    criteres = appDelegate.accueilView.myTableViewController.criteres2;
+    appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    listeAnnonces = appDelegate.favorisView.rechercheMulti.tableauAnnonces1;
+    criteres = appDelegate.favorisView.rechercheMulti.criteres2;
 	
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheAnnonceReady:) name:@"afficheAnnonceReady" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(nextResults:) name:@"nextResults" object: nil];
     
     /*UIColor *fond = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"background.png"]];
@@ -226,7 +226,22 @@
     [self.view addSubview:tableView1];
 }
 
-/*- (void) afficheAnnonceReady:(NSNotification *)notify {
+/*- (void) afficheListeAnnoncesFavoris:(NSNotification *)notify {
+    bodyString = @"";
+    bodyString = [[notify object] objectAtIndex:2];
+    
+	[listeAnnonces removeAllObjects];
+    [listeAnnonces release];
+    listeAnnonces = nil;
+    listeAnnonces = [[NSMutableArray alloc] initWithArray:[[notify object] objectAtIndex:1]];
+    
+    [criteres removeAllObjects];
+    [criteres release];
+    criteres = nil;
+    criteres = [[NSMutableDictionary alloc] initWithDictionary:[[notify object] objectAtIndex:0]];
+}
+
+- (void) afficheAnnonceReady:(NSNotification *)notify {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"afficheAnnonce" object: annonceSelected];
 }*/
 
@@ -360,22 +375,22 @@
     
     static NSString *CellIdentifier = @"Cell";
     
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    /*if (cell == nil) {
+    /*UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
-    /*else{
+    else{
         UIImage *image= [UIImage imageNamed:@"appareil-photo-photographie-icone-6076-64.png"];
         UIImageView *iv = [[UIImageView alloc] initWithImage:image];
         [cell.imageView addSubview:iv];
         [iv release];
         
     }*/
+    
     UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     
 	// Configure the cell...
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
 	if (indexPath.row == (20 * page)) {
         cell.textLabel.text = @"Les 20 annonces suivantes";
     }
@@ -383,10 +398,10 @@
         Annonce *uneAnnonce = [listeAnnonces objectAtIndex:indexPath.row];
         
         if (cell.imageView.image == nil) {
-        
+            
             UIImage *image= [UIImage imageNamed:@"appareil-photo-photographie-icone-6076-64.png"];
             [cell.imageView setImage:image];
-        
+            
             [NSThread detachNewThreadSelector:@selector(loadImage:) toTarget:self withObject:[NSArray arrayWithObjects:cell, uneAnnonce, nil]];
         }
         
@@ -440,9 +455,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
-    
+	
     [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
-
+    
     if (indexPath.row == (20 * page)) {
         page++;
         [self getNextResults];
@@ -450,16 +465,15 @@
     else{
         annonceSelected = [listeAnnonces objectAtIndex:indexPath.row];
         
-        appDelegate.annonceMulti = annonceSelected;
+        appDelegate.annonceModifierFavoris = annonceSelected;
         
-        AfficheAnnonceController2 *afficheAnnonceController = [[AfficheAnnonceController2 alloc] init];
+        AfficheAnnonceControllerModifierFavoris *afficheAnnonceController = [[AfficheAnnonceControllerModifierFavoris alloc] init];
         [self.navigationController pushViewController:afficheAnnonceController animated:YES];
         [afficheAnnonceController release];
 	}
 }
 
 - (void)getNextResults{
-    
     /*--- QUEUE POUR LES REQUETES HTTP ---*/
     ASINetworkQueue *networkQueue = [[ASINetworkQueue alloc] init];
     [networkQueue reset];

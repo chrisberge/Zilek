@@ -1,11 +1,11 @@
 //
-//  AfficheAnnonceController2.h
+//  AfficheAnnonceControllerAccueil.h
 //  Zilek
 //
-//  Created by Christophe Bergé on 13/07/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Christophe Bergé on 12/06/12.
+//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
-//  CLASSE UTILISEE POUR MOTEUR DE RECHERCHE
+//  CLASSE UTILISEE POUR ACCUEIL
 
 #import <UIKit/UIKit.h>
 #import "ArrayWithIndex.h"
@@ -18,7 +18,7 @@
 
 @class ZilekAppDelegate;
 
-@interface AfficheAnnonceController2 : UIViewController <DiapoController3Delegate, FormulaireAnnonceDelegate>{
+@interface AfficheAnnonceControllerAccueil : UIViewController <DiapoController3Delegate, FormulaireAnnonceDelegate>{
     Annonce *lAnnonce;
     Agence *lAgence;
 	NSMutableArray *imagesArray;

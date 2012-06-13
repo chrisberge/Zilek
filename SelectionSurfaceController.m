@@ -31,7 +31,20 @@
 	intervalle = [[Intervalle alloc] init];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(setCriteres:) name:@"setCriteres" object: nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"getCriteres" object: nil];
+    
+    UIViewController *tempView = [self.navigationController.viewControllers objectAtIndex:0];
+    
+    if (tempView.title == @"Accueil") {
+        postString = @"Multi";
+    }
+    
+    if (tempView.title == @"Favoris") {
+        postString = @"Favoris";
+    }
+    
+    NSString *name = [NSString stringWithFormat:@"getCriteres%@",postString];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object: nil];
     
     self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"background.png"]];
     
@@ -213,7 +226,9 @@
             intervalle.max = 0;
         }
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"surfaceSelected" object:intervalle];
+        NSString *name = [NSString stringWithFormat:@"surfaceSelected%@",postString];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:name object:intervalle];
     }
     [super viewWillDisappear:animated];
 }

@@ -1,14 +1,14 @@
 //
-//  AfficheAnnonceController4.m
+//  AfficheAnnonceControllerFavoris.m
 //  Zilek
 //
-//  Created by Christophe Bergé on 08/03/12.
+//  Created by Christophe Bergé on 12/06/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AfficheAnnonceController4.h"
+#import "AfficheAnnonceControllerFavoris.h"
 
-@implementation AfficheAnnonceController4
+@implementation AfficheAnnonceControllerFavoris
 
 - (void)formulaireAnnonceDidFinish:(FormulaireAnnonce *)controller
 {
@@ -51,11 +51,11 @@
 #pragma mark - View lifecycle
 
 /*
- // Implement loadView to create a view hierarchy programmatically, without using a nib.
- - (void)loadView
- {
- }
- */
+// Implement loadView to create a view hierarchy programmatically, without using a nib.
+- (void)loadView
+{
+}
+*/
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -70,11 +70,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(formulaireAnnonceReady:) name:@"formulaireAnnonceReady" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(formulaireGetAgence:) name:@"formulaireGetAgence" object: nil];
     
-	lAnnonce = appDelegate.annonceBiensFavoris;
+	lAnnonce = appDelegate.annonceFavoris;
     
     UIColor *fond = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"background.png"]];
-     self.view.backgroundColor = fond;
-     [fond release];
+    self.view.backgroundColor = fond;
+    [fond release];
     //self.view.backgroundColor = [UIColor whiteColor];
     
     //SCROLLVIEW
@@ -543,37 +543,37 @@
     
     //TEL
     /*NSError *error = nil;
-    NSString *fullPath;
-    NSString *texte;
-    
-    error = nil;
-    
-    fullPath = [[NSBundle mainBundle] pathForResource:@"telephone-agence" ofType:@"txt"];
-    texte = [NSString stringWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:&error];
-    
-    texte = [texte stringByReplacingOccurrencesOfString:@"." withString:@" "];
-    
-    UITextView *tel = [[UITextView alloc] initWithFrame:CGRectMake(15, 920, 150, 20)];
-    tel.text = [NSString stringWithFormat:@"Tél : %@", texte];
-    tel.userInteractionEnabled = NO;
-    tel.backgroundColor = [UIColor clearColor];
-    [scrollView addSubview:tel];
-    [tel release];*/
+     NSString *fullPath;
+     NSString *texte;
+     
+     error = nil;
+     
+     fullPath = [[NSBundle mainBundle] pathForResource:@"telephone-agence" ofType:@"txt"];
+     texte = [NSString stringWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:&error];
+     
+     texte = [texte stringByReplacingOccurrencesOfString:@"." withString:@" "];
+     
+     UITextView *tel = [[UITextView alloc] initWithFrame:CGRectMake(15, 920, 150, 20)];
+     tel.text = [NSString stringWithFormat:@"Tél : %@", texte];
+     tel.userInteractionEnabled = NO;
+     tel.backgroundColor = [UIColor clearColor];
+     [scrollView addSubview:tel];
+     [tel release];*/
     
     //FAX
     /*error = nil;
-    
-    fullPath = [[NSBundle mainBundle] pathForResource:@"fax-agence" ofType:@"txt"];
-    texte = [NSString stringWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:&error];
-    
-    texte = [texte stringByReplacingOccurrencesOfString:@"." withString:@" "];
-    
-    UITextView *fax = [[UITextView alloc] initWithFrame:CGRectMake(180, 920, 150, 20)];
-    fax.text = [NSString stringWithFormat:@"Fax : %@", texte];
-    fax.userInteractionEnabled = NO;
-    fax.backgroundColor = [UIColor clearColor];
-    [scrollView addSubview:fax];
-    [fax release];*/
+     
+     fullPath = [[NSBundle mainBundle] pathForResource:@"fax-agence" ofType:@"txt"];
+     texte = [NSString stringWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:&error];
+     
+     texte = [texte stringByReplacingOccurrencesOfString:@"." withString:@" "];
+     
+     UITextView *fax = [[UITextView alloc] initWithFrame:CGRectMake(180, 920, 150, 20)];
+     fax.text = [NSString stringWithFormat:@"Fax : %@", texte];
+     fax.userInteractionEnabled = NO;
+     fax.backgroundColor = [UIColor clearColor];
+     [scrollView addSubview:fax];
+     [fax release];*/
     
     //BOUTON ECRIVEZ NOUS
     UIButton *ecrivez = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -587,11 +587,11 @@
     
     //BOUTON APPELEZ NOUS
     /*UIButton *appelez = [UIButton buttonWithType:UIButtonTypeCustom];
-    [appelez setFrame:CGRectMake(30, 1020, 95, 65)];
-    [appelez setImage:[UIImage imageNamed:@"appelez-nous.png"] forState:UIControlStateNormal];
-    [appelez addTarget:self action:@selector(buttonAppelez:) 
-      forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:appelez];*/
+     [appelez setFrame:CGRectMake(30, 1020, 95, 65)];
+     [appelez setImage:[UIImage imageNamed:@"appelez-nous.png"] forState:UIControlStateNormal];
+     [appelez addTarget:self action:@selector(buttonAppelez:) 
+     forControlEvents:UIControlEventTouchUpInside];
+     [scrollView addSubview:appelez];*/
     
     //AJOUTER FAVORIS
     UIButton *favoris = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -789,24 +789,24 @@
     NSString * string = [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease];
     //NSString * string = @"    ";
     NSString *string2 = [string stringByAppendingFormat:@"\n"];
-     
-     NSLog(@"REPONSE DU WEB: \"%@\"",string2);
+    
+    NSLog(@"REPONSE DU WEB: \"%@\"",string2);
     
     if ([string length] > 0) {
         
         NSUInteger zap = 39;
-         
-         NSData *dataString = [string2 dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-         
-         NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];
+        
+        NSData *dataString = [string2 dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        
+        NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];
         
         /*--- POUR LE TEST OFF LINE ---
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Formulaire" ofType:@"xml"];
-        NSData *data = [fileManager contentsAtPath:xmlSamplePath];
-        string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"REPONSE DU WEB: %@\n",string);
-        */
+         NSFileManager *fileManager = [NSFileManager defaultManager];
+         NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Formulaire" ofType:@"xml"];
+         NSData *data = [fileManager contentsAtPath:xmlSamplePath];
+         string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+         NSLog(@"REPONSE DU WEB: %@\n",string);
+         */
         
         NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
         XMLParserFormulaire *parser = [[XMLParserFormulaire alloc] initXMLParser];
@@ -885,14 +885,12 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [myOpenFlowView centerOnSelectedCover:YES];
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    return YES;
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

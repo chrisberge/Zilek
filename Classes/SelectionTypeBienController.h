@@ -14,6 +14,7 @@
 	NSMutableArray *rowSelected;
 	NSMutableArray *rowSelectedValue;
     NSArray *types;
+    NSString *postString;
 }
 
 @property (nonatomic, retain) NSMutableArray *listOfItems;

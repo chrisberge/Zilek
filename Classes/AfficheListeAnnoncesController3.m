@@ -51,15 +51,16 @@
 {
     [super viewDidLoad];
     //self.navigationController.navigationBar.hidden = YES;
-    criteres = [[NSMutableDictionary alloc] init];
-    listeAnnonces = [[NSMutableArray alloc] init];
+    //criteres = [[NSMutableDictionary alloc] init];
+    //listeAnnonces = [[NSMutableArray alloc] init];
     page = 1;
     bodyString = @"";
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheListeAnnoncesFavoris:) name:@"afficheListeAnnoncesFavoris" object: nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"afficheListeAnnoncesReadyFavoris" object: @"afficheListeAnnoncesReadyFavoris"];
+    appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    listeAnnonces = appDelegate.favorisView.tableauAnnonces1;
+    criteres = appDelegate.favorisView.criteres2;
 	
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheAnnonceReady:) name:@"afficheAnnonceReady" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(nextResults:) name:@"nextResults" object: nil];
     
     /*UIColor *fond = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"background.png"]];
@@ -198,7 +199,7 @@
     [vierge release];
     
     //NOMBRE D'ANNONCES DANS BANDEAU
-    UITextView *nbAnnoncesText = [[UITextView alloc] initWithFrame:CGRectMake(0, 150, 320, 20)];
+    /*UITextView *nbAnnoncesText = [[UITextView alloc] initWithFrame:CGRectMake(0, 150, 320, 20)];
     int nbAnnonces = [listeAnnonces count];
     
     if (nbAnnonces > 1) {
@@ -212,7 +213,7 @@
     
     [self.view addSubview:nbAnnoncesText];
     
-    [nbAnnoncesText release];
+    [nbAnnoncesText release];*/
     
     //TABLE VIEW
     tableView1 = [[UITableView alloc] init];
@@ -223,25 +224,6 @@
     //tableView1.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cell.png"]];
     tableView1.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:tableView1];
-}
-
-- (void) afficheListeAnnoncesFavoris:(NSNotification *)notify {
-    bodyString = @"";
-    bodyString = [[notify object] objectAtIndex:2];
-    
-	[listeAnnonces removeAllObjects];
-    [listeAnnonces release];
-    listeAnnonces = nil;
-    listeAnnonces = [[NSMutableArray alloc] initWithArray:[[notify object] objectAtIndex:1]];
-    
-    [criteres removeAllObjects];
-    [criteres release];
-    criteres = nil;
-    criteres = [[NSMutableDictionary alloc] initWithDictionary:[[notify object] objectAtIndex:0]];
-}
-
-- (void) afficheAnnonceReady:(NSNotification *)notify {
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"afficheAnnonce" object: annonceSelected];
 }
 
 - (void) buttonPushed:(id)sender
@@ -464,7 +446,9 @@
     else{
         annonceSelected = [listeAnnonces objectAtIndex:indexPath.row];
         
-        AfficheAnnonceController2 *afficheAnnonceController = [[AfficheAnnonceController2 alloc] init];
+        appDelegate.annonceFavoris = annonceSelected;
+        
+        AfficheAnnonceControllerFavoris *afficheAnnonceController = [[AfficheAnnonceControllerFavoris alloc] init];
         [self.navigationController pushViewController:afficheAnnonceController animated:YES];
         [afficheAnnonceController release];
 	}
@@ -479,7 +463,6 @@
     [networkQueue setDelegate:self];
     /*--- QUEUE POUR LES REQUETES HTTP ---*/
     
-    ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.whichView = @"listing";
     [appDelegate.tableauAnnonces1 removeAllObjects];
     
@@ -712,7 +695,7 @@
 }
 
 - (void) viewWillAppear:(BOOL)animated{
-    [tableView1 reloadData];
+    //[tableView1 reloadData];
 }
 
 - (void) viewWillDisappear:(BOOL)animated{

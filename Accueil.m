@@ -90,12 +90,11 @@
     tableauAnnonces1 = [[NSMutableArray alloc] init];
     tableauVilles = [[NSMutableArray alloc] init];
     
-    ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.whichView = @"accueil";
     
     [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
     [self makeRequest];
-    //[self makeCoverFlow];
     
     //IMAGE NOS BIENS A LA VENTE
     UIImageView *nosBiens = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"coverflow-background.png"]];
@@ -150,7 +149,6 @@
 - (void) buttonPushed:(id)sender
 {
 	UIButton *button = sender;
-    ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
 	switch (button.tag) {
 		case 1:
             appDelegate.whichView = @"multicriteres";
@@ -174,10 +172,11 @@
     NSNumber *num = [notify object];
     
     annonceSelected = [tableauAnnonces1 objectAtIndex:[num intValue]];
+    appDelegate.annonceAccueil = annonceSelected;
     
     [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
     
-	AfficheAnnonceController2 *afficheAnnonceController = [[AfficheAnnonceController2 alloc] init];
+	AfficheAnnonceControllerAccueil *afficheAnnonceController = [[AfficheAnnonceControllerAccueil alloc] init];
 	[self.navigationController pushViewController:afficheAnnonceController animated:YES];
 	[afficheAnnonceController release];
     afficheAnnonceController = nil;
@@ -230,66 +229,6 @@
     [networkQueue release];
     [pvc release];
     [super dealloc];
-}
-
-- (void)makeCoverFlow{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Biens" ofType:@"xml"];
-    NSData *data = [fileManager contentsAtPath:xmlSamplePath];
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"REPONSE DU WEB: %@\n",string);
-    
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
-    XMLParser *parser = [[XMLParser alloc] initXMLParser];
-    
-    [xmlParser setDelegate:parser];
-    
-    BOOL success = [xmlParser parse];
-    
-    if(success)
-        NSLog(@"No Errors on XML parsing.");
-    else
-        NSLog(@"Error on XML parsing!!!");
-    
-    //COVER FLOW
-    NSMutableArray *imagesArray = [[NSMutableArray alloc] init];
-    
-    for (Annonce *uneAnnonce in tableauAnnonces1) {
-        NSString *photos = [uneAnnonce valueForKey:@"photos"];
-        NSLog(@"COVERFLOW: \"%@\"",photos);
-        photos = [photos stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-        //photos = [photos stringByReplacingOccurrencesOfString:@" " withString:@""];
-        
-        if ([photos length] > 0) {
-            [imagesArray addObject:[[NSMutableArray arrayWithArray:[photos componentsSeparatedByString:@","]] objectAtIndex:0]];
-        }
-    }
-    
-    
-    myOpenFlowView = [[AFOpenFlowView alloc] init];
-    int num = [imagesArray count];
-    [myOpenFlowView setNumberOfImages:num];
-    
-    [myOpenFlowView setFrame:CGRectMake(10, 260, 300, 130)];
-    for (int index = 0; index < num; index++){
-        NSData* imageData = [[NSData alloc]initWithContentsOfURL:
-                             [NSURL URLWithString:
-                              [NSString stringWithFormat:@"%@",
-                               [imagesArray objectAtIndex:index]]]];
-        if (imageData != nil) {
-            UIImage *image = [[UIImage alloc] initWithData:imageData];
-            [myOpenFlowView setImage:image forIndex:index];
-        }
-        [imageData release];
-    }
-    
-    [self.view addSubview:myOpenFlowView];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Accueil"];
-    
-    [pvc.view removeFromSuperview];
-    
-    [xmlParser release];
-    [parser release];
 }
 
 - (void)makeRequest{

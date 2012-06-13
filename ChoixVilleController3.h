@@ -18,6 +18,7 @@
     UISearchBar *searchBar;
 	BOOL searching;
 	BOOL letUserSelectRow;
+    NSString *postString;
     
 }
 

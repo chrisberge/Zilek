@@ -45,7 +45,19 @@
     [super viewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(setCriteres:) name:@"setCriteres" object: nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"getCriteres" object: nil];
+    
+    UIViewController *tempView = [self.navigationController.viewControllers objectAtIndex:0];
+    
+    if (tempView.title == @"Accueil") {
+        postString = @"Multi";
+    }
+    
+    if (tempView.title == @"Favoris") {
+        postString = @"Favoris";
+    }
+    
+    NSString *name = [NSString stringWithFormat:@"getCriteres%@",postString];
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object: nil];
     
     //HEADER
     UIImageView *enTete = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"header.png"]];
@@ -280,8 +292,10 @@
 	
 	[commune release];
 	[code release];
-	
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"citySelected" object: selection];
+    
+    NSString *name = [NSString stringWithFormat:@"citySelected%@",postString];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object: selection];
     
 	[self.navigationController popViewControllerAnimated:YES];
 	

@@ -1,22 +1,22 @@
 //
-//  AfficheListeAnnoncesController2.h
+//  AfficheListeAnnoncesControllerModifierFavoris.h
 //  Zilek
 //
 //  Created by Christophe Bergé on 12/07/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
-//  UTILISEE DEPUIS RECHERCHE MULTICRITERES
+//  UTILISEE DEPUIS MODIFIER FAVORIS
 
 #import <UIKit/UIKit.h>
 #import "Annonce.h"
-#import "AfficheAnnonceController2.h"
+#import "AfficheAnnonceControllerModifierFavoris.h"
 #import "ProgressViewContoller.h"
 #import "XMLParser.h"
 #import "ZilekAppDelegate.h"
 
 @class ZilekAppDelegate;
 
-@interface AfficheListeAnnoncesController2 : UIViewController <UITableViewDelegate, UITableViewDataSource>{
+@interface AfficheListeAnnoncesControllerModifierFavoris : UIViewController <UITableViewDelegate, UITableViewDataSource>{
     NSMutableArray *listeAnnonces;
     NSMutableDictionary *criteres;
 	Annonce *annonceSelected;

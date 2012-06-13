@@ -1,14 +1,14 @@
 //
-//  AfficheAnnonceController4.m
+//  AfficheAnnonceControllerModifierFavoris.m
 //  Zilek
 //
-//  Created by Christophe Bergé on 08/03/12.
+//  Created by Christophe Bergé on 12/06/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "AfficheAnnonceController4.h"
+#import "AfficheAnnonceControllerModifierFavoris.h"
 
-@implementation AfficheAnnonceController4
+@implementation AfficheAnnonceControllerModifierFavoris
 
 - (void)formulaireAnnonceDidFinish:(FormulaireAnnonce *)controller
 {
@@ -29,6 +29,14 @@
     return self;
 }
 
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
 - (void)dealloc
 {
     [imagesArray release];
@@ -40,22 +48,14 @@
     [super dealloc];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
 
 /*
- // Implement loadView to create a view hierarchy programmatically, without using a nib.
- - (void)loadView
- {
- }
- */
+// Implement loadView to create a view hierarchy programmatically, without using a nib.
+- (void)loadView
+{
+}
+*/
 
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
@@ -70,11 +70,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(formulaireAnnonceReady:) name:@"formulaireAnnonceReady" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(formulaireGetAgence:) name:@"formulaireGetAgence" object: nil];
     
-	lAnnonce = appDelegate.annonceBiensFavoris;
+    lAnnonce = appDelegate.annonceModifierFavoris;
     
     UIColor *fond = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"background.png"]];
-     self.view.backgroundColor = fond;
-     [fond release];
+    self.view.backgroundColor = fond;
+    [fond release];
     //self.view.backgroundColor = [UIColor whiteColor];
     
     //SCROLLVIEW
@@ -155,15 +155,15 @@
     labelPrix.text = [NSString stringWithFormat:@"%@€", prix];
     
     labelVille.text = [NSString stringWithFormat:@"%@ - %@",
-                       [lAnnonce valueForKey:@"ville"],
-                       [lAnnonce valueForKey:@"cp"]
+                       [lAnnonce valueForKey:@"ville"] ,
+                       [lAnnonce valueForKey:@"cp"] 
                        ];
     
     labelSurface.text = [NSString stringWithFormat:@"%@ - %@ piece%@ - %@m²",
-                         [lAnnonce valueForKey:@"ref"],
+                         [lAnnonce valueForKey:@"ref"] ,
                          nb_pieces,
                          isS,
-                         [lAnnonce valueForKey:@"surface"]
+                         [lAnnonce valueForKey:@"surface"] 
                          ];
     
     [scrollView addSubview:labelPrix];
@@ -177,14 +177,13 @@
     /*--- CRITERES ---*/
     
     /*--- COVER FLOW ---*/
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
     
     myOpenFlowView = [[AFOpenFlowViewDiapo alloc] init];
     [myOpenFlowView setFrame:CGRectMake(10, 65, 300, 130)];
     
     NSString *string = [lAnnonce valueForKey:@"photos"];
-	string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    
+    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+	
     if ([string length] > 0) {
 		imagesArray = [[NSMutableArray alloc] initWithArray:[string componentsSeparatedByString:@","]];
 		
@@ -207,7 +206,6 @@
 	}
     
     [scrollView addSubview:myOpenFlowView];
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
     
     /*--- COVER FLOW ---*/
     
@@ -334,6 +332,7 @@
     /*---- BILAN CONSO ENERGIE ----*/
     NSString *lettreCE = [lAnnonce valueForKey:@"bilan_ce"];
     lettreCE = [lettreCE stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    NSLog(@"LETTRE CE: \"%@\"",lettreCE);
     
     NSString *consoA = @"consommationenergieA";
     NSString *consoB = @"consommationenergieB";
@@ -543,37 +542,37 @@
     
     //TEL
     /*NSError *error = nil;
-    NSString *fullPath;
-    NSString *texte;
-    
-    error = nil;
-    
-    fullPath = [[NSBundle mainBundle] pathForResource:@"telephone-agence" ofType:@"txt"];
-    texte = [NSString stringWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:&error];
-    
-    texte = [texte stringByReplacingOccurrencesOfString:@"." withString:@" "];
-    
-    UITextView *tel = [[UITextView alloc] initWithFrame:CGRectMake(15, 920, 150, 20)];
-    tel.text = [NSString stringWithFormat:@"Tél : %@", texte];
-    tel.userInteractionEnabled = NO;
-    tel.backgroundColor = [UIColor clearColor];
-    [scrollView addSubview:tel];
-    [tel release];*/
+     NSString *fullPath;
+     NSString *texte;
+     
+     error = nil;
+     
+     fullPath = [[NSBundle mainBundle] pathForResource:@"telephone-agence" ofType:@"txt"];
+     texte = [NSString stringWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:&error];
+     
+     texte = [texte stringByReplacingOccurrencesOfString:@"." withString:@" "];
+     
+     UITextView *tel = [[UITextView alloc] initWithFrame:CGRectMake(15, 920, 150, 20)];
+     tel.text = [NSString stringWithFormat:@"Tél : %@", texte];
+     tel.userInteractionEnabled = NO;
+     tel.backgroundColor = [UIColor clearColor];
+     [scrollView addSubview:tel];
+     [tel release];*/
     
     //FAX
     /*error = nil;
-    
-    fullPath = [[NSBundle mainBundle] pathForResource:@"fax-agence" ofType:@"txt"];
-    texte = [NSString stringWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:&error];
-    
-    texte = [texte stringByReplacingOccurrencesOfString:@"." withString:@" "];
-    
-    UITextView *fax = [[UITextView alloc] initWithFrame:CGRectMake(180, 920, 150, 20)];
-    fax.text = [NSString stringWithFormat:@"Fax : %@", texte];
-    fax.userInteractionEnabled = NO;
-    fax.backgroundColor = [UIColor clearColor];
-    [scrollView addSubview:fax];
-    [fax release];*/
+     
+     fullPath = [[NSBundle mainBundle] pathForResource:@"fax-agence" ofType:@"txt"];
+     texte = [NSString stringWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:&error];
+     
+     texte = [texte stringByReplacingOccurrencesOfString:@"." withString:@" "];
+     
+     UITextView *fax = [[UITextView alloc] initWithFrame:CGRectMake(180, 920, 150, 20)];
+     fax.text = [NSString stringWithFormat:@"Fax : %@", texte];
+     fax.userInteractionEnabled = NO;
+     fax.backgroundColor = [UIColor clearColor];
+     [scrollView addSubview:fax];
+     [fax release];*/
     
     //BOUTON ECRIVEZ NOUS
     UIButton *ecrivez = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -587,11 +586,11 @@
     
     //BOUTON APPELEZ NOUS
     /*UIButton *appelez = [UIButton buttonWithType:UIButtonTypeCustom];
-    [appelez setFrame:CGRectMake(30, 1020, 95, 65)];
-    [appelez setImage:[UIImage imageNamed:@"appelez-nous.png"] forState:UIControlStateNormal];
-    [appelez addTarget:self action:@selector(buttonAppelez:) 
-      forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:appelez];*/
+     [appelez setFrame:CGRectMake(30, 1020, 95, 65)];
+     [appelez setImage:[UIImage imageNamed:@"appelez-nous.png"] forState:UIControlStateNormal];
+     [appelez addTarget:self action:@selector(buttonAppelez:) 
+     forControlEvents:UIControlEventTouchUpInside];
+     [scrollView addSubview:appelez];*/
     
     //AJOUTER FAVORIS
     UIButton *favoris = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -634,6 +633,7 @@
         [networkQueue go];
         [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
         boutonRetour.userInteractionEnabled = NO;
+        
     }
     
     /*--- CONTACT ---*/
@@ -646,7 +646,6 @@
     [scrollView addSubview:pvc.view];
     
     [pool release];
-    
 }
 
 - (void) formulaireGetAgence:(NSNotification *)notify {
@@ -665,7 +664,7 @@
 - (void) coverFlowFicheDetaillee:(NSNotification *)notify {
     [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
     
-	NSNumber *num = [notify object];
+    NSNumber *num = [notify object];
     arrayWithIndex.arrayIndex = [num intValue];
     arrayWithIndex.titre = [NSString stringWithString:[lAnnonce valueForKey:@"ref"]];
     
@@ -674,6 +673,7 @@
     diaporamaController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentModalViewController:diaporamaController animated:YES];
     [diaporamaController release];
+    
 }
 
 - (void) buttonPushed:(id)sender
@@ -757,7 +757,8 @@
     
     NSString *htmlBody = [NSString stringWithFormat:
                           @"Plus d'infos sur %@, r&eacute;f&eacute;rence: %@",
-                          [lAnnonce valueForKey:@"ref"]]; 
+                          texte,
+                          [lAnnonce valueForKey:@"ref"]];
     
     NSString *escapedBody = [(NSString*)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)htmlBody, NULL, CFSTR("?=&+"), kCFStringEncodingISOLatin1) autorelease];
     
@@ -775,8 +776,58 @@
 - (void) buttonFavoris:(id)sender
 {
     //AJOUTE CETTE ANNONCE AUX FAVORIS
-    NSLog(@"NOUS SOMMES ARRIVES ICI PAR LE BOUTON \"FAVORIS\": INUTILE D'AJOUTER CETTE ANNONCE AUX FAVORIS");
-    //NOUS SOMMES ARRIVES ICI PAR LE BOUTON "FAVORIS": INUTILE D'AJOUTER CETTE ANNONCE AUX FAVORIS
+    NSLog(@"AJOUTE CETTE ANNONCE AUX FAVORIS");
+    NSString *nbPieces = [lAnnonce valueForKey:@"nb_pieces"];
+    nbPieces = [nbPieces stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    NSString *prix = [lAnnonce valueForKey:@"prix"];
+    prix = [prix stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    NSString *photos = [lAnnonce valueForKey:@"photos"];
+    photos = [photos stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    NSString *bilan_ce = [lAnnonce valueForKey:@"bilan_ce"];
+    bilan_ce = [bilan_ce stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    NSString *bilan_ges = [lAnnonce valueForKey:@"bilan_ges"];
+    bilan_ges = [bilan_ges stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    NSDictionary *recordAnnonce = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                   [lAnnonce valueForKey:@"ref"], @"ref",
+                                   nbPieces, @"nb_pieces",
+                                   [lAnnonce valueForKey:@"surface"], @"surface",
+                                   [lAnnonce valueForKey:@"ville"], @"ville",
+                                   [lAnnonce valueForKey:@"cp"], @"cp",
+                                   prix, @"prix",
+                                   [lAnnonce valueForKey:@"descriptif"], @"descriptif",
+                                   photos, @"photos",
+                                   bilan_ce, @"bilan_ce",
+                                   bilan_ges, @"bilan_ges",
+                                   [lAnnonce valueForKey:@"etage"], @"etage",
+                                   [lAnnonce valueForKey:@"ascenseur"], @"ascenseur",
+                                   [lAnnonce valueForKey:@"chauffage"], @"chauffage",
+                                   [lAnnonce valueForKey:@"code"], @"code",
+                                   nil];
+    
+    NSLog(@"Annonce record: %@", recordAnnonce);
+    
+    NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSDictionary *save1 = [NSDictionary dictionaryWithContentsOfFile:[directory stringByAppendingPathComponent:@"bien1.plist"]];
+    NSDictionary *save2 = [NSDictionary dictionaryWithContentsOfFile:[directory stringByAppendingPathComponent:@"bien2.plist"]];
+    
+    if (save1 == nil ){
+        [recordAnnonce writeToFile:[directory stringByAppendingPathComponent:@"bien1.plist"] atomically:YES];
+    }
+    else {
+        if (save2 == nil) {
+            [recordAnnonce writeToFile:[directory stringByAppendingPathComponent:@"bien2.plist"] atomically:YES];
+        }
+    }
+    
+    if (save2 != nil) {
+        [save2 writeToFile:[directory stringByAppendingPathComponent:@"bien1.plist"] atomically:YES];
+        [recordAnnonce writeToFile:[directory stringByAppendingPathComponent:@"bien2.plist"] atomically:YES];
+    }
     
 }
 
@@ -789,24 +840,25 @@
     NSString * string = [[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] autorelease];
     //NSString * string = @"    ";
     NSString *string2 = [string stringByAppendingFormat:@"\n"];
-     
-     NSLog(@"REPONSE DU WEB: \"%@\"",string2);
+    
+    NSLog(@"REPONSE DU WEB: \"%@\"",string2);
     
     if ([string length] > 0) {
         
         NSUInteger zap = 39;
-         
-         NSData *dataString = [string2 dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-         
-         NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];
+        
+        NSData *dataString = [string2 dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        
+        NSData *data = [[NSData alloc] initWithData:[dataString subdataWithRange:NSMakeRange(38, [dataString length] - zap)]];
         
         /*--- POUR LE TEST OFF LINE ---
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Formulaire" ofType:@"xml"];
-        NSData *data = [fileManager contentsAtPath:xmlSamplePath];
-        string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"REPONSE DU WEB: %@\n",string);
-        */
+         NSFileManager *fileManager = [NSFileManager defaultManager];
+         NSString *xmlSamplePath = [[NSBundle mainBundle] pathForResource:@"Formulaire" ofType:@"xml"];
+         NSData *data = [fileManager contentsAtPath:xmlSamplePath];
+         string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+         NSLog(@"REPONSE DU WEB: %@\n",string);
+         */
+        
         
         NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
         XMLParserFormulaire *parser = [[XMLParserFormulaire alloc] initXMLParser];
@@ -883,16 +935,18 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [pvc.view removeFromSuperview];
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [myOpenFlowView centerOnSelectedCover:YES];
-    //[[NSNotificationCenter defaultCenter] postNotificationName:@"whichViewFrom" object: @"Fiche détaillée"];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    //return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    return YES;
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 @end

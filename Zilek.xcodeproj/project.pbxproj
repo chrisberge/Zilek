@@ -79,7 +79,6 @@
 		837E5D2413CC8CF500CA5776 /* ArrayWithIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E5D2313CC8CF500CA5776 /* ArrayWithIndex.m */; };
 		837E5D3013CC8F5300CA5776 /* Intervalle.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E5D2F13CC8F5300CA5776 /* Intervalle.m */; };
 		837E5D4F13CC945000CA5776 /* Annonce.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E5D4E13CC945000CA5776 /* Annonce.m */; };
-		837E5D5313CC947000CA5776 /* ChoixVilleController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E5D5113CC947000CA5776 /* ChoixVilleController2.m */; };
 		837E5D5A13CCADE700CA5776 /* AfficheListeAnnoncesController2.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E5D5913CCADE700CA5776 /* AfficheListeAnnoncesController2.m */; };
 		837EE97A13E0CD4A00ACF0B7 /* Ventes.xml in Resources */ = {isa = PBXBuildFile; fileRef = 837EE97913E0CD4A00ACF0B7 /* Ventes.xml */; };
 		837F2EB613EF400C0049FFEE /* AfficheAnnonceController3.m in Sources */ = {isa = PBXBuildFile; fileRef = 837F2EB513EF400C0049FFEE /* AfficheAnnonceController3.m */; };
@@ -143,6 +142,11 @@
 		83A75C6C150101EC006F0A80 /* consommationenergieG.png in Resources */ = {isa = PBXBuildFile; fileRef = 83A75C5F150101EC006F0A80 /* consommationenergieG.png */; };
 		83A81860120054AF00BDADA2 /* SelectionTypeBienController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A8185E120054AF00BDADA2 /* SelectionTypeBienController.m */; };
 		83A81861120054AF00BDADA2 /* SelectionTypeBienController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A8185F120054AF00BDADA2 /* SelectionTypeBienController.xib */; };
+		83ADE7A0158731A6002C43C0 /* RootViewControllerModifierFavoris.m in Sources */ = {isa = PBXBuildFile; fileRef = 83ADE79F158731A6002C43C0 /* RootViewControllerModifierFavoris.m */; };
+		83ADE7A315873506002C43C0 /* AfficheListeAnnoncesControllerModifierFavoris.m in Sources */ = {isa = PBXBuildFile; fileRef = 83ADE7A215873506002C43C0 /* AfficheListeAnnoncesControllerModifierFavoris.m */; };
+		83ADE7AF15876F4F002C43C0 /* AfficheAnnonceControllerModifierFavoris.m in Sources */ = {isa = PBXBuildFile; fileRef = 83ADE7AE15876F4F002C43C0 /* AfficheAnnonceControllerModifierFavoris.m */; };
+		83ADE7B215877D34002C43C0 /* AfficheAnnonceControllerFavoris.m in Sources */ = {isa = PBXBuildFile; fileRef = 83ADE7B115877D30002C43C0 /* AfficheAnnonceControllerFavoris.m */; };
+		83ADE7B51587821B002C43C0 /* AfficheAnnonceControllerAccueil.m in Sources */ = {isa = PBXBuildFile; fileRef = 83ADE7B41587821A002C43C0 /* AfficheAnnonceControllerAccueil.m */; };
 		83AED48F13E83676005F1610 /* accueil.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AED48B13E83676005F1610 /* accueil.png */; };
 		83AED49013E83676005F1610 /* lagence.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AED48C13E83676005F1610 /* lagence.png */; };
 		83AED49113E83676005F1610 /* contact.png in Resources */ = {isa = PBXBuildFile; fileRef = 83AED48D13E83676005F1610 /* contact.png */; };
@@ -289,8 +293,6 @@
 		837E5D2F13CC8F5300CA5776 /* Intervalle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Intervalle.m; sourceTree = "<group>"; };
 		837E5D4D13CC945000CA5776 /* Annonce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Annonce.h; path = ../Annonce.h; sourceTree = "<group>"; };
 		837E5D4E13CC945000CA5776 /* Annonce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Annonce.m; path = ../Annonce.m; sourceTree = "<group>"; };
-		837E5D5013CC947000CA5776 /* ChoixVilleController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoixVilleController2.h; sourceTree = "<group>"; };
-		837E5D5113CC947000CA5776 /* ChoixVilleController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoixVilleController2.m; sourceTree = "<group>"; };
 		837E5D5813CCADE700CA5776 /* AfficheListeAnnoncesController2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AfficheListeAnnoncesController2.h; path = Classes/AfficheListeAnnoncesController2.h; sourceTree = "<group>"; };
 		837E5D5913CCADE700CA5776 /* AfficheListeAnnoncesController2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AfficheListeAnnoncesController2.m; path = Classes/AfficheListeAnnoncesController2.m; sourceTree = "<group>"; };
 		837EE97913E0CD4A00ACF0B7 /* Ventes.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Ventes.xml; sourceTree = "<group>"; };
@@ -382,6 +384,16 @@
 		83A8185D120054AF00BDADA2 /* SelectionTypeBienController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectionTypeBienController.h; path = Classes/SelectionTypeBienController.h; sourceTree = "<group>"; };
 		83A8185E120054AF00BDADA2 /* SelectionTypeBienController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectionTypeBienController.m; path = Classes/SelectionTypeBienController.m; sourceTree = "<group>"; };
 		83A8185F120054AF00BDADA2 /* SelectionTypeBienController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SelectionTypeBienController.xib; path = Classes/SelectionTypeBienController.xib; sourceTree = "<group>"; };
+		83ADE79E158731A6002C43C0 /* RootViewControllerModifierFavoris.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewControllerModifierFavoris.h; sourceTree = "<group>"; };
+		83ADE79F158731A6002C43C0 /* RootViewControllerModifierFavoris.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewControllerModifierFavoris.m; sourceTree = "<group>"; };
+		83ADE7A115873506002C43C0 /* AfficheListeAnnoncesControllerModifierFavoris.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AfficheListeAnnoncesControllerModifierFavoris.h; path = Classes/AfficheListeAnnoncesControllerModifierFavoris.h; sourceTree = "<group>"; };
+		83ADE7A215873506002C43C0 /* AfficheListeAnnoncesControllerModifierFavoris.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AfficheListeAnnoncesControllerModifierFavoris.m; path = Classes/AfficheListeAnnoncesControllerModifierFavoris.m; sourceTree = "<group>"; };
+		83ADE7AD15876F4E002C43C0 /* AfficheAnnonceControllerModifierFavoris.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AfficheAnnonceControllerModifierFavoris.h; sourceTree = "<group>"; };
+		83ADE7AE15876F4F002C43C0 /* AfficheAnnonceControllerModifierFavoris.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AfficheAnnonceControllerModifierFavoris.m; sourceTree = "<group>"; };
+		83ADE7B015877D30002C43C0 /* AfficheAnnonceControllerFavoris.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AfficheAnnonceControllerFavoris.h; sourceTree = "<group>"; };
+		83ADE7B115877D30002C43C0 /* AfficheAnnonceControllerFavoris.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AfficheAnnonceControllerFavoris.m; sourceTree = "<group>"; };
+		83ADE7B315878219002C43C0 /* AfficheAnnonceControllerAccueil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AfficheAnnonceControllerAccueil.h; sourceTree = "<group>"; };
+		83ADE7B41587821A002C43C0 /* AfficheAnnonceControllerAccueil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AfficheAnnonceControllerAccueil.m; sourceTree = "<group>"; };
 		83AED48B13E83676005F1610 /* accueil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = accueil.png; sourceTree = "<group>"; };
 		83AED48C13E83676005F1610 /* lagence.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lagence.png; sourceTree = "<group>"; };
 		83AED48D13E83676005F1610 /* contact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = contact.png; sourceTree = "<group>"; };
@@ -790,6 +802,8 @@
 			children = (
 				83751B1B13AA553500774276 /* RootViewController.h */,
 				83751B1C13AA553500774276 /* RootViewController.m */,
+				83ADE79E158731A6002C43C0 /* RootViewControllerModifierFavoris.h */,
+				83ADE79F158731A6002C43C0 /* RootViewControllerModifierFavoris.m */,
 				838150E813CF12F00070C3F0 /* Selection Type bien */,
 				838150E713CF11090070C3F0 /* Selection Ville */,
 				838150E913CF13480070C3F0 /* Selection Surface */,
@@ -802,8 +816,6 @@
 		838150E713CF11090070C3F0 /* Selection Ville */ = {
 			isa = PBXGroup;
 			children = (
-				837E5D5013CC947000CA5776 /* ChoixVilleController2.h */,
-				837E5D5113CC947000CA5776 /* ChoixVilleController2.m */,
 				83C715B2152DDCFC00638B42 /* ChoixVilleController3.h */,
 				83C715B3152DDCFC00638B42 /* ChoixVilleController3.m */,
 			);
@@ -863,6 +875,8 @@
 				837E5D5913CCADE700CA5776 /* AfficheListeAnnoncesController2.m */,
 				836C5A07152DC6E1008BDE0B /* AfficheListeAnnoncesController3.h */,
 				836C5A08152DC6E1008BDE0B /* AfficheListeAnnoncesController3.m */,
+				83ADE7A115873506002C43C0 /* AfficheListeAnnoncesControllerModifierFavoris.h */,
+				83ADE7A215873506002C43C0 /* AfficheListeAnnoncesControllerModifierFavoris.m */,
 			);
 			name = "Resultats recherche";
 			sourceTree = "<group>";
@@ -872,10 +886,16 @@
 			children = (
 				8382A3D913CDC49600D74331 /* AfficheAnnonceController2.h */,
 				8382A3DA13CDC49600D74331 /* AfficheAnnonceController2.m */,
+				83ADE7B315878219002C43C0 /* AfficheAnnonceControllerAccueil.h */,
+				83ADE7B41587821A002C43C0 /* AfficheAnnonceControllerAccueil.m */,
 				837F2EB413EF400C0049FFEE /* AfficheAnnonceController3.h */,
 				837F2EB513EF400C0049FFEE /* AfficheAnnonceController3.m */,
 				837664A01508B63E0035B357 /* AfficheAnnonceController4.h */,
 				837664A11508B63E0035B357 /* AfficheAnnonceController4.m */,
+				83ADE7B015877D30002C43C0 /* AfficheAnnonceControllerFavoris.h */,
+				83ADE7B115877D30002C43C0 /* AfficheAnnonceControllerFavoris.m */,
+				83ADE7AD15876F4E002C43C0 /* AfficheAnnonceControllerModifierFavoris.h */,
+				83ADE7AE15876F4F002C43C0 /* AfficheAnnonceControllerModifierFavoris.m */,
 				8391370815494069003E3114 /* FormulaireAnnonce.h */,
 				8391370915494069003E3114 /* FormulaireAnnonce.m */,
 			);
@@ -1262,7 +1282,6 @@
 				837E5D2413CC8CF500CA5776 /* ArrayWithIndex.m in Sources */,
 				837E5D3013CC8F5300CA5776 /* Intervalle.m in Sources */,
 				837E5D4F13CC945000CA5776 /* Annonce.m in Sources */,
-				837E5D5313CC947000CA5776 /* ChoixVilleController2.m in Sources */,
 				837E5D5A13CCADE700CA5776 /* AfficheListeAnnoncesController2.m in Sources */,
 				8382A3DB13CDC49600D74331 /* AfficheAnnonceController2.m in Sources */,
 				8381510613CF1B240070C3F0 /* ContactViewController.m in Sources */,
@@ -1300,6 +1319,11 @@
 				8391370A15494069003E3114 /* FormulaireAnnonce.m in Sources */,
 				8391370D154957E5003E3114 /* XMLParserFormulaire.m in Sources */,
 				839137101549582F003E3114 /* Agence.m in Sources */,
+				83ADE7A0158731A6002C43C0 /* RootViewControllerModifierFavoris.m in Sources */,
+				83ADE7A315873506002C43C0 /* AfficheListeAnnoncesControllerModifierFavoris.m in Sources */,
+				83ADE7AF15876F4F002C43C0 /* AfficheAnnonceControllerModifierFavoris.m in Sources */,
+				83ADE7B215877D34002C43C0 /* AfficheAnnonceControllerFavoris.m in Sources */,
+				83ADE7B51587821B002C43C0 /* AfficheAnnonceControllerAccueil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

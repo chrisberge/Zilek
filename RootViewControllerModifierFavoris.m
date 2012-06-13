@@ -1,15 +1,15 @@
 //
-//  RootViewController.m
+//  RootViewControllerModifierFavoris.m
 //  Zilek
 //
 //  Created by Christophe Bergé on 16/06/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "RootViewController.h"
+#import "RootViewControllerModifierFavoris.h"
 
 
-@implementation RootViewController
+@implementation RootViewControllerModifierFavoris
 
 @synthesize tableauAnnonces1, criteres1, criteres2;
 
@@ -68,12 +68,13 @@
     
 	tableauAnnonces1 = [[NSMutableArray alloc] init];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(citySelectedMulti:) name:@"citySelectedMulti" object: nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(typesSelectedMulti:) name:@"typesSelectedMulti" object: nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(surfaceSelectedMulti:) name:@"surfaceSelectedMulti" object: nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(nbPiecesSelectedMulti:) name:@"nbPiecesSelectedMulti" object: nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(budgetSelectedMulti:) name:@"budgetSelectedMulti" object: nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(getCriteresMulti:) name:@"getCriteresMulti" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(citySelectedFavoris:) name:@"citySelectedFavoris" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(typesSelectedFavoris:) name:@"typesSelectedFavoris" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(surfaceSelectedFavoris:) name:@"surfaceSelectedFavoris" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(nbPiecesSelectedFavoris:) name:@"nbPiecesSelectedFavoris" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(budgetSelectedFavoris:) name:@"budgetSelectedFavoris" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(rechercheSauveeFavoris:) name:@"rechercheSauveeFavoris" object: nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(getCriteresFavoris:) name:@"getCriteresFavoris" object: nil];
     
     isConnectionErrorPrinted = NO;
     
@@ -374,12 +375,28 @@
     [networkQueue go];
 }
 
-- (void) getCriteresMulti:(NSNotification *)notify {
+- (void) getCriteresFavoris:(NSNotification *)notify {
     NSLog(@"criteres1 getCrit: %@",criteres1);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setCriteres" object: criteres1];
 }
 
-- (void) citySelectedMulti:(NSNotification *)notify {
+- (void) rechercheSauveeFavoris:(NSNotification *)notify {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[notify object]];
+    
+    NSEnumerator *enume;
+    NSString *key;
+    
+    enume = [dict keyEnumerator];
+    
+    while((key = [enume nextObject])) {
+        [criteres1 setValue:[dict valueForKey:key] forKey:key];
+    }
+
+    NSLog(@"criteres1 rechSauv: %@",criteres1);
+    [self afficheCriteres];
+}
+
+- (void) citySelectedFavoris:(NSNotification *)notify {
 	NSMutableArray *array = [notify object];
     
     if ([array count] != 0) {
@@ -391,7 +408,7 @@
 	NSLog(@"criteres1: %@",criteres1);
 }
 
-- (void) typesSelectedMulti:(NSNotification *)notify {
+- (void) typesSelectedFavoris:(NSNotification *)notify {
 	NSMutableArray *typesSelected = [notify object];
     
 	NSString *types = @"";
@@ -413,7 +430,7 @@
     NSLog(@"criteres1: %@",criteres1);
 }
 
-- (void) nbPiecesSelectedMulti:(NSNotification *)notify {
+- (void) nbPiecesSelectedFavoris:(NSNotification *)notify {
     NSMutableArray *nbPiecesSelected = [notify object];
     NSLog(@"nbpieces: %@", nbPiecesSelected);
     
@@ -452,7 +469,7 @@
     
 }
 
-- (void) surfaceSelectedMulti:(NSNotification *)notify {
+- (void) surfaceSelectedFavoris:(NSNotification *)notify {
 	Intervalle *intervalle = [notify object];
 	int min = [intervalle min];
 	int max = [intervalle max];
@@ -480,7 +497,7 @@
     NSLog(@"criteres1: %@",criteres1);
 }
 
-- (void) budgetSelectedMulti:(NSNotification *)notify {
+- (void) budgetSelectedFavoris:(NSNotification *)notify {
 	Intervalle *intervalle = [notify object];
 	int min = [intervalle min];
 	int max = [intervalle max];
@@ -618,10 +635,9 @@
             [self sauvegardeRecherches];
             
             [criteres1 setDictionary:tempDictionary];
-            [criteres1 setValue:@"0" forKey:@"transaction"];
             
-            AfficheListeAnnoncesController2 *afficheListeAnnoncesController = 
-            [[AfficheListeAnnoncesController2 alloc] init];
+            AfficheListeAnnoncesControllerModifierFavoris *afficheListeAnnoncesController = 
+            [[AfficheListeAnnoncesControllerModifierFavoris alloc] init];
             [self.navigationController pushViewController:afficheListeAnnoncesController animated:YES];
             [afficheListeAnnoncesController release];
             
@@ -653,53 +669,6 @@
     }
 }
 
--(void) sauvegardeRecherches{
-	int i = 0;
-	NSMutableDictionary *recherche;
-	NSMutableArray *recherches = [[NSMutableArray alloc] init];
-	NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-	
-	for (i = 0; i < 3; i++) {
-		[recherches addObject:@""];
-		if ((recherche = [NSDictionary dictionaryWithContentsOfFile:
-						  [directory stringByAppendingPathComponent:
-						   [@"" stringByAppendingFormat:@"%d.plist",i+1]]]) != nil ) {
-                              [recherches replaceObjectAtIndex:i withObject:recherche];
-                          }
-	}
-	
-	for (i = 2; i > 0; i--) {
-		if ([recherches objectAtIndex:i-1] != @"") {
-			[recherches replaceObjectAtIndex:i withObject:[recherches objectAtIndex:i-1]];
-		}
-	}
-    
-	/*NSMutableDictionary *criteresCopy = [NSDictionary dictionaryWithDictionary:criteres];
-     NSEnumerator *enume;
-     NSString *key;
-     
-     enume = [criteresCopy keyEnumerator];
-     
-     while(key = [enume nextObject]) {
-     if ([criteresCopy valueForKey:key] == @"") {
-     [criteres setObject:@"VIDE" forKey:key];
-     }
-     }*/
-	
-	[recherches replaceObjectAtIndex:0 withObject:criteres2];
-	
-	for (i = 0; i < 3; i++) {
-		if ([recherches objectAtIndex:i] != @"") {
-			recherche = [recherches objectAtIndex:i];
-			[recherche writeToFile:[directory stringByAppendingPathComponent:
-									[@"" stringByAppendingFormat:@"%d.plist",i+1]] atomically:YES];
-		}
-	}
-	NSLog(@"recherches: %@",recherches);
-    [recherche release];
-    //[recherches release];
-}
-
 /*
  // Override to allow orientations other than the default portrait orientation.
  - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -708,18 +677,14 @@
  }
  */
 
-- (void)viewWillAppear:(BOOL)animated {
-    ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
-    appDelegate.whichView = @"multicriteres";
-    nbRequetes = 0;
-    //AFFICHAGE DES CRITERES CHOISIS
-    
+- (void)afficheCriteres{
     //VILLE
-    if ([criteres1 valueForKey:@"ville1"] != @"") {
+    if (([criteres1 valueForKey:@"ville1"] != @"") && ([criteres1 valueForKey:@"ville1"] != nil)) {
         labelVille.text = [criteres1 valueForKey:@"ville1"];
     }
     
     //TYPES DE BIEN
+    
     NSString *types = [criteres1 valueForKey:@"types"];
     
     NSMutableArray *arrayTypes = [[NSMutableArray alloc] initWithArray:[types componentsSeparatedByString:@","]];
@@ -741,8 +706,8 @@
     //SURFACE
     if ([criteres1 valueForKey:@"surface_mini"] != @"" && [criteres1 valueForKey:@"surface_maxi"] != @"") {
         labelSurface.text = [NSString stringWithFormat:@"De %d m² à %d m²",
-                         [[criteres1 valueForKey:@"surface_mini"] intValue],
-                         [[criteres1 valueForKey:@"surface_maxi"] intValue]];
+                             [[criteres1 valueForKey:@"surface_mini"] intValue],
+                             [[criteres1 valueForKey:@"surface_maxi"] intValue]];
     }
     
     if ([criteres1 valueForKey:@"surface_mini"] != @"" && [criteres1 valueForKey:@"surface_maxi"] == @"") {
@@ -817,13 +782,68 @@
         [formatter release];
         
         labelBudget.text = [NSString stringWithFormat:@"De %@ à %@",
-                             prix_mini,
-                             prix_maxi];
+                            prix_mini,
+                            prix_maxi];
     }
     
     if ([criteres1 valueForKey:@"prix_mini"] == @"" && [criteres1 valueForKey:@"prix_maxi"] == @"") {
         labelBudget.text = @"";
     }
+}
+
+-(void) sauvegardeRecherches{
+	int i = 0;
+	NSMutableDictionary *recherche;
+	NSMutableArray *recherches = [[NSMutableArray alloc] init];
+	NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+	
+	for (i = 0; i < 3; i++) {
+		[recherches addObject:@""];
+		if ((recherche = [NSDictionary dictionaryWithContentsOfFile:
+						  [directory stringByAppendingPathComponent:
+						   [@"" stringByAppendingFormat:@"%d.plist",i+1]]]) != nil ) {
+                              [recherches replaceObjectAtIndex:i withObject:recherche];
+                          }
+	}
+	
+	for (i = 2; i > 0; i--) {
+		if ([recherches objectAtIndex:i-1] != @"") {
+			[recherches replaceObjectAtIndex:i withObject:[recherches objectAtIndex:i-1]];
+		}
+	}
+    
+	/*NSMutableDictionary *criteresCopy = [NSDictionary dictionaryWithDictionary:criteres];
+     NSEnumerator *enume;
+     NSString *key;
+     
+     enume = [criteresCopy keyEnumerator];
+     
+     while(key = [enume nextObject]) {
+     if ([criteresCopy valueForKey:key] == @"") {
+     [criteres setObject:@"VIDE" forKey:key];
+     }
+     }*/
+	
+	[recherches replaceObjectAtIndex:0 withObject:criteres2];
+	
+	for (i = 0; i < 3; i++) {
+		if ([recherches objectAtIndex:i] != @"") {
+			recherche = [recherches objectAtIndex:i];
+			[recherche writeToFile:[directory stringByAppendingPathComponent:
+									[@"" stringByAppendingFormat:@"%d.plist",i+1]] atomically:YES];
+		}
+	}
+	NSLog(@"recherches: %@",recherches);
+    [recherche release];
+    //[recherches release];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    ZilekAppDelegate *appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.whichView = @"favoris_modifier";
+    nbRequetes = 0;
+    //AFFICHAGE DES CRITERES CHOISIS
+    [self afficheCriteres];
     
     [super viewWillAppear:animated];
 }

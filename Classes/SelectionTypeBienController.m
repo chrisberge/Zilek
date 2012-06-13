@@ -23,7 +23,20 @@
     self.navigationController.navigationBar.hidden = YES;
 	
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(setCriteres:) name:@"setCriteres" object: nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"getCriteres" object: nil];
+    
+    UIViewController *tempView = [self.navigationController.viewControllers objectAtIndex:0];
+    
+    if (tempView.title == @"Accueil") {
+        postString = @"Multi";
+    }
+    
+    if (tempView.title == @"Favoris") {
+        postString = @"Favoris";
+    }
+    
+    NSString *name = [NSString stringWithFormat:@"getCriteres%@",postString];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object: nil];
     
 	listOfItems = [[NSMutableArray alloc] init];
 	
@@ -100,7 +113,8 @@
 */
 
 - (void)viewWillDisappear:(BOOL)animated {
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"typesSelected" object:rowSelected];
+    NSString *name = [NSString stringWithFormat:@"typesSelected%@",postString];
+	[[NSNotificationCenter defaultCenter] postNotificationName:name object:rowSelected];
     [super viewWillDisappear:animated];
 }
 

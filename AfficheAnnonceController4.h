@@ -5,7 +5,7 @@
 //  Created by Christophe Bergé on 08/03/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
-//  CLASSE CREEE POUR FAVORIS
+//  CLASSE CREEE POUR BIENS FAVORIS
 
 #import <UIKit/UIKit.h>
 #import "ArrayWithIndex.h"
@@ -14,6 +14,9 @@
 #import "AFOpenFlowViewDiapo.h"
 #import "ProgressViewContoller.h"
 #import "FormulaireAnnonce.h"
+#import "ZilekAppDelegate.h"
+
+@class ZilekAppDelegate;
 
 @interface AfficheAnnonceController4 : UIViewController <DiapoController3Delegate, FormulaireAnnonceDelegate>{
     Annonce *lAnnonce;
@@ -24,6 +27,7 @@
     UIScrollView *scrollView;
     ProgressViewContoller *pvc;
     UIButton *boutonRetour;
+    ZilekAppDelegate *appDelegate;
 }
 
 @end

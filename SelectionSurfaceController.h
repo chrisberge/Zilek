@@ -18,6 +18,7 @@
     UILabel *labelMax;
     NSString *surface_mini;
     NSString *surface_maxi;
+    NSString *postString;
     
 }
 

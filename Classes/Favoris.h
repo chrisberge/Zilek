@@ -14,8 +14,9 @@
 #import "AfficheAnnonceController4.h"
 #import "ProgressViewContoller.h"
 #import "ZilekAppDelegate.h"
+#import "RootViewControllerModifierFavoris.h"
 
-@class RootViewController;
+@class RootViewControllerModifierFavoris;
 @class ASINetworkQueue;
 @class XMLParser;
 @class ZilekAppDelegate;
@@ -59,7 +60,7 @@
     UIImageView *imgBien1;
     UIImageView *imgBien2;
     
-    RootViewController *rechercheMulti;
+    RootViewControllerModifierFavoris *rechercheMulti;
     NSString *whichView;
     NSMutableArray *tableauAnnonces1;
     
@@ -72,11 +73,13 @@
     Annonce *annonceSelected;
 
     NSString *bodyString2;
+    ZilekAppDelegate *appDelegate;
 }
 
 @property (nonatomic, assign) NSString *whichView;
-@property (nonatomic, retain) RootViewController *rechercheMulti;
+@property (nonatomic, retain) RootViewControllerModifierFavoris *rechercheMulti;
 @property (nonatomic, copy) NSMutableArray *tableauAnnonces1;
 @property (nonatomic, copy) Annonce *annonceSelected;
+@property (nonatomic, assign) NSMutableDictionary *criteres2;
 
 @end

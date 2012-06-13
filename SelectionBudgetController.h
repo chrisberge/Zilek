@@ -18,6 +18,7 @@
     UILabel *labelMax;
     NSString *prix_mini;
     NSString *prix_maxi;
+    NSString *postString;
     
 }
 
