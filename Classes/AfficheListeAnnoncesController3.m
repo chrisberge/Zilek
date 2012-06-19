@@ -347,7 +347,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [listeAnnonces count] + 1;
+    if (([listeAnnonces count] % 20) == 0) {
+        return [listeAnnonces count] + 1;
+    }
+    else{
+        return [listeAnnonces count];
+    }
 }
 
 
