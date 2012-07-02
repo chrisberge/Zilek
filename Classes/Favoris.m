@@ -826,8 +826,8 @@
     noRecherche = YES;
     int i = 0;
 	for (i = 0; i < 3; i++) {
-		[recherchesSauvees addObject:@""];
-		
+		[recherchesSauvees addObject:[NSMutableDictionary dictionary]];
+        
 		recherche = [NSMutableDictionary dictionaryWithContentsOfFile:
 					 [directory stringByAppendingPathComponent:
 					  [NSString stringWithFormat:@"%d.plist",i+1]]];
@@ -866,7 +866,7 @@
                 }
             }
             
-            if (recherche != @"") {
+            if ([recherche count] != 0) {
                 
                 switch (i) {
                     case 0:

@@ -58,7 +58,13 @@
     appDelegate = (ZilekAppDelegate *)[[UIApplication sharedApplication] delegate];
     
     listeAnnonces = appDelegate.favorisView.rechercheMulti.tableauAnnonces1;
-    criteres = [NSMutableDictionary dictionaryWithDictionary:appDelegate.favorisView.rechercheMulti.criteres2];
+    //criteres = [NSMutableDictionary dictionaryWithDictionary:appDelegate.favorisView.rechercheMulti.criteres2];
+    if (appDelegate.favorisView.rechercheMulti.criteres2 == nil) {
+        criteres = [NSMutableDictionary dictionary];
+    }
+    else {
+        criteres = appDelegate.favorisView.rechercheMulti.criteres2;
+    }
 	
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(afficheAnnonceReady:) name:@"afficheAnnonceReady" object: nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(nextResults:) name:@"nextResults" object: nil];
