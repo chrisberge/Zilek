@@ -54,10 +54,8 @@
 	UIButton *boutonRecherche = [UIButton buttonWithType:UIButtonTypeCustom];
 	//UIButton *boutonCarte = [UIButton buttonWithType:UIButtonTypeCustom];
 	
-	
 	boutonRecherche.tag = 1;
 	//boutonCarte.tag = 2;
-	
 	
 	[boutonRecherche setFrame:CGRectMake(20, 115, 280, 46)];
 	//[boutonCarte setFrame:CGRectMake(20, 85, 280, 46)];

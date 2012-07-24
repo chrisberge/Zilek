@@ -11,7 +11,7 @@
 
 @implementation AfficheListeAnnoncesController2
 
-@synthesize listeAnnonces, criteres, annonceSelected;
+@synthesize /*listeAnnonces, criteres,*/ annonceSelected;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,8 +59,9 @@
     bodyString = @"";
     
     listeAnnonces = appDelegate.accueilView.myTableViewController.tableauAnnonces1;
-    criteres = [NSMutableDictionary dictionaryWithDictionary:appDelegate.accueilView.myTableViewController.criteres2];
-	
+    //criteres = [NSMutableDictionary dictionaryWithDictionary:appDelegate.accueilView.myTableViewController.criteres2];
+	criteres = appDelegate.accueilView.myTableViewController.criteres2;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector: @selector(nextResults:) name:@"nextResults" object: nil];
     
     /*UIColor *fond = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"background.png"]];

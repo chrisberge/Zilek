@@ -11,7 +11,7 @@
 
 @implementation AfficheListeAnnoncesControllerModifierFavoris
 
-@synthesize listeAnnonces, criteres, annonceSelected;
+@synthesize /*listeAnnonces, criteres,*/ annonceSelected;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
