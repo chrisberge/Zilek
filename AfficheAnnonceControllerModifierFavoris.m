@@ -576,7 +576,7 @@
     
     //BOUTON ECRIVEZ NOUS
     UIButton *ecrivez = [UIButton buttonWithType:UIButtonTypeCustom];
-    [ecrivez setFrame:CGRectMake(15, 920, 90, 70)];
+    [ecrivez setFrame:CGRectMake(15, 1130, 90, 70)];
     [ecrivez setImage:[UIImage imageNamed:@"contact-agence.png"] forState:UIControlStateNormal];
     /*[ecrivez addTarget:self action:@selector(buttonEcrivez:) 
      forControlEvents:UIControlEventTouchUpInside];*/
@@ -594,7 +594,7 @@
     
     //AJOUTER FAVORIS
     UIButton *favoris = [UIButton buttonWithType:UIButtonTypeCustom];
-    [favoris setFrame:CGRectMake(215, 920, 90, 70)];
+    [favoris setFrame:CGRectMake(215, 1130, 90, 70)];
     [favoris setImage:[UIImage imageNamed:@"ajouter-favoris.png"] forState:UIControlStateNormal];
     [favoris addTarget:self action:@selector(buttonFavoris:) 
       forControlEvents:UIControlEventTouchUpInside];
@@ -602,39 +602,39 @@
     
     //ENVOYEZ AMI
     UIButton *envoyez = [UIButton buttonWithType:UIButtonTypeCustom];
-    [envoyez setFrame:CGRectMake(115, 920, 90, 70)];
+    [envoyez setFrame:CGRectMake(115, 1130, 90, 70)];
     [envoyez setImage:[UIImage imageNamed:@"envoyez-a-un-ami.png"] forState:UIControlStateNormal];
     [envoyez addTarget:self action:@selector(buttonEnvoyez:) 
       forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:envoyez];
     
     //COORDONNEES AGENCE
-    NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    /*NSString *directory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     
     NSDictionary *formData = [NSDictionary dictionaryWithContentsOfFile:
                               [directory stringByAppendingPathComponent:@"formData.plist"]];
     
-    if (formData != nil) {
-        /*--- QUEUE POUR LES REQUETES HTTP ---*/
-        ASINetworkQueue *networkQueue = [[ASINetworkQueue alloc] init];
-        [networkQueue reset];
-        [networkQueue setRequestDidFinishSelector:@selector(requestDone:)];
-        [networkQueue setRequestDidFailSelector:@selector(requestFailed:)];
-        [networkQueue setDelegate:self];
-        /*--- QUEUE POUR LES REQUETES HTTP ---*/
+    if (formData != nil) {*/
+    /*--- QUEUE POUR LES REQUETES HTTP ---*/
+    ASINetworkQueue *networkQueue = [[ASINetworkQueue alloc] init];
+    [networkQueue reset];
+    [networkQueue setRequestDidFinishSelector:@selector(requestDone:)];
+    [networkQueue setRequestDidFailSelector:@selector(requestFailed:)];
+    [networkQueue setDelegate:self];
+    /*--- QUEUE POUR LES REQUETES HTTP ---*/
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.akios.fr/immobilier/smart_phone.php?part=ZilekPortail&url=http://zilek.com/akios_agent_query.pl&pid=%@",
+                                       [lAnnonce valueForKey:@"code"]]];
+    
+    ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
+    [request setUserInfo:[NSDictionary dictionaryWithObject:@"coordonnees agence" forKey:@"name"]];
+    
+    [networkQueue addOperation:request];
+    [networkQueue go];
+    [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
+    boutonRetour.userInteractionEnabled = NO;
         
-        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://www.akios.fr/immobilier/smart_phone.php?part=ZilekPortail&url=http://zilek.com/akios_agent_query.pl&pid=%@",
-                                           [lAnnonce valueForKey:@"code"]]];
-        
-        ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:url];
-        [request setUserInfo:[NSDictionary dictionaryWithObject:[NSString stringWithString:@"coordonnees agence"] forKey:@"name"]];
-        
-        [networkQueue addOperation:request];
-        [networkQueue go];
-        [NSThread detachNewThreadSelector:@selector(printHUD) toTarget:self withObject:nil];
-        boutonRetour.userInteractionEnabled = NO;
-        
-    }
+    //}
     
     /*--- CONTACT ---*/
 }
@@ -875,29 +875,97 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"formulaireAgenceReady" object: @"formulaireAgenceReady"];
         
         NSString *texte = @"Coordonnées de l'agence:\n";
-        texte = [texte stringByAppendingFormat:@"Agence        :\t%@\n",
+        
+        UITextView *coordAgence = [[UITextView alloc] initWithFrame:CGRectMake(15, 910, 300, 50)];
+        coordAgence.font = [UIFont fontWithName:@"Arial-BoldMT" size:12];
+        coordAgence.text = texte;
+        coordAgence.scrollEnabled = NO;
+        coordAgence.editable = NO;
+        [scrollView addSubview:coordAgence];
+        [coordAgence release];
+        
+        
+        texte = @"";
+        texte = [texte stringByAppendingFormat:@"Agence:\n%@\n",
                  [lAgence valueForKey:@"titre"]];
-        texte = [texte stringByAppendingFormat:@"Nom du contact:\t%@\n",
+        
+        UITextView *agence = [[UITextView alloc] initWithFrame:CGRectMake(15, 940, 100, 50)];
+        agence.text = texte;
+        agence.scrollEnabled = NO;
+        agence.editable = NO;
+        [scrollView addSubview:agence];
+        [agence release];
+        
+        texte = @"";
+        texte = [texte stringByAppendingFormat:@"Nom du contact:\n%@\n",
                  [lAgence valueForKey:@"responsable"]];
-        texte = [texte stringByAppendingFormat:@"Adresse       :\t%@\n",
+        
+        UITextView *nomContact = [[UITextView alloc] initWithFrame:CGRectMake(170, 940, 150, 50)];
+        nomContact.text = texte;
+        nomContact.editable = NO;
+        nomContact.scrollEnabled = NO;
+        [scrollView addSubview:nomContact];
+        [nomContact release];
+        
+        texte = @"";
+        texte = [texte stringByAppendingFormat:@"Adresse:\n%@\n",
                  [lAgence valueForKey:@"adresse"]];
-        texte = [texte stringByAppendingFormat:@"               \t%@ %@\n",
+        texte = [texte stringByAppendingFormat:@"%@ %@\n",
                  [lAgence valueForKey:@"cp"],
                  [lAgence valueForKey:@"ville"]];
-        texte = [texte stringByAppendingFormat:@"Tel. fixe     :\t%@\n",
-                 [lAgence valueForKey:@"fixe"]];
-        texte = [texte stringByAppendingFormat:@"Tel. mobile   :\t%@\n",
-                 [lAgence valueForKey:@"mobile"]];
         
-        texte = [texte stringByAppendingFormat:@"email         :\t%@",
+        UITextView *adresse = [[UITextView alloc] initWithFrame:CGRectMake(15, 990, 150, 100)];
+        adresse.text = texte;
+        adresse.editable = NO;
+        adresse.scrollEnabled = NO;
+        [scrollView addSubview:adresse];
+        [adresse release];
+        
+        texte = @"";
+        if ([[lAgence valueForKey:@"fixe"] length] > 0) {
+            
+            NSString *numero = [lAgence valueForKey:@"fixe"];
+            
+            texte = @"Tel. fixe:\n";
+            
+            for (int i = 0; i < 5; i++) {
+                texte = [texte stringByAppendingFormat:@"%@ ", [numero substringWithRange:NSMakeRange(i * 2, 2)]];
+            }
+        }
+        
+        UITextView *telFixe = [[UITextView alloc] initWithFrame:CGRectMake(170, 990, 150, 50)];
+        telFixe.text = texte;
+        telFixe.editable = NO;
+        [scrollView addSubview:telFixe];
+        [telFixe release];
+        
+        texte = @"";
+        if ([[lAgence valueForKey:@"mobile"] length] > 0) {
+            
+            NSString *numero = [lAgence valueForKey:@"mobile"];
+            
+            texte = @"Tel. mobile:\n";
+            
+            for (int i = 0; i < 5; i++) {
+                texte = [texte stringByAppendingFormat:@"%@ ", [numero substringWithRange:NSMakeRange(i * 2, 2)]];
+            }
+        }
+        
+        UITextView *telMobile = [[UITextView alloc] initWithFrame:CGRectMake(170, 1040, 150, 50)];
+        telMobile.text = texte;
+        telFixe.editable = NO;
+        [scrollView addSubview:telMobile];
+        [telMobile release];
+        
+        texte = @"";
+        texte = [texte stringByAppendingFormat:@"email:\n%@",
                  [lAgence valueForKey:@"email"]];
         
-        UITextView *contactMessage = [[UITextView alloc] initWithFrame:CGRectMake(5, 1040, 300, 350)];
-        contactMessage.editable = NO;
-        contactMessage.text = texte;
-        contactMessage.font = [UIFont fontWithName:@"Courier" size:12];
-        
-        [scrollView addSubview:contactMessage];
+        UITextView *mail = [[UITextView alloc] initWithFrame:CGRectMake(15, 1080, 300, 50)];
+        mail.editable = NO;
+        mail.text = texte;
+        [scrollView addSubview:mail];
+        [mail release];
         
         [pvc.view removeFromSuperview];
         
